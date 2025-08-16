@@ -1,0 +1,27 @@
+﻿using BeachTenis.Core.Entidades;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BeachTenis.Core.Attributes
+{
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public sealed class PasswordEPasswordConfirmAttribute : ValidationAttribute
+    {
+        private const string DefaultErrorMessage = "As senhas são obrigatorias.";
+
+        public override bool IsValid(object value)
+        {
+            if (!(value is User user))
+            {
+                return false;
+            }
+            return user.Provider == 0 && string.IsNullOrWhiteSpace(user.Password);
+        }
+
+        public PasswordEPasswordConfirmAttribute() : base(DefaultErrorMessage) { }
+    }
+}

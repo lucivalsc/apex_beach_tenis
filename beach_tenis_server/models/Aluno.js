@@ -1,0 +1,109 @@
+'use strict';
+
+module.exports = (sequelize, DataTypes) => {
+  const Aluno = sequelize.define('Aluno', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    usuario_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: true,
+      references: {
+        model: 'usuarios',
+        key: 'id'
+      }
+    },
+    nome: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    cpf: {
+      type: DataTypes.STRING(14),
+      unique: true
+    },
+    data_nascimento: {
+      type: DataTypes.DATEONLY
+    },
+    sexo: {
+      type: DataTypes.ENUM('MASCULINO', 'FEMININO', 'OUTRO')
+    },
+    cidade: {
+      type: DataTypes.STRING(100)
+    },
+    telefone: {
+      type: DataTypes.STRING(20)
+    },
+    whatsapp: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    instagram: {
+      type: DataTypes.STRING(100)
+    },
+    facebook: {
+      type: DataTypes.STRING(100)
+    },
+    ativo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    }
+  }, {
+    tableName: 'alunos',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    indexes: [
+      {
+        name: 'idx_cpf',
+        fields: ['cpf']
+      },
+      {
+        name: 'idx_nome',
+        fields: ['nome']
+      },
+      {
+        name: 'idx_ativo',
+        fields: ['ativo']
+      }
+    ]
+  });
+
+  Aluno.associate = function(models) {
+    Aluno.belongsTo(models.Usuario, {
+      foreignKey: 'usuario_id',
+      as: 'usuario',
+      onDelete: 'CASCADE'
+    });
+    
+    // Relação com arenas
+    Aluno.hasMany(models.ArenaAluno, {
+      foreignKey: 'aluno_id',
+      as: 'arenasVinculadas'
+    });
+    
+    // Treinos realizados
+    Aluno.hasMany(models.Treino, {
+      foreignKey: 'aluno_id',
+      as: 'treinos'
+    });
+    
+    // Avaliações recebidas
+    Aluno.hasMany(models.Avaliacao, {
+      foreignKey: 'aluno_id',
+      as: 'avaliacoes'
+    });
+  };
+
+  return Aluno;
+};

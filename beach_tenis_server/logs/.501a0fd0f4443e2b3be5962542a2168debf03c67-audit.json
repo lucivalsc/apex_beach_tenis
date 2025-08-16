@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Projetos\\Flutter\\Lucival\\beach_tenis\\beach_tenis_server\\logs\\.501a0fd0f4443e2b3be5962542a2168debf03c67-audit.json",
+    "files": [
+        {
+            "date": 1755382946473,
+            "name": "C:\\Projetos\\Flutter\\Lucival\\beach_tenis\\beach_tenis_server\\logs\\application-2025-08-16.log",
+            "hash": "7680968d2a775d15be47344f494d9ca550e513e1389c49c1ec3a6f76d03e9fd9"
+        }
+    ],
+    "hashType": "sha256"
+}

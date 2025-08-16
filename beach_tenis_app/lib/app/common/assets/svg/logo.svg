@@ -1,0 +1,45 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradiente principal -->
+    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7ED321;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradiente do coração -->
+    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B9D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F7931E;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Sombra suave -->
+    <filter id="softShadow">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="45" fill="url(#mainGradient)" filter="url(#softShadow)" opacity="0.1"/>
+  
+  <!-- Ícone principal: DNA + Coração -->
+  <g transform="translate(30, 30)">
+    <!-- DNA Helix -->
+    <path d="M20 10 Q35 25 20 40 Q5 55 20 70" stroke="url(#mainGradient)" stroke-width="3" fill="none" opacity="0.8"/>
+    <path d="M40 10 Q25 25 40 40 Q55 55 40 70" stroke="url(#mainGradient)" stroke-width="3" fill="none" opacity="0.8"/>
+    
+    <!-- DNA connection lines -->
+    <line x1="20" y1="20" x2="40" y2="20" stroke="url(#mainGradient)" stroke-width="2" opacity="0.6"/>
+    <line x1="20" y1="35" x2="40" y2="35" stroke="url(#mainGradient)" stroke-width="2" opacity="0.6"/>
+    <line x1="20" y1="50" x2="40" y2="50" stroke="url(#mainGradient)" stroke-width="2" opacity="0.6"/>
+    <line x1="20" y1="65" x2="40" y2="65" stroke="url(#mainGradient)" stroke-width="2" opacity="0.6"/>
+    
+    <!-- Coração pequeno no centro -->
+    <path d="M30 25 C28 23, 24 23, 24 27 C24 31, 30 35, 30 35 C30 35, 36 31, 36 27 C36 23, 32 23, 30 25 Z" 
+          fill="url(#heartGradient)" opacity="0.9"/>
+  </g>
+  
+  <!-- Elementos decorativos -->
+  <circle cx="90" cy="25" r="3" fill="#4A90E2" opacity="0.3"/>
+  <circle cx="95" cy="45" r="2" fill="#7ED321" opacity="0.5"/>
+  <circle cx="85" cy="95" r="1.5" fill="#FF6B9D" opacity="0.4"/>
+</svg>
