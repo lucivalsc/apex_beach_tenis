@@ -3,6 +3,8 @@ import 'package:beach_tenis_app/app/common/widget/custom_app_bar.dart';
 import 'package:beach_tenis_app/app/common/widget/custom_button.dart';
 import 'package:beach_tenis_app/app/common/widget/custom_text_field.dart';
 import 'package:beach_tenis_app/app/common/widget/gradient_background.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/arena_dashboard/arena_dashboard_screen.dart';
+import 'package:beach_tenis_app/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -130,10 +132,9 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.pushNamedAndRemoveUntil(
+                  pushAndRemoveUntil(
                     context,
-                    '/dashboard',
-                    (route) => false,
+                    const ArenaDashboardScreen(),
                   );
                 },
                 style: ElevatedButton.styleFrom(

@@ -1,4 +1,5 @@
 import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
+import 'package:beach_tenis_app/navigation.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool _isDarkMode = false;
 
   void _navigateToAuth() {
-    Navigator.pushNamed(context, AuthScreen.route);
+    push(context, const AuthScreen());
   }
 
   @override

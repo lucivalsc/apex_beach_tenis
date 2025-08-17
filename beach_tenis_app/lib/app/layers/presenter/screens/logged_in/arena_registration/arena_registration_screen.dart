@@ -1,4 +1,5 @@
 import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/payment_methods/payment_methods_screen.dart';
+import 'package:beach_tenis_app/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -127,7 +128,7 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       // Implementar lógica de cadastro
-      Navigator.pushNamed(context, PaymentMethodsScreen.route);
+      push(context, const PaymentMethodsScreen());
     }
   }
 

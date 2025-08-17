@@ -2,6 +2,7 @@ import 'package:beach_tenis_app/app/common/styles/app_styles.dart';
 import 'package:beach_tenis_app/app/common/widget/custom_app_bar.dart';
 import 'package:beach_tenis_app/app/common/widget/gradient_background.dart';
 import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/payment_methods/payment_methods_screen.dart';
+import 'package:beach_tenis_app/navigation.dart';
 import 'package:flutter/material.dart';
 
 class SubscriptionSelectionScreen extends StatefulWidget {
@@ -87,10 +88,12 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
 
   void _continueToPayment() {
     if (_selectedPlan != null) {
-      Navigator.pushNamed(context, PaymentMethodsScreen.route, arguments: {
-        'plan': _selectedPlan,
-        'isAnnual': _isAnnual,
-      });
+      pushNamed(context, PaymentMethodsScreen.route, arguments: [
+        {
+          'plan': _selectedPlan,
+          'isAnnual': _isAnnual,
+        }
+      ]);
     }
   }
 

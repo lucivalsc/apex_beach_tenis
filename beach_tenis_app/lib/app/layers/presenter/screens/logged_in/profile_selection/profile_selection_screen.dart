@@ -2,8 +2,10 @@ import 'package:beach_tenis_app/app/common/styles/app_styles.dart';
 import 'package:beach_tenis_app/app/common/widget/custom_app_bar.dart';
 import 'package:beach_tenis_app/app/common/widget/gradient_background.dart';
 import 'package:beach_tenis_app/app/common/widget/profile_card.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/arena_dashboard/arena_dashboard_screen.dart';
 import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/athlete_registration/athlete_registration_screen.dart';
 import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/subscription_selection/subscription_selection_screen.dart';
+import 'package:beach_tenis_app/navigation.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSelectionScreen extends StatefulWidget {
@@ -27,9 +29,9 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
   void _continueToNextStep() {
     if (_selectedProfile != null) {
       if (_selectedProfile == 'arena') {
-        Navigator.pushNamed(context, SubscriptionSelectionScreen.route);
+        push(context, const SubscriptionSelectionScreen());
       } else {
-        Navigator.pushNamed(context, AthleteRegistrationScreen.route);
+        push(context, const AthleteRegistrationScreen());
       }
     }
   }
@@ -192,7 +194,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                       TextButton(
                         onPressed: () {
                           // Implementar lógica para pular seleção
-                          Navigator.pushNamed(context, '/dashboard');
+                          push(context, const ArenaDashboardScreen());
                         },
                         child: Text(
                           'Pular por agora',
