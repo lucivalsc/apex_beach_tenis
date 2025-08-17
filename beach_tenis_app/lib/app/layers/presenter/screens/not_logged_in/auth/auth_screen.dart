@@ -20,7 +20,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   late AuthProvider authProvider;
 
   // Controllers para os campos de texto
-  final _loginEmailController = TextEditingController(text: 'lucivalsc@gmail.com');
+  final _loginEmailController = TextEditingController(text: 'professor@exemplo.com');
   final _loginPasswordController = TextEditingController(text: '912167');
   final _registerNameController = TextEditingController();
   final _registerEmailController = TextEditingController();

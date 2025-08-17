@@ -5,9 +5,10 @@ import 'package:intl/intl.dart';
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
+import '../../not_logged_in/auth/auth_screen.dart';
 import 'widgets/dashboard_card.dart';
-import 'widgets/treino_card.dart';
 import 'widgets/progresso_card.dart';
+import 'widgets/treino_card.dart';
 
 class AlunoDashboardScreen extends StatefulWidget {
   const AlunoDashboardScreen({Key? key}) : super(key: key);
@@ -104,15 +105,9 @@ class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
               // Navegar para tela de notificações
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.menu, color: AppStyles.white),
-            onPressed: () {
-              _scaffoldKey.currentState?.openEndDrawer();
-            },
-          ),
         ],
       ),
-      endDrawer: _buildDrawer(),
+      drawer: _buildDrawer(),
       body: GradientBackground(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -150,7 +145,7 @@ class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
   Widget _buildAlunoHeader() {
     final desde = DateTime.parse(alunoData['desde']);
     final desdeFormatter = DateFormat('dd/MM/yyyy');
-    
+
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -166,9 +161,7 @@ class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.primaryGreen,
-                  backgroundImage: alunoData['foto'] != null
-                      ? NetworkImage(alunoData['foto'])
-                      : null,
+                  backgroundImage: alunoData['foto'] != null ? NetworkImage(alunoData['foto']) : null,
                   child: alunoData['foto'] == null
                       ? Text(
                           alunoData['nome'].substring(0, 1).toUpperCase(),
@@ -384,7 +377,7 @@ class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
             final dateTime = DateTime.parse(treino['data']);
             final dateFormatter = DateFormat('dd/MM/yyyy');
             final timeFormatter = DateFormat('HH:mm');
-            
+
             return TreinoCard(
               date: dateTime,
               formattedDate: dateFormatter.format(dateTime),
@@ -435,7 +428,7 @@ class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
             final habilidade = progressoHabilidades[index];
             final ultimaAvaliacao = DateTime.parse(habilidade['ultimaAvaliacao']);
             final avaliacaoFormatter = DateFormat('dd/MM/yyyy');
-            
+
             return ProgressoCard(
               habilidade: habilidade['habilidade'],
               progresso: habilidade['progresso'],
@@ -465,9 +458,7 @@ class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.white,
-                  backgroundImage: alunoData['foto'] != null
-                      ? NetworkImage(alunoData['foto'])
-                      : null,
+                  backgroundImage: alunoData['foto'] != null ? NetworkImage(alunoData['foto']) : null,
                   child: alunoData['foto'] == null
                       ? Text(
                           alunoData['nome'].substring(0, 1).toUpperCase(),
@@ -560,7 +551,11 @@ class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
             title: const Text('Sair'),
             onTap: () {
               Navigator.pop(context);
-              // Implementar logout
+              // Redirecionar para a tela de login
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const AuthScreen()),
+                (route) => false,
+              );
             },
           ),
         ],

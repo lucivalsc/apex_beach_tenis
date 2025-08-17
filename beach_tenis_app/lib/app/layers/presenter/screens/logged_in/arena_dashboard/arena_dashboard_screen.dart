@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
+import '../../not_logged_in/auth/auth_screen.dart';
 import 'widgets/dashboard_card.dart';
 import 'widgets/dashboard_stats_card.dart';
 import 'widgets/professor_list_item.dart';
@@ -111,15 +112,9 @@ class _ArenaDashboardScreenState extends State<ArenaDashboardScreen> {
               // Navegar para tela de notificações
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.menu, color: AppStyles.white),
-            onPressed: () {
-              _scaffoldKey.currentState?.openEndDrawer();
-            },
-          ),
         ],
       ),
-      endDrawer: _buildDrawer(),
+      drawer: _buildDrawer(),
       body: GradientBackground(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -659,7 +654,11 @@ class _ArenaDashboardScreenState extends State<ArenaDashboardScreen> {
             title: const Text('Sair'),
             onTap: () {
               Navigator.pop(context);
-              // Implementar logout
+              // Redirecionar para a tela de login
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const AuthScreen()),
+                (route) => false,
+              );
             },
           ),
         ],

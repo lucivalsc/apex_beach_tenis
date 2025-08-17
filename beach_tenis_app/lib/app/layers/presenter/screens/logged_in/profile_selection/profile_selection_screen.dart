@@ -5,6 +5,7 @@ import 'package:apex_sports/app/common/widget/profile_card.dart';
 import 'package:apex_sports/app/layers/presenter/screens/logged_in/arena_dashboard/arena_dashboard_screen.dart';
 import 'package:apex_sports/app/layers/presenter/screens/logged_in/athlete_registration/athlete_registration_screen.dart';
 import 'package:apex_sports/app/layers/presenter/screens/logged_in/subscription_selection/subscription_selection_screen.dart';
+import 'package:apex_sports/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
 import 'package:apex_sports/navigation.dart';
 import 'package:flutter/material.dart';
 
@@ -203,6 +204,38 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                             fontSize: 14,
                             decoration: TextDecoration.underline,
                           ),
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 20),
+                      
+                      // Botão de sair
+                      TextButton(
+                        onPressed: () {
+                          // Redirecionar para a tela de login
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => const AuthScreen()),
+                            (route) => false,
+                          );
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.exit_to_app,
+                              color: Colors.white.withOpacity(0.7),
+                              size: 18,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Sair',
+                              style: TextStyle(
+                                color: Colors.white.withOpacity(0.7),
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
+import '../../not_logged_in/auth/auth_screen.dart';
 import 'widgets/dashboard_card.dart';
 import 'widgets/estatistica_card.dart';
 import 'widgets/usuario_list_item.dart';
@@ -98,15 +99,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               // Navegar para tela de notificações
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.menu, color: AppStyles.white),
-            onPressed: () {
-              _scaffoldKey.currentState?.openEndDrawer();
-            },
-          ),
         ],
       ),
-      endDrawer: _buildDrawer(),
+      drawer: _buildDrawer(),
       body: GradientBackground(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -157,9 +152,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.grey800,
-                  backgroundImage: adminData['foto'] != null
-                      ? NetworkImage(adminData['foto'])
-                      : null,
+                  backgroundImage: adminData['foto'] != null ? NetworkImage(adminData['foto']) : null,
                   child: adminData['foto'] == null
                       ? Text(
                           adminData['nome'].substring(0, 1).toUpperCase(),
@@ -422,7 +415,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             final usuario = ultimosUsuarios[index];
             final dataCadastro = DateTime.parse(usuario['dataCadastro']);
             final cadastroFormatter = DateFormat('dd/MM/yyyy');
-            
+
             return UsuarioListItem(
               name: usuario['nome'],
               photoUrl: usuario['foto'],
@@ -455,9 +448,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.white,
-                  backgroundImage: adminData['foto'] != null
-                      ? NetworkImage(adminData['foto'])
-                      : null,
+                  backgroundImage: adminData['foto'] != null ? NetworkImage(adminData['foto']) : null,
                   child: adminData['foto'] == null
                       ? Text(
                           adminData['nome'].substring(0, 1).toUpperCase(),
@@ -550,7 +541,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             title: const Text('Sair'),
             onTap: () {
               Navigator.pop(context);
-              // Implementar logout
+              // Redirecionar para a tela de login
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const AuthScreen()),
+                (route) => false,
+              );
             },
           ),
         ],

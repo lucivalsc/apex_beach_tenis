@@ -5,9 +5,10 @@ import 'package:intl/intl.dart';
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
-import 'widgets/dashboard_card.dart';
+import '../../not_logged_in/auth/auth_screen.dart';
 import 'widgets/atendimento_card.dart';
 import 'widgets/atleta_card.dart';
+import 'widgets/dashboard_card.dart';
 
 class ProfissionalTecnicoDashboardScreen extends StatefulWidget {
   const ProfissionalTecnicoDashboardScreen({Key? key}) : super(key: key);
@@ -108,15 +109,9 @@ class _ProfissionalTecnicoDashboardScreenState extends State<ProfissionalTecnico
               // Navegar para tela de notificações
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.menu, color: AppStyles.white),
-            onPressed: () {
-              _scaffoldKey.currentState?.openEndDrawer();
-            },
-          ),
         ],
       ),
-      endDrawer: _buildDrawer(),
+      drawer: _buildDrawer(),
       body: GradientBackground(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -167,9 +162,7 @@ class _ProfissionalTecnicoDashboardScreenState extends State<ProfissionalTecnico
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.warning,
-                  backgroundImage: profissionalData['foto'] != null
-                      ? NetworkImage(profissionalData['foto'])
-                      : null,
+                  backgroundImage: profissionalData['foto'] != null ? NetworkImage(profissionalData['foto']) : null,
                   child: profissionalData['foto'] == null
                       ? Text(
                           profissionalData['nome'].substring(0, 1).toUpperCase(),
@@ -392,7 +385,7 @@ class _ProfissionalTecnicoDashboardScreenState extends State<ProfissionalTecnico
             final dateTime = DateTime.parse(atendimento['data']);
             final dateFormatter = DateFormat('dd/MM/yyyy');
             final timeFormatter = DateFormat('HH:mm');
-            
+
             return AtendimentoCard(
               date: dateTime,
               formattedDate: dateFormatter.format(dateTime),
@@ -444,7 +437,7 @@ class _ProfissionalTecnicoDashboardScreenState extends State<ProfissionalTecnico
             final atleta = atletasEmAtendimento[index];
             final ultimoAtendimento = DateTime.parse(atleta['ultimoAtendimento']);
             final atendimentoFormatter = DateFormat('dd/MM/yyyy');
-            
+
             return AtletaCard(
               name: atleta['nome'],
               photoUrl: atleta['foto'],
@@ -476,9 +469,7 @@ class _ProfissionalTecnicoDashboardScreenState extends State<ProfissionalTecnico
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.white,
-                  backgroundImage: profissionalData['foto'] != null
-                      ? NetworkImage(profissionalData['foto'])
-                      : null,
+                  backgroundImage: profissionalData['foto'] != null ? NetworkImage(profissionalData['foto']) : null,
                   child: profissionalData['foto'] == null
                       ? Text(
                           profissionalData['nome'].substring(0, 1).toUpperCase(),
@@ -571,7 +562,11 @@ class _ProfissionalTecnicoDashboardScreenState extends State<ProfissionalTecnico
             title: const Text('Sair'),
             onTap: () {
               Navigator.pop(context);
-              // Implementar logout
+              // Redirecionar para a tela de login
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const AuthScreen()),
+                (route) => false,
+              );
             },
           ),
         ],

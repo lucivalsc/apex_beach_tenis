@@ -5,8 +5,9 @@ import 'package:intl/intl.dart';
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
-import 'widgets/dashboard_card.dart';
+import '../../not_logged_in/auth/auth_screen.dart';
 import 'widgets/aluno_list_item.dart';
+import 'widgets/dashboard_card.dart';
 import 'widgets/treino_card.dart';
 
 class ProfessorDashboardScreen extends StatefulWidget {
@@ -108,15 +109,9 @@ class _ProfessorDashboardScreenState extends State<ProfessorDashboardScreen> {
               // Navegar para tela de notificações
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.menu, color: AppStyles.white),
-            onPressed: () {
-              _scaffoldKey.currentState?.openEndDrawer();
-            },
-          ),
         ],
       ),
-      endDrawer: _buildDrawer(),
+      drawer: _buildDrawer(),
       body: GradientBackground(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -167,9 +162,7 @@ class _ProfessorDashboardScreenState extends State<ProfessorDashboardScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.lightBlue,
-                  backgroundImage: professorData['foto'] != null
-                      ? NetworkImage(professorData['foto'])
-                      : null,
+                  backgroundImage: professorData['foto'] != null ? NetworkImage(professorData['foto']) : null,
                   child: professorData['foto'] == null
                       ? Text(
                           professorData['nome'].substring(0, 1).toUpperCase(),
@@ -392,7 +385,7 @@ class _ProfessorDashboardScreenState extends State<ProfessorDashboardScreen> {
             final dateTime = DateTime.parse(treino['data']);
             final dateFormatter = DateFormat('dd/MM/yyyy');
             final timeFormatter = DateFormat('HH:mm');
-            
+
             return TreinoCard(
               date: dateTime,
               formattedDate: dateFormatter.format(dateTime),
@@ -444,7 +437,7 @@ class _ProfessorDashboardScreenState extends State<ProfessorDashboardScreen> {
             final aluno = alunos[index];
             final desde = DateTime.parse(aluno['desde']);
             final desdeFormatter = DateFormat('MM/yyyy');
-            
+
             return AlunoListItem(
               name: aluno['nome'],
               photoUrl: aluno['foto'],
@@ -476,9 +469,7 @@ class _ProfessorDashboardScreenState extends State<ProfessorDashboardScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.white,
-                  backgroundImage: professorData['foto'] != null
-                      ? NetworkImage(professorData['foto'])
-                      : null,
+                  backgroundImage: professorData['foto'] != null ? NetworkImage(professorData['foto']) : null,
                   child: professorData['foto'] == null
                       ? Text(
                           professorData['nome'].substring(0, 1).toUpperCase(),
@@ -571,7 +562,11 @@ class _ProfessorDashboardScreenState extends State<ProfessorDashboardScreen> {
             title: const Text('Sair'),
             onTap: () {
               Navigator.pop(context);
-              // Implementar logout
+              // Redirecionar para a tela de login
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const AuthScreen()),
+                (route) => false,
+              );
             },
           ),
         ],

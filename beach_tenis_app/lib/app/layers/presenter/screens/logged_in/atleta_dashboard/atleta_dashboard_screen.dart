@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
+import '../../not_logged_in/auth/auth_screen.dart';
 import 'widgets/dashboard_card.dart';
 import 'widgets/estatistica_card.dart';
 import 'widgets/jogo_list_item.dart';
@@ -123,15 +124,9 @@ class _AtletaDashboardScreenState extends State<AtletaDashboardScreen> {
               ),
             ],
           ),
-          IconButton(
-            icon: const Icon(Icons.menu, color: AppStyles.white),
-            onPressed: () {
-              _scaffoldKey.currentState?.openEndDrawer();
-            },
-          ),
         ],
       ),
-      endDrawer: _buildDrawer(),
+      drawer: _buildDrawer(),
       body: GradientBackground(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -182,9 +177,7 @@ class _AtletaDashboardScreenState extends State<AtletaDashboardScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.lightBlue,
-                  backgroundImage: atletaData['foto'] != null
-                      ? NetworkImage(atletaData['foto'])
-                      : null,
+                  backgroundImage: atletaData['foto'] != null ? NetworkImage(atletaData['foto']) : null,
                   child: atletaData['foto'] == null
                       ? Text(
                           atletaData['nome'].substring(0, 1).toUpperCase(),
@@ -472,7 +465,7 @@ class _AtletaDashboardScreenState extends State<AtletaDashboardScreen> {
             final dateTime = DateTime.parse(jogo['data']);
             final dateFormatter = DateFormat('dd/MM/yyyy');
             final timeFormatter = DateFormat('HH:mm');
-            
+
             return JogoListItem(
               date: dateTime,
               formattedDate: dateFormatter.format(dateTime),
@@ -507,9 +500,7 @@ class _AtletaDashboardScreenState extends State<AtletaDashboardScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.white,
-                  backgroundImage: atletaData['foto'] != null
-                      ? NetworkImage(atletaData['foto'])
-                      : null,
+                  backgroundImage: atletaData['foto'] != null ? NetworkImage(atletaData['foto']) : null,
                   child: atletaData['foto'] == null
                       ? Text(
                           atletaData['nome'].substring(0, 1).toUpperCase(),
@@ -610,7 +601,11 @@ class _AtletaDashboardScreenState extends State<AtletaDashboardScreen> {
             title: const Text('Sair'),
             onTap: () {
               Navigator.pop(context);
-              // Implementar logout
+              // Redirecionar para a tela de login
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const AuthScreen()),
+                (route) => false,
+              );
             },
           ),
         ],
