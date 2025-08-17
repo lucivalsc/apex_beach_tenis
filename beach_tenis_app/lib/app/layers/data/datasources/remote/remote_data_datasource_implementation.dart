@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:beach_tenis_app/app/common/http/http_client.dart';
-import 'package:beach_tenis_app/app/common/models/exception_models.dart';
-import 'package:beach_tenis_app/app/layers/data/datasources/remote/remote_data_datasource.dart';
+import 'package:apex_sports/app/common/http/http_client.dart';
+import 'package:apex_sports/app/common/models/exception_models.dart';
+import 'package:apex_sports/app/layers/data/datasources/remote/remote_data_datasource.dart';
 
 class RemoteDataDatasourceImplementation implements IRemoteDataDatasource {
   final Map<String, String> headers = {"Content-Type": "application/json"};

@@ -1,6 +1,6 @@
-import 'package:beach_tenis_app/app/layers/data/datasources/remote/remote_data_datasource.dart';
-import 'package:beach_tenis_app/app/layers/domain/entities/match_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/repositories/match_repository.dart';
+import 'package:apex_sports/app/layers/data/datasources/remote/remote_data_datasource.dart';
+import 'package:apex_sports/app/layers/domain/entities/match_entity.dart';
+import 'package:apex_sports/app/layers/domain/repositories/match_repository.dart';
 
 class MatchRepositoryImplementation implements IMatchRepository {
   final IRemoteDataDatasource remoteDataSource;

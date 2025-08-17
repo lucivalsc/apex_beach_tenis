@@ -1,4 +1,4 @@
-import 'package:beach_tenis_app/app/layers/domain/entities/demandante_profile_entity.dart';
+import 'package:apex_sports/app/layers/domain/entities/demandante_profile_entity.dart';
 
 abstract class IDemandanteRepository {
   Future<DemandanteProfileEntity?> getDemandanteProfile(String userId);

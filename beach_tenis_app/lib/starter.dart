@@ -1,7 +1,7 @@
-import 'package:beach_tenis_app/app/layers/presenter/providers/auth_provider.dart';
-import 'package:beach_tenis_app/app/layers/presenter/providers/config_provider.dart';
-import 'package:beach_tenis_app/app/layers/presenter/providers/data_provider.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
+import 'package:apex_sports/app/layers/presenter/providers/auth_provider.dart';
+import 'package:apex_sports/app/layers/presenter/providers/config_provider.dart';
+import 'package:apex_sports/app/layers/presenter/providers/data_provider.dart';
+import 'package:apex_sports/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

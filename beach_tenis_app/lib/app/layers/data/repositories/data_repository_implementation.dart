@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:beach_tenis_app/app/common/models/exception_models.dart';
-import 'package:beach_tenis_app/app/common/models/failure_models.dart';
-import 'package:beach_tenis_app/app/layers/data/datasources/remote/remote_data_datasource.dart';
-import 'package:beach_tenis_app/app/layers/domain/repositories/data_repository.dart';
+import 'package:apex_sports/app/common/models/exception_models.dart';
+import 'package:apex_sports/app/common/models/failure_models.dart';
+import 'package:apex_sports/app/layers/data/datasources/remote/remote_data_datasource.dart';
+import 'package:apex_sports/app/layers/domain/repositories/data_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class DataRepositoryImplementation implements IDataRepository {

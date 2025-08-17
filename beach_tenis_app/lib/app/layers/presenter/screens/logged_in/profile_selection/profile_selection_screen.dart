@@ -1,11 +1,11 @@
-import 'package:beach_tenis_app/app/common/styles/app_styles.dart';
-import 'package:beach_tenis_app/app/common/widget/custom_app_bar.dart';
-import 'package:beach_tenis_app/app/common/widget/gradient_background.dart';
-import 'package:beach_tenis_app/app/common/widget/profile_card.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/arena_dashboard/arena_dashboard_screen.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/athlete_registration/athlete_registration_screen.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/subscription_selection/subscription_selection_screen.dart';
-import 'package:beach_tenis_app/navigation.dart';
+import 'package:apex_sports/app/common/styles/app_styles.dart';
+import 'package:apex_sports/app/common/widget/custom_app_bar.dart';
+import 'package:apex_sports/app/common/widget/gradient_background.dart';
+import 'package:apex_sports/app/common/widget/profile_card.dart';
+import 'package:apex_sports/app/layers/presenter/screens/logged_in/arena_dashboard/arena_dashboard_screen.dart';
+import 'package:apex_sports/app/layers/presenter/screens/logged_in/athlete_registration/athlete_registration_screen.dart';
+import 'package:apex_sports/app/layers/presenter/screens/logged_in/subscription_selection/subscription_selection_screen.dart';
+import 'package:apex_sports/navigation.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSelectionScreen extends StatefulWidget {

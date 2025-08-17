@@ -53,23 +53,34 @@ router.post('/login', [
 
     // Gerar JWT token
     const token = jwt.sign(
-      { 
+      {
         id: usuario.id,
         email: usuario.email,
-        tipo: usuario.tipo_principal 
-      }, 
-      JWT_SECRET, 
+        tipo: usuario.tipo_principal
+      },
+      JWT_SECRET,
       { expiresIn: '24h' }
     );
+
+    // console.log('Usuário logado:', usuario);
+    // console.log('Token gerado:', token);
 
     res.json({
       success: true,
       token,
       usuario: {
-        id: usuario.id,
+        id: usuario.id, 
         nome: usuario.nome,
+        telefone: usuario.telefone,
+        instagram: usuario.instagram,
+        facebook: usuario.facebook,
+        linkedin: usuario.linkedin,
         email: usuario.email,
-        tipo: usuario.tipo
+        tipo: usuario.tipo_principal,
+        ativo: usuario.ativo,
+        ultimo_login: usuario.ultimo_login,
+        created_at: usuario.created_at,
+        updated_at: usuario.updated_at,
       }
     });
   } catch (error) {

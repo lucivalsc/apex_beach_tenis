@@ -1,6 +1,7 @@
-import 'package:beach_tenis_app/app/common/providers/theme_provider.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/arena_dashboard/arena_dashboard_screen.dart';
-import 'package:beach_tenis_app/navigation.dart';
+import 'package:apex_sports/app/common/providers/theme_provider.dart';
+import 'package:apex_sports/app/layers/presenter/providers/auth_provider.dart';
+import 'package:apex_sports/app/layers/presenter/screens/logged_in/arena_dashboard/arena_dashboard_screen.dart';
+import 'package:apex_sports/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,9 +17,11 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
+  late AuthProvider authProvider;
+
   // Controllers para os campos de texto
-  final _loginEmailController = TextEditingController();
-  final _loginPasswordController = TextEditingController();
+  final _loginEmailController = TextEditingController(text: 'lucivalsc@gmail.com');
+  final _loginPasswordController = TextEditingController(text: '912167');
   final _registerNameController = TextEditingController();
   final _registerEmailController = TextEditingController();
   final _registerPhoneController = TextEditingController();
@@ -40,6 +43,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    authProvider = Provider.of<AuthProvider>(context, listen: false);
   }
 
   @override
@@ -57,9 +61,12 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
 
   // --- Lógica de Negócio ---
   void _handleLogin() {
-    // TODO: Implementar lógica de login
-    print("Login attempt with: ${_loginEmailController.text}");
-    push(context, const ArenaDashboardScreen());
+    authProvider.signIn(
+      context,
+      mounted,
+      _loginEmailController.text,
+      _loginPasswordController.text,
+    );
   }
 
   void _handleRegister() {
@@ -80,7 +87,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     // Acessa o ThemeProvider para obter o tema atual
     final themeProvider = Provider.of<ThemeProvider>(context);
-    
+
     return Scaffold(
       // resizeToAvoidBottomInset: true (padrão) já ajuda, mas o SingleChildScrollView é essencial
       body: Container(
@@ -163,7 +170,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -445,7 +452,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   Widget _buildDarkModeToggle() {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final isDarkMode = themeProvider.isDarkMode;
-    
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -460,7 +467,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
           inactiveTrackColor: Colors.white.withOpacity(0.3),
         ),
         const SizedBox(width: 12),
-        Text(
+        const Text(
           'Modo escuro',
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),

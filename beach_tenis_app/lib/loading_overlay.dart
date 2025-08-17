@@ -1,4 +1,4 @@
-import 'package:beach_tenis_app/loading_screen.dart';
+import 'package:apex_sports/loading_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoadingOverlay extends StatelessWidget {

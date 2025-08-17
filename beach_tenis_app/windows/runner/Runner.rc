@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "br.com.lucivalsc" "\0"
-            VALUE "FileDescription", "beach_tenis_app" "\0"
+            VALUE "FileDescription", "apex_sports" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "beach_tenis_app" "\0"
+            VALUE "InternalName", "apex_sports" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 br.com.lucivalsc. All rights reserved." "\0"
-            VALUE "OriginalFilename", "beach_tenis_app.exe" "\0"
-            VALUE "ProductName", "beach_tenis_app" "\0"
+            VALUE "OriginalFilename", "apex_sports.exe" "\0"
+            VALUE "ProductName", "apex_sports" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

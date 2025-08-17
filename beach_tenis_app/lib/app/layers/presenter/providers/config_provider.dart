@@ -1,15 +1,15 @@
-import 'package:beach_tenis_app/app/common/usecase.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/config/load_addresses_usecase.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/config/load_company_usecase.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/config/load_config_usecase.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/config/load_last_logged_email.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/config/load_last_logged_password.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/config/save_addresses_usecase.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/config/save_company_usecase.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/config/save_config_usecase.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/config/save_last_logged_email.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/config/save_last_logged_password.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/config/version_usecase.dart';
+import 'package:apex_sports/app/common/usecase.dart';
+import 'package:apex_sports/app/layers/domain/usecases/config/load_addresses_usecase.dart';
+import 'package:apex_sports/app/layers/domain/usecases/config/load_company_usecase.dart';
+import 'package:apex_sports/app/layers/domain/usecases/config/load_config_usecase.dart';
+import 'package:apex_sports/app/layers/domain/usecases/config/load_last_logged_email.dart';
+import 'package:apex_sports/app/layers/domain/usecases/config/load_last_logged_password.dart';
+import 'package:apex_sports/app/layers/domain/usecases/config/save_addresses_usecase.dart';
+import 'package:apex_sports/app/layers/domain/usecases/config/save_company_usecase.dart';
+import 'package:apex_sports/app/layers/domain/usecases/config/save_config_usecase.dart';
+import 'package:apex_sports/app/layers/domain/usecases/config/save_last_logged_email.dart';
+import 'package:apex_sports/app/layers/domain/usecases/config/save_last_logged_password.dart';
+import 'package:apex_sports/app/layers/domain/usecases/config/version_usecase.dart';
 import 'package:flutter/cupertino.dart';
 
 class ConfigProvider extends ChangeNotifier {

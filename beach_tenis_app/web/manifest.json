@@ -1,6 +1,6 @@
 {
-    "name": "beach_tenis_app",
-    "short_name": "beach_tenis_app",
+    "name": "apex_sports",
+    "short_name": "apex_sports",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

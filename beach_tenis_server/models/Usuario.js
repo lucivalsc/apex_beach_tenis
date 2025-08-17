@@ -7,6 +7,26 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
+    nome: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    telefone: {
+      type: DataTypes.STRING(20),
+      allowNull: false
+    },
+    instagram: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    facebook: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    linkedin: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
     email: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -61,45 +81,45 @@ module.exports = (sequelize, DataTypes) => {
     ]
   });
 
-  Usuario.associate = function(models) {
+  Usuario.associate = function (models) {
     // Associações com os perfis específicos
     Usuario.hasOne(models.Arena, {
       foreignKey: 'usuario_id',
       as: 'arena'
     });
-    
+
     Usuario.hasOne(models.Atleta, {
       foreignKey: 'usuario_id',
       as: 'atleta'
     });
-    
+
     Usuario.hasOne(models.Professor, {
       foreignKey: 'usuario_id',
       as: 'professor'
     });
-    
+
     Usuario.hasOne(models.Aluno, {
       foreignKey: 'usuario_id',
       as: 'aluno'
     });
-    
+
     Usuario.hasOne(models.ProfissionalTecnico, {
       foreignKey: 'usuario_id',
       as: 'profissionalTecnico'
     });
-    
+
     // Associação com assinaturas
     Usuario.hasMany(models.Assinatura, {
       foreignKey: 'usuario_id',
       as: 'assinaturas'
     });
-    
+
     // Associação com notificações
     Usuario.hasMany(models.Notificacao, {
       foreignKey: 'usuario_id',
       as: 'notificacoes'
     });
-    
+
     // Associação com logs
     Usuario.hasMany(models.LogSistema, {
       foreignKey: 'usuario_id',

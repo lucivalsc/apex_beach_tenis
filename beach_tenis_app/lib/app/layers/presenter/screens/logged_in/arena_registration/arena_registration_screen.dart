@@ -1,5 +1,5 @@
-import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/payment_methods/payment_methods_screen.dart';
-import 'package:beach_tenis_app/navigation.dart';
+import 'package:apex_sports/app/layers/presenter/screens/logged_in/payment_methods/payment_methods_screen.dart';
+import 'package:apex_sports/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

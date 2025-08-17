@@ -1,6 +1,6 @@
-import 'package:beach_tenis_app/app/common/models/exception_models.dart';
-import 'package:beach_tenis_app/app/common/utils/cryptography.dart';
-import 'package:beach_tenis_app/app/layers/data/datasources/local/config_datasource.dart';
+import 'package:apex_sports/app/common/models/exception_models.dart';
+import 'package:apex_sports/app/common/utils/cryptography.dart';
+import 'package:apex_sports/app/layers/data/datasources/local/config_datasource.dart';
 import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 

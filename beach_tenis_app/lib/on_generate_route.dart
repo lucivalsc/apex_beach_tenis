@@ -1,11 +1,11 @@
-import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/arena_registration/arena_registration_screen.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/athlete_registration/athlete_registration_screen.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/payment_methods/payment_methods_screen.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/profile_selection/profile_selection_screen.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/subscription_selection/subscription_selection_screen.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/splash/splash_screen.dart';
-import "package:beach_tenis_app/starter.dart";
+import 'package:apex_sports/app/layers/presenter/screens/logged_in/arena_registration/arena_registration_screen.dart';
+import 'package:apex_sports/app/layers/presenter/screens/logged_in/athlete_registration/athlete_registration_screen.dart';
+import 'package:apex_sports/app/layers/presenter/screens/logged_in/payment_methods/payment_methods_screen.dart';
+import 'package:apex_sports/app/layers/presenter/screens/logged_in/profile_selection/profile_selection_screen.dart';
+import 'package:apex_sports/app/layers/presenter/screens/logged_in/subscription_selection/subscription_selection_screen.dart';
+import 'package:apex_sports/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
+import 'package:apex_sports/app/layers/presenter/screens/not_logged_in/splash/splash_screen.dart';
+import "package:apex_sports/starter.dart";
 import "package:flutter/material.dart";
 import "package:responsive_sizer/responsive_sizer.dart";
 

@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:apex_sports/app/common/styles/app_styles.dart';
+import 'package:apex_sports/navigation.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:beach_tenis_app/app/common/styles/app_styles.dart';
-import 'package:beach_tenis_app/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';

@@ -1,5 +1,5 @@
-import 'package:beach_tenis_app/app/layers/domain/entities/chat_message_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/repositories/chat_repository.dart';
+import 'package:apex_sports/app/layers/domain/entities/chat_message_entity.dart';
+import 'package:apex_sports/app/layers/domain/repositories/chat_repository.dart';
 
 class GetChatMessagesUseCase {
   final IChatRepository repository;

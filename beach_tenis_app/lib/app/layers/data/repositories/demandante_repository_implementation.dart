@@ -1,6 +1,6 @@
-import 'package:beach_tenis_app/app/layers/data/datasources/remote/remote_data_datasource.dart';
-import 'package:beach_tenis_app/app/layers/domain/entities/demandante_profile_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/repositories/demandante_repository.dart';
+import 'package:apex_sports/app/layers/data/datasources/remote/remote_data_datasource.dart';
+import 'package:apex_sports/app/layers/domain/entities/demandante_profile_entity.dart';
+import 'package:apex_sports/app/layers/domain/repositories/demandante_repository.dart';
 
 class DemandanteRepositoryImplementation implements IDemandanteRepository {
   final IRemoteDataDatasource remoteDataSource;

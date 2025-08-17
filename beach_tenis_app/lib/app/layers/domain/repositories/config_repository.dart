@@ -1,4 +1,4 @@
-import 'package:beach_tenis_app/app/common/models/failure_models.dart';
+import 'package:apex_sports/app/common/models/failure_models.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class IConfigRepository {

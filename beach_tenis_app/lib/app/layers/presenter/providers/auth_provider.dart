@@ -1,11 +1,11 @@
-import 'package:beach_tenis_app/app/common/models/failure_models.dart';
-import 'package:beach_tenis_app/app/layers/data/models/login_model.dart';
-import 'package:beach_tenis_app/app/layers/data/models/usuario_model.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/auth/sign_in_usecase.dart';
-import 'package:beach_tenis_app/app/layers/presenter/providers/config_provider.dart';
-import 'package:beach_tenis_app/app/layers/presenter/providers/user_provider.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
-import 'package:beach_tenis_app/functions.dart';
+import 'package:apex_sports/app/common/models/failure_models.dart';
+import 'package:apex_sports/app/layers/data/models/login_model.dart';
+import 'package:apex_sports/app/layers/data/models/usuario_model.dart';
+import 'package:apex_sports/app/layers/domain/usecases/auth/sign_in_usecase.dart';
+import 'package:apex_sports/app/layers/presenter/providers/config_provider.dart';
+import 'package:apex_sports/app/layers/presenter/providers/user_provider.dart';
+import 'package:apex_sports/app/layers/presenter/screens/logged_in/arena_dashboard/arena_dashboard_screen.dart';
+import 'package:apex_sports/functions.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
@@ -82,20 +82,22 @@ class AuthProvider extends ChangeNotifier {
           await configProvider.saveUserType(userType);
 
           // Navegar para a tela específica com base no tipo de usuário
-          if (userType == 'tentante') {
+
+          ///'ARENA', 'ATLETA', 'ALUNO', 'PROFESSOR', 'PROFISSIONAL_TECNICO', 'ADMIN'
+          if (userType == 'ALUNO') {
             // Navegar para a tela de tentante (demandante)
             Navigator.of(context).pushAndRemoveUntil(
               PageRouteBuilder(
-                pageBuilder: (context, a1, a2) => const AuthScreen(),
+                pageBuilder: (context, a1, a2) => const ArenaDashboardScreen(),
                 transitionsBuilder: (context, a1, a2, child) => FadeTransition(opacity: a1, child: child),
               ),
               (route) => false,
             );
-          } else if (userType == 'doador') {
+          } else if (userType == 'ATLETA') {
             // Navegar para a tela de doador
             Navigator.of(context).pushAndRemoveUntil(
               PageRouteBuilder(
-                pageBuilder: (context, a1, a2) => const AuthScreen(),
+                pageBuilder: (context, a1, a2) => const ArenaDashboardScreen(),
                 transitionsBuilder: (context, a1, a2, child) => FadeTransition(opacity: a1, child: child),
               ),
               (route) => false,

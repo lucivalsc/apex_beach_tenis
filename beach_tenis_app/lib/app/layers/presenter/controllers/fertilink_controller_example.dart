@@ -1,13 +1,13 @@
 // Exemplo de como usar os casos de uso do Fertilink na camada de apresentação
 // Este arquivo demonstra o fluxo completo da arquitetura Clean Architecture
 
-import 'package:beach_tenis_app/app/layers/domain/entities/chat_message_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/entities/donor_profile_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/entities/match_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/chat/chat_usecases.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/donor/get_donors_usecase.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/match/match_usecases.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/user/user_profile_usecases.dart';
+import 'package:apex_sports/app/layers/domain/entities/chat_message_entity.dart';
+import 'package:apex_sports/app/layers/domain/entities/donor_profile_entity.dart';
+import 'package:apex_sports/app/layers/domain/entities/match_entity.dart';
+import 'package:apex_sports/app/layers/domain/usecases/chat/chat_usecases.dart';
+import 'package:apex_sports/app/layers/domain/usecases/donor/get_donors_usecase.dart';
+import 'package:apex_sports/app/layers/domain/usecases/match/match_usecases.dart';
+import 'package:apex_sports/app/layers/domain/usecases/user/user_profile_usecases.dart';
 
 class FertilinkControllerExample {
   // Casos de uso injetados via dependency injection

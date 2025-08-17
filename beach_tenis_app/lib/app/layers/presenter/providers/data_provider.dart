@@ -1,20 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:beach_tenis_app/app/layers/data/models/login_model.dart';
-import 'package:beach_tenis_app/app/layers/domain/entities/chat_message_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/entities/donor_profile_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/entities/match_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/chat/chat_usecases.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/data/datas_usecase.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/data/get_sync_datas.dart';
+import 'package:apex_sports/app/layers/data/models/login_model.dart';
+import 'package:apex_sports/app/layers/domain/entities/chat_message_entity.dart';
+import 'package:apex_sports/app/layers/domain/entities/donor_profile_entity.dart';
+import 'package:apex_sports/app/layers/domain/entities/match_entity.dart';
+import 'package:apex_sports/app/layers/domain/usecases/chat/chat_usecases.dart';
+import 'package:apex_sports/app/layers/domain/usecases/data/datas_usecase.dart';
+import 'package:apex_sports/app/layers/domain/usecases/data/get_sync_datas.dart';
 // Importações específicas do Fertilink
-import 'package:beach_tenis_app/app/layers/domain/usecases/donor/get_donors_usecase.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/match/match_usecases.dart';
-import 'package:beach_tenis_app/app/layers/domain/usecases/user/user_profile_usecases.dart';
-import 'package:beach_tenis_app/app/layers/presenter/providers/auth_provider.dart';
-import 'package:beach_tenis_app/app/layers/presenter/providers/config_provider.dart';
-import 'package:beach_tenis_app/app/layers/presenter/providers/user_provider.dart';
+import 'package:apex_sports/app/layers/domain/usecases/donor/get_donors_usecase.dart';
+import 'package:apex_sports/app/layers/domain/usecases/match/match_usecases.dart';
+import 'package:apex_sports/app/layers/domain/usecases/user/user_profile_usecases.dart';
+import 'package:apex_sports/app/layers/presenter/providers/auth_provider.dart';
+import 'package:apex_sports/app/layers/presenter/providers/config_provider.dart';
+import 'package:apex_sports/app/layers/presenter/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 
 class DataProvider extends ChangeNotifier {

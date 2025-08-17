@@ -1,4 +1,6 @@
 class Endpoints {
+  String baseUrl = const String.fromEnvironment('DEFINE_API_ADDRESS');
+
   // PRD:
   // static const apiAddress = "";
   // static const environment = "";

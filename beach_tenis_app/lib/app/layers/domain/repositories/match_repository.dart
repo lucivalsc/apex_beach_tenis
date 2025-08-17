@@ -1,4 +1,4 @@
-import 'package:beach_tenis_app/app/layers/domain/entities/match_entity.dart';
+import 'package:apex_sports/app/layers/domain/entities/match_entity.dart';
 
 abstract class IMatchRepository {
   Future<MatchEntity?> getMatchById(String id);

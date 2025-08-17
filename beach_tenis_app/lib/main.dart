@@ -1,10 +1,10 @@
-import 'package:beach_tenis_app/app/common/providers/theme_provider.dart';
-import 'package:beach_tenis_app/app/common/styles/app_styles.dart';
-import 'package:beach_tenis_app/app/common/utils/functions.dart';
-import 'package:beach_tenis_app/app/common/widget/safe_bottom_padding.dart';
-import 'package:beach_tenis_app/on_generate_route.dart';
-import 'package:beach_tenis_app/provider_injections.dart';
-import 'package:beach_tenis_app/starter.dart';
+import 'package:apex_sports/app/common/providers/theme_provider.dart';
+import 'package:apex_sports/app/common/styles/app_styles.dart';
+import 'package:apex_sports/app/common/utils/functions.dart';
+import 'package:apex_sports/app/common/widget/safe_bottom_padding.dart';
+import 'package:apex_sports/on_generate_route.dart';
+import 'package:apex_sports/provider_injections.dart';
+import 'package:apex_sports/starter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
@@ -42,7 +42,7 @@ class MainApp extends StatelessWidget {
         builder: (context) {
           // Acessa o ThemeProvider para obter o tema atual
           final themeProvider = Provider.of<ThemeProvider>(context);
-          
+
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             localizationsDelegates: const [

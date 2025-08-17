@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
-import 'package:beach_tenis_app/navigation.dart';
+import 'package:apex_sports/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
+import 'package:apex_sports/navigation.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

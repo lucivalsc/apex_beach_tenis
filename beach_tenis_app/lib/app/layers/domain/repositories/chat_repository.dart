@@ -1,4 +1,4 @@
-import 'package:beach_tenis_app/app/layers/domain/entities/chat_message_entity.dart';
+import 'package:apex_sports/app/layers/domain/entities/chat_message_entity.dart';
 
 abstract class IChatRepository {
   Future<List<ChatMessageEntity>> getMessagesByMatch(String matchId);
