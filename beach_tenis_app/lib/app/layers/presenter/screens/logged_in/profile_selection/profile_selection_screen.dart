@@ -2,6 +2,8 @@ import 'package:beach_tenis_app/app/common/styles/app_styles.dart';
 import 'package:beach_tenis_app/app/common/widget/custom_app_bar.dart';
 import 'package:beach_tenis_app/app/common/widget/gradient_background.dart';
 import 'package:beach_tenis_app/app/common/widget/profile_card.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/athlete_registration/athlete_registration_screen.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/subscription_selection/subscription_selection_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSelectionScreen extends StatefulWidget {
@@ -25,9 +27,9 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
   void _continueToNextStep() {
     if (_selectedProfile != null) {
       if (_selectedProfile == 'arena') {
-        Navigator.pushNamed(context, '/subscription-selection');
+        Navigator.pushNamed(context, SubscriptionSelectionScreen.route);
       } else {
-        Navigator.pushNamed(context, '/athlete-registration');
+        Navigator.pushNamed(context, AthleteRegistrationScreen.route);
       }
     }
   }

@@ -1,3 +1,4 @@
+import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool _isDarkMode = false;
 
   void _navigateToAuth() {
-    Navigator.pushNamed(context, '/auth');
+    Navigator.pushNamed(context, AuthScreen.route);
   }
 
   @override
@@ -92,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           const SizedBox(height: 16),
                           // Texto 40x40
                           const Text(
-                            'Apex Sports - Beach Tenis',
+                            'Apex Sports - Beach Tênis',
                             style: TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.bold,

@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
 import 'widgets/dashboard_card.dart';
 import 'widgets/dashboard_stats_card.dart';
-import 'widgets/upcoming_event_card.dart';
 import 'widgets/professor_list_item.dart';
+import 'widgets/upcoming_event_card.dart';
 
 class ArenaDashboardScreen extends StatefulWidget {
   const ArenaDashboardScreen({Key? key}) : super(key: key);
 
   @override
   State<ArenaDashboardScreen> createState() => _ArenaDashboardScreenState();
+
+  static const String route = "arena_dashboard";
 }
 
 class _ArenaDashboardScreenState extends State<ArenaDashboardScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  
+
   // Mock data para demonstração
   final Map<String, dynamic> arenaData = {
     'nome': 'Arena Beach Tennis 40x40',
@@ -156,7 +159,7 @@ class _ArenaDashboardScreenState extends State<ArenaDashboardScreen> {
   Widget _buildArenaHeader() {
     final formatter = DateFormat('dd/MM/yyyy');
     final dataVencimento = DateTime.parse(arenaData['data_vencimento']);
-    
+
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -169,10 +172,10 @@ class _ArenaDashboardScreenState extends State<ArenaDashboardScreen> {
           children: [
             Row(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.lightBlue,
-                  child: const Icon(
+                  child: Icon(
                     Icons.sports_tennis,
                     size: 30,
                     color: AppStyles.white,
@@ -200,9 +203,7 @@ class _ArenaDashboardScreenState extends State<ArenaDashboardScreen> {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: arenaData['status_assinatura'] == 'ATIVO'
-                                  ? AppStyles.success
-                                  : AppStyles.warning,
+                              color: arenaData['status_assinatura'] == 'ATIVO' ? AppStyles.success : AppStyles.warning,
                               borderRadius: BorderRadius.circular(AppStyles.radiusSmall),
                             ),
                             child: Text(

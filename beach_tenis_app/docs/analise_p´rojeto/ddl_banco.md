@@ -1,7 +1,7 @@
 # DDL SQLite
 
 sql-- ============================================
--- SCHEMA Apex Sports - Beach Tenis - SQLite
+-- SCHEMA Apex Sports - Beach Tênis - SQLite
 -- ============================================
 
 -- Habilitar foreign keys

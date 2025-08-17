@@ -1,3 +1,6 @@
+import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/arena_dashboard/arena_dashboard_screen.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/profile_selection/profile_selection_screen.dart';
+import 'package:beach_tenis_app/navigation.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -48,12 +51,12 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
 
   void _handleLogin() {
     // Implementar lógica de login
-    Navigator.pushNamed(context, '/profile-selection');
+    push(context, const ArenaDashboardScreen());
   }
 
   void _handleRegister() {
     // Implementar lógica de registro
-    Navigator.pushNamed(context, '/profile-selection');
+    push(context, const ProfileSelectionScreen());
   }
 
   void _handleFacebookLogin() {
@@ -137,7 +140,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                         ),
                         const SizedBox(height: 12),
                         const Text(
-                          'Apex Sports - Beach Tenis',
+                          'Apex Sports - Beach Tênis',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,

@@ -74,7 +74,7 @@ class BeachTennisLogo extends StatelessWidget {
         const SizedBox(height: AppStyles.largeSpace),
         // Texto 40x40
         Text(
-          'Apex Sports - Beach Tenis',
+          'Apex Sports - Beach Tênis',
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,

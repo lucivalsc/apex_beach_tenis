@@ -1,10 +1,12 @@
+import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/payment_methods/payment_methods_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../../../common/widget/custom_app_bar.dart';
-import '../../../../../common/widget/gradient_background.dart';
-import '../../../../../common/widget/custom_text_field.dart';
-import '../../../../../common/widget/custom_button.dart';
+
 import '../../../../../common/styles/app_styles.dart';
+import '../../../../../common/widget/custom_app_bar.dart';
+import '../../../../../common/widget/custom_button.dart';
+import '../../../../../common/widget/custom_text_field.dart';
+import '../../../../../common/widget/gradient_background.dart';
 
 class ArenaRegistrationScreen extends StatefulWidget {
   const ArenaRegistrationScreen({Key? key}) : super(key: key);
@@ -19,7 +21,7 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
   final _pageController = PageController();
   int _currentStep = 0;
-  
+
   // Controladores dos campos
   final _arenaNameController = TextEditingController();
   final _cnpjController = TextEditingController();
@@ -48,9 +50,33 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
   String _selectedState = 'SP';
 
   final List<String> _brazilianStates = [
-    'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA',
-    'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN',
-    'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+    'AC',
+    'AL',
+    'AP',
+    'AM',
+    'BA',
+    'CE',
+    'DF',
+    'ES',
+    'GO',
+    'MA',
+    'MT',
+    'MS',
+    'MG',
+    'PA',
+    'PB',
+    'PR',
+    'PE',
+    'PI',
+    'RJ',
+    'RN',
+    'RS',
+    'RO',
+    'RR',
+    'SC',
+    'SP',
+    'SE',
+    'TO'
   ];
 
   @override
@@ -101,7 +127,7 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       // Implementar lógica de cadastro
-      Navigator.pushNamed(context, '/payment-methods');
+      Navigator.pushNamed(context, PaymentMethodsScreen.route);
     }
   }
 
@@ -156,9 +182,7 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
                         margin: EdgeInsets.only(right: index < 2 ? 8 : 0),
                         height: 4,
                         decoration: BoxDecoration(
-                          color: index <= _currentStep 
-                              ? Colors.white 
-                              : Colors.white.withOpacity(0.3),
+                          color: index <= _currentStep ? Colors.white : Colors.white.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
@@ -230,9 +254,9 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 8),
-          
+
           Text(
             'Passo 1 de 3',
             style: TextStyle(
@@ -328,7 +352,7 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Número de Quadras',
                   style: TextStyle(
                     color: Colors.white,
@@ -340,9 +364,7 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
                 Row(
                   children: [
                     IconButton(
-                      onPressed: _numberOfCourts > 1 
-                          ? () => setState(() => _numberOfCourts--) 
-                          : null,
+                      onPressed: _numberOfCourts > 1 ? () => setState(() => _numberOfCourts--) : null,
                       icon: const Icon(Icons.remove_circle_outline),
                       color: Colors.white,
                     ),
@@ -388,9 +410,9 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 8),
-          
+
           Text(
             'Passo 2 de 3',
             style: TextStyle(
@@ -531,9 +553,9 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 8),
-          
+
           Text(
             'Passo 3 de 3',
             style: TextStyle(
@@ -566,7 +588,7 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Comodidades Disponíveis',
                   style: TextStyle(
                     color: Colors.white,
@@ -578,9 +600,11 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
                 _buildAmenityCheckbox('Estacionamento', _hasParking, (value) => setState(() => _hasParking = value)),
                 _buildAmenityCheckbox('Vestiário/Chuveiro', _hasShower, (value) => setState(() => _hasShower = value)),
                 _buildAmenityCheckbox('Lanchonete', _hasSnackBar, (value) => setState(() => _hasSnackBar = value)),
-                _buildAmenityCheckbox('Aluguel de Equipamentos', _hasEquipmentRental, (value) => setState(() => _hasEquipmentRental = value)),
+                _buildAmenityCheckbox('Aluguel de Equipamentos', _hasEquipmentRental,
+                    (value) => setState(() => _hasEquipmentRental = value)),
                 _buildAmenityCheckbox('Wi-Fi', _hasWifi, (value) => setState(() => _hasWifi = value)),
-                _buildAmenityCheckbox('Acessibilidade', _hasAccessibility, (value) => setState(() => _hasAccessibility = value)),
+                _buildAmenityCheckbox(
+                    'Acessibilidade', _hasAccessibility, (value) => setState(() => _hasAccessibility = value)),
               ],
             ),
           ),
@@ -588,7 +612,7 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
           const SizedBox(height: 24),
 
           // Redes sociais
-          Text(
+          const Text(
             'Redes Sociais (opcional)',
             style: TextStyle(
               color: Colors.white,

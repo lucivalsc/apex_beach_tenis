@@ -1,22 +1,18 @@
-import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/login/config/config_screen.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/arena_registration/arena_registration_screen.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/athlete_registration/athlete_registration_screen.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/payment_methods/payment_methods_screen.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/profile_selection/profile_selection_screen.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/subscription_selection/subscription_selection_screen.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
 import "package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/login/login.dart";
+import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/splash/splash_screen.dart';
 import "package:beach_tenis_app/starter.dart";
-import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/professors_list/professors_list_screen.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/statistics/statistics_screen.dart';
 import "package:flutter/material.dart";
 import "package:responsive_sizer/responsive_sizer.dart";
 
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
   final args = settings.arguments != null ? settings.arguments as List<dynamic> : null;
   switch (settings.name) {
-    case '/professors_list':
-      return pageRouteBuilder(
-        const ProfessorsListScreen(),
-      );
-    case '/statistics':
-      return pageRouteBuilder(
-        const StatisticsScreen(),
-      );
     case Starter.route:
       return MaterialPageRoute(
         builder: (context) => ResponsiveSizer(
@@ -29,9 +25,33 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return pageRouteBuilder(
         const Login(),
       );
-    case Config.route:
+    case ArenaRegistrationScreen.route:
       return pageRouteBuilder(
-        const Config(),
+        const ArenaRegistrationScreen(),
+      );
+    case AuthScreen.route:
+      return pageRouteBuilder(
+        const AuthScreen(),
+      );
+    case ProfileSelectionScreen.route:
+      return pageRouteBuilder(
+        const ProfileSelectionScreen(),
+      );
+    case SubscriptionSelectionScreen.route:
+      return pageRouteBuilder(
+        const SubscriptionSelectionScreen(),
+      );
+    case SplashScreen.route:
+      return pageRouteBuilder(
+        const SplashScreen(),
+      );
+    case PaymentMethodsScreen.route:
+      return pageRouteBuilder(
+        const PaymentMethodsScreen(),
+      );
+    case AthleteRegistrationScreen.route:
+      return pageRouteBuilder(
+        const AthleteRegistrationScreen(),
       );
   }
 

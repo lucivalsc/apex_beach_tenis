@@ -1,4 +1,4 @@
-# Planejamento completo e detalhado para o desenvolvimento do aplicativo Apex Sports - Beach Tenis! 🚀
+# Planejamento completo e detalhado para o desenvolvimento do aplicativo Apex Sports - Beach Tênis! 🚀
 
 🎯 Destaques do Planejamento:
 📅 Cronograma Estruturado (12-16 semanas):
