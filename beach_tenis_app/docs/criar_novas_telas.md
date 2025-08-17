@@ -12,5 +12,5 @@
 6. Utilize o arquivo `lib\app\common\styles\app_styles.dart` para estilizar a tela em partes que não estejam contempladas no `ThemeData`.
 7. Adicione a tela ao arquivo `on_generate_route.dart` seguindo o padrão do arquivo.
 8. Adicione no fluxo de navegação de telas a função de navegação seguindo o padrão do arquivo `navigation.dart`, `push(context, tela, arguments)` ou `pushNamed(context, name, arguments)` ou `pushWithoutFading(context, tela)` ou `pushReplacement(context, tela)` ou `pushAndRemoveUntil(context, tela)`.
-9. Adicione variáveis de estado para a tela seguindo o padrão do arquivo `login_screen.dart`, adicione os providers necessários, as funções de navegação e os estados de variáveis, os controladores de texto e os controladores de animação, initState e dispose.
+9. Adicione variáveis de estado para a tela seguindo o padrão do arquivo `auth_screen.dart`, adicione os providers necessários, as funções de navegação e os estados de variáveis, os controladores de texto e os controladores de animação, initState e dispose.
 10. Implemente a tela seguindo o padrão Clean Architecture.

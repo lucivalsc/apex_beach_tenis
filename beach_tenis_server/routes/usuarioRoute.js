@@ -110,7 +110,16 @@ router.post('/registro', [
       });
     }
 
-    const { nome, email, senha, tipo } = req.body;
+    const { 
+      nome, 
+      email, 
+      senha, 
+      tipo, 
+      telefone, 
+      instagram, 
+      facebook, 
+      linkedin 
+    } = req.body;
 
     // Verificar se o email já está em uso
     const usuarioExistente = await Usuario.findOne({ where: { email } });
@@ -125,22 +134,40 @@ router.post('/registro', [
     const saltRounds = 10;
     const password_hash = await bcrypt.hash(senha, saltRounds);
 
-    // Criar novo usuário
-    const novoUsuario = await Usuario.create({
+    // Criar novo usuário com todos os campos possíveis do modelo
+    // Incluindo apenas os que foram fornecidos no body
+    const dadosUsuario = {
       email,
       password_hash,
       tipo_principal: tipo, // Mapear o tipo para tipo_principal
       ativo: true
-    });
+    };
+    
+    // Adicionar campos opcionais apenas se foram fornecidos
+    if (nome !== undefined) dadosUsuario.nome = nome;
+    if (telefone !== undefined) dadosUsuario.telefone = telefone;
+    if (instagram !== undefined) dadosUsuario.instagram = instagram;
+    if (facebook !== undefined) dadosUsuario.facebook = facebook;
+    if (linkedin !== undefined) dadosUsuario.linkedin = linkedin;
+    
+    // Criar o usuário com os dados fornecidos
+    const novoUsuario = await Usuario.create(dadosUsuario);
 
     res.status(201).json({
       success: true,
       message: 'Usuário registrado com sucesso',
       usuario: {
         id: novoUsuario.id,
+        nome: novoUsuario.nome,
         email: novoUsuario.email,
         tipo: novoUsuario.tipo_principal,
-        ativo: novoUsuario.ativo
+        ativo: novoUsuario.ativo,
+        telefone: novoUsuario.telefone,
+        instagram: novoUsuario.instagram,
+        facebook: novoUsuario.facebook,
+        linkedin: novoUsuario.linkedin,
+        created_at: novoUsuario.created_at,
+        updated_at: novoUsuario.updated_at
       }
     });
   } catch (error) {

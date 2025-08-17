@@ -9,23 +9,23 @@ module.exports = (sequelize, DataTypes) => {
     },
     nome: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     telefone: {
       type: DataTypes.STRING(20),
-      allowNull: false
+      allowNull: true
     },
     instagram: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: true
     },
     facebook: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: true
     },
     linkedin: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: true
     },
     email: {
       type: DataTypes.STRING(255),
