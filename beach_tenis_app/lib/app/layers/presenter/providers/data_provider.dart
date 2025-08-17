@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:apex_sports/app/layers/data/models/login_model.dart';
 import 'package:apex_sports/app/layers/domain/entities/chat_message_entity.dart';
 import 'package:apex_sports/app/layers/domain/entities/donor_profile_entity.dart';
 import 'package:apex_sports/app/layers/domain/entities/match_entity.dart';
@@ -52,7 +51,7 @@ class DataProvider extends ChangeNotifier {
   late ConfigProvider _configProvider;
   late UserProvider userProvider;
   late AuthProvider authProvider;
-  late LoginModelEmpresas empresa;
+
   void setConfigProvider(ConfigProvider provider) => _configProvider = provider;
   void setUserProvider(UserProvider provider) => userProvider = provider;
   void setAuthProvider(AuthProvider provider) => authProvider = provider;

@@ -30,7 +30,6 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
 
   // Variáveis de estado da UI
   bool _keepLoggedIn = false;
-  final bool _isWhatsApp = false;
   bool _acceptTerms = false;
   bool _acceptCommunications = false;
 

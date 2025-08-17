@@ -1,6 +1,5 @@
 import 'package:apex_sports/app/common/models/failure_models.dart';
 import 'package:apex_sports/app/layers/data/models/login_model.dart';
-import 'package:apex_sports/app/layers/data/models/usuario_model.dart';
 import 'package:apex_sports/app/layers/domain/usecases/auth/sign_in_usecase.dart';
 import 'package:apex_sports/app/layers/presenter/providers/config_provider.dart';
 import 'package:apex_sports/app/layers/presenter/providers/user_provider.dart';
@@ -26,18 +25,13 @@ class AuthProvider extends ChangeNotifier {
     final result = await signInUsecase([email, password]);
     await configProvider.saveLastLoggedEmail(email);
     await configProvider.saveLastLoggedPassword(password);
-    usuario = UsuarioModel();
-    empresa = LoginModelEmpresas();
-    usuario.user = email;
-    usuario.password = password;
+
     if (mounted) {
       await fold(context, result);
     }
   }
 
   late LoginModel? loginData;
-  late UsuarioModel usuario;
-  late LoginModelEmpresas empresa;
 
   Future<void> fold(
     BuildContext context,
@@ -56,27 +50,33 @@ class AuthProvider extends ChangeNotifier {
         // Processar dados do mock do Fertilink
         final responseData = r[0] as Map<String, dynamic>;
 
-        if (responseData['success'] == true && responseData['user'] != null) {
+        if (responseData['success'] == true && responseData['usuario'] != null) {
           // Extrair dados do usuário do mock
-          final userData = responseData['user'] as Map<String, dynamic>;
-
-          // Criar estrutura compatível com LoginModel (sem empresas para Fertilink)
+          final userData = responseData['usuario'] as Map<String, dynamic>;
+          // Caso 2: Se precisa construir a estrutura a partir de dados separados
           final loginResponse = {
             'success': true,
-            'ucusername': userData['nome'],
-            'uclogin': userData['email'],
-            'ucemail': userData['email'],
-            // Para o Fertilink, não usamos empresas, então criamos uma estrutura vazia ou omitimos
+            'token': userData['token'], // Token JWT do beach tênis
+            'usuario': {
+              'id': userData['id'] ?? 0,
+              'nome': userData['nome'] ?? '',
+              'telefone': userData['telefone'],
+              'instagram': userData['instagram'],
+              'facebook': userData['facebook'],
+              'linkedin': userData['linkedin'],
+              'email': userData['email'] ?? '',
+              'tipo': userData['tipo'] ?? 'ALUNO', // ALUNO, PROFESSOR, ADMIN
+              'ativo': userData['ativo'] ?? true,
+              'ultimo_login': userData['ultimo_login'],
+              'created_at': userData['created_at'],
+              'updated_at': userData['updated_at'],
+            }
           };
 
           loginData = LoginModel.fromJson(loginResponse);
 
-          // Salvar dados básicos usando métodos disponíveis
-          // Nota: UserProvider e ConfigProvider não têm métodos específicos para dados do usuário
-          // Os dados do usuário estão disponíveis em loginData para uso posterior
-
           // Obter o tipo de usuário do mock para navegação condicional
-          final userType = userData['tipo_usuario'] as String;
+          final userType = userData['tipo'] as String;
 
           // Salvar o tipo de usuário no storage para uso futuro
           await configProvider.saveUserType(userType);
