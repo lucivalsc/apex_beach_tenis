@@ -4,7 +4,6 @@ import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/payment_m
 import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/profile_selection/profile_selection_screen.dart';
 import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/subscription_selection/subscription_selection_screen.dart';
 import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
-import "package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/login/login.dart";
 import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/splash/splash_screen.dart';
 import "package:beach_tenis_app/starter.dart";
 import "package:flutter/material.dart";
@@ -21,10 +20,7 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
           },
         ),
       );
-    case Login.route:
-      return pageRouteBuilder(
-        const Login(),
-      );
+
     case ArenaRegistrationScreen.route:
       return pageRouteBuilder(
         const ArenaRegistrationScreen(),

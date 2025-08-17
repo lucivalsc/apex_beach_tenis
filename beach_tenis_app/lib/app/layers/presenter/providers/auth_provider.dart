@@ -4,7 +4,7 @@ import 'package:beach_tenis_app/app/layers/data/models/usuario_model.dart';
 import 'package:beach_tenis_app/app/layers/domain/usecases/auth/sign_in_usecase.dart';
 import 'package:beach_tenis_app/app/layers/presenter/providers/config_provider.dart';
 import 'package:beach_tenis_app/app/layers/presenter/providers/user_provider.dart';
-import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/login/login.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
 import 'package:beach_tenis_app/functions.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +86,7 @@ class AuthProvider extends ChangeNotifier {
             // Navegar para a tela de tentante (demandante)
             Navigator.of(context).pushAndRemoveUntil(
               PageRouteBuilder(
-                pageBuilder: (context, a1, a2) => const Login(),
+                pageBuilder: (context, a1, a2) => const AuthScreen(),
                 transitionsBuilder: (context, a1, a2, child) => FadeTransition(opacity: a1, child: child),
               ),
               (route) => false,
@@ -95,7 +95,7 @@ class AuthProvider extends ChangeNotifier {
             // Navegar para a tela de doador
             Navigator.of(context).pushAndRemoveUntil(
               PageRouteBuilder(
-                pageBuilder: (context, a1, a2) => const Login(),
+                pageBuilder: (context, a1, a2) => const AuthScreen(),
                 transitionsBuilder: (context, a1, a2, child) => FadeTransition(opacity: a1, child: child),
               ),
               (route) => false,
