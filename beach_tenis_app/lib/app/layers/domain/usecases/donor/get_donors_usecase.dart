@@ -1,5 +1,5 @@
 import 'package:apex_sports/app/layers/domain/entities/donor_profile_entity.dart';
-import 'package:apex_sports/layers/domain/repositories/donor_repository.dart';
+import 'package:apex_sports/app/layers/domain/repositories/donor_repository.dart';
 
 class GetDonorsUseCase {
   final IDonorRepository repository;

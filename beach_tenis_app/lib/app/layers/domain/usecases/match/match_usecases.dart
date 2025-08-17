@@ -1,5 +1,5 @@
 import 'package:apex_sports/app/layers/domain/entities/match_entity.dart';
-import 'package:apex_sports/layers/domain/repositories/match_repository.dart';
+import 'package:apex_sports/app/layers/domain/repositories/match_repository.dart';
 
 class GetMatchesUseCase {
   final IMatchRepository repository;

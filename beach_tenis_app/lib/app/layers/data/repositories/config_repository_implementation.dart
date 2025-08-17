@@ -1,7 +1,7 @@
 import 'package:apex_sports/app/common/models/exception_models.dart';
-import 'package:apex_sports/common/models/failure_models.dart';
-import 'package:apex_sports/layers/data/datasources/local/config_datasource.dart';
-import 'package:apex_sports/layers/domain/repositories/config_repository.dart';
+import 'package:apex_sports/app/common/models/failure_models.dart';
+import 'package:apex_sports/app/layers/data/datasources/local/config_datasource.dart';
+import 'package:apex_sports/app/layers/domain/repositories/config_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class ConfigRepositoryImplementation implements IConfigRepository {
