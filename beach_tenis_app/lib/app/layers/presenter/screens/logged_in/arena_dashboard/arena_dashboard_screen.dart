@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
+import '../../../../data/models/login_model.dart';
+import '../../../providers/auth_provider.dart';
 import '../../not_logged_in/auth/auth_screen.dart';
 import 'widgets/dashboard_card.dart';
 import 'widgets/dashboard_stats_card.dart';
@@ -23,7 +26,11 @@ class ArenaDashboardScreen extends StatefulWidget {
 class _ArenaDashboardScreenState extends State<ArenaDashboardScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Mock data para demonstração
+  // Dados do usuário logado
+  LoginModel? loginData;
+  UsuarioModel? usuarioData;
+
+  // Mock data para demonstração (usado como fallback)
   final Map<String, dynamic> arenaData = {
     'nome': 'Apex Sports - Beach Tennis',
     'status_assinatura': 'ATIVO',
@@ -87,6 +94,15 @@ class _ArenaDashboardScreenState extends State<ArenaDashboardScreen> {
   };
 
   @override
+  void initState() {
+    super.initState();
+    // Obter dados do usuário logado
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    loginData = authProvider.loginData;
+    usuarioData = loginData?.usuario;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -97,9 +113,9 @@ class _ArenaDashboardScreenState extends State<ArenaDashboardScreen> {
           statusBarColor: AppStyles.primaryBlue,
           statusBarIconBrightness: Brightness.light,
         ),
-        title: const Text(
-          'Dashboard Arena',
-          style: TextStyle(
+        title: Text(
+          'Arena: ${usuarioData?.nome ?? arenaData['nome']}',
+          style: const TextStyle(
             color: AppStyles.white,
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -182,7 +198,7 @@ class _ArenaDashboardScreenState extends State<ArenaDashboardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        arenaData['nome'],
+                        usuarioData?.nome ?? arenaData['nome'],
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -567,7 +583,7 @@ class _ArenaDashboardScreenState extends State<ArenaDashboardScreen> {
                 ),
                 const SizedBox(height: AppStyles.smallSpace),
                 Text(
-                  arenaData['nome'],
+                  usuarioData?.nome ?? arenaData['nome'],
                   style: const TextStyle(
                     color: AppStyles.white,
                     fontSize: 18,

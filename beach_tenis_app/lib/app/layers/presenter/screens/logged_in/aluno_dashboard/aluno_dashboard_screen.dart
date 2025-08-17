@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
+import '../../../../data/models/login_model.dart';
+import '../../../providers/auth_provider.dart';
 import '../../not_logged_in/auth/auth_screen.dart';
 import 'widgets/dashboard_card.dart';
 import 'widgets/progresso_card.dart';
@@ -22,7 +25,11 @@ class AlunoDashboardScreen extends StatefulWidget {
 class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Mock data para demonstração
+  // Dados do usuário logado
+  LoginModel? loginData;
+  UsuarioModel? usuarioData;
+
+  // Mock data para demonstração (usado como fallback)
   final Map<String, dynamic> alunoData = {
     'nome': 'Pedro Santos',
     'nivel': 'Intermediário',
@@ -80,6 +87,15 @@ class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    // Obter dados do usuário logado
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    loginData = authProvider.loginData;
+    usuarioData = loginData?.usuario;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -91,7 +107,7 @@ class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
           statusBarIconBrightness: Brightness.light,
         ),
         title: Text(
-          'ALUNO: ${alunoData['nome']}',
+          'ALUNO: ${usuarioData?.nome ?? alunoData['nome']}',
           style: const TextStyle(
             color: AppStyles.white,
             fontSize: 18,
@@ -161,17 +177,15 @@ class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.primaryGreen,
-                  backgroundImage: alunoData['foto'] != null ? NetworkImage(alunoData['foto']) : null,
-                  child: alunoData['foto'] == null
-                      ? Text(
-                          alunoData['nome'].substring(0, 1).toUpperCase(),
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppStyles.white,
-                          ),
-                        )
-                      : null,
+                  // Usando iniciais do usuário em vez de foto
+                  child: Text(
+                    usuarioData?.iniciais ?? alunoData['nome'].substring(0, 1).toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: AppStyles.white,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: AppStyles.mediumSpace),
                 Expanded(
@@ -179,7 +193,7 @@ class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        alunoData['nome'],
+                        usuarioData?.nome ?? alunoData['nome'],
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -458,21 +472,19 @@ class _AlunoDashboardScreenState extends State<AlunoDashboardScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.white,
-                  backgroundImage: alunoData['foto'] != null ? NetworkImage(alunoData['foto']) : null,
-                  child: alunoData['foto'] == null
-                      ? Text(
-                          alunoData['nome'].substring(0, 1).toUpperCase(),
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppStyles.primaryGreen,
-                          ),
-                        )
-                      : null,
+                  // Usando iniciais do usuário em vez de foto
+                  child: Text(
+                    usuarioData?.iniciais ?? alunoData['nome'].substring(0, 1).toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: AppStyles.primaryGreen,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: AppStyles.smallSpace),
                 Text(
-                  alunoData['nome'],
+                  usuarioData?.nome ?? alunoData['nome'],
                   style: const TextStyle(
                     color: AppStyles.white,
                     fontSize: 18,

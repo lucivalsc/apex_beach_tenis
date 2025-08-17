@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
+import '../../../../data/models/login_model.dart';
+import '../../../providers/auth_provider.dart';
 import '../../not_logged_in/auth/auth_screen.dart';
 import 'widgets/atendimento_card.dart';
 import 'widgets/atleta_card.dart';
@@ -22,7 +25,11 @@ class ProfissionalTecnicoDashboardScreen extends StatefulWidget {
 class _ProfissionalTecnicoDashboardScreenState extends State<ProfissionalTecnicoDashboardScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Mock data para demonstração
+  // Dados do usuário logado
+  LoginModel? loginData;
+  UsuarioModel? usuarioData;
+
+  // Mock data para demonstração (usado como fallback)
   final Map<String, dynamic> profissionalData = {
     'nome': 'Ricardo Almeida',
     'especialidade': 'Fisioterapeuta Esportivo',
@@ -84,6 +91,15 @@ class _ProfissionalTecnicoDashboardScreenState extends State<ProfissionalTecnico
   ];
 
   @override
+  void initState() {
+    super.initState();
+    // Obter dados do usuário logado
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    loginData = authProvider.loginData;
+    usuarioData = loginData?.usuario;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -95,7 +111,7 @@ class _ProfissionalTecnicoDashboardScreenState extends State<ProfissionalTecnico
           statusBarIconBrightness: Brightness.light,
         ),
         title: Text(
-          'PROF. TÉCNICO: ${profissionalData['nome']}',
+          'PROF. TÉCNICO: ${usuarioData?.nome ?? profissionalData['nome']}',
           style: const TextStyle(
             color: AppStyles.white,
             fontSize: 18,
@@ -162,17 +178,16 @@ class _ProfissionalTecnicoDashboardScreenState extends State<ProfissionalTecnico
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.warning,
-                  backgroundImage: profissionalData['foto'] != null ? NetworkImage(profissionalData['foto']) : null,
-                  child: profissionalData['foto'] == null
-                      ? Text(
-                          profissionalData['nome'].substring(0, 1).toUpperCase(),
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppStyles.white,
-                          ),
-                        )
-                      : null,
+                  child: Text(
+                    usuarioData != null 
+                        ? usuarioData!.iniciais
+                        : profissionalData['nome'].substring(0, 1).toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: AppStyles.white,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: AppStyles.mediumSpace),
                 Expanded(
@@ -180,7 +195,7 @@ class _ProfissionalTecnicoDashboardScreenState extends State<ProfissionalTecnico
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        profissionalData['nome'],
+                        usuarioData?.nome ?? profissionalData['nome'],
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -469,21 +484,20 @@ class _ProfissionalTecnicoDashboardScreenState extends State<ProfissionalTecnico
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.white,
-                  backgroundImage: profissionalData['foto'] != null ? NetworkImage(profissionalData['foto']) : null,
-                  child: profissionalData['foto'] == null
-                      ? Text(
-                          profissionalData['nome'].substring(0, 1).toUpperCase(),
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppStyles.warning,
-                          ),
-                        )
-                      : null,
+                  child: Text(
+                    usuarioData != null 
+                        ? usuarioData!.iniciais
+                        : profissionalData['nome'].substring(0, 1).toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: AppStyles.warning,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: AppStyles.smallSpace),
                 Text(
-                  profissionalData['nome'],
+                  usuarioData?.nome ?? profissionalData['nome'],
                   style: const TextStyle(
                     color: AppStyles.white,
                     fontSize: 18,

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
+import '../../../../data/models/login_model.dart';
+import '../../../providers/auth_provider.dart';
 import '../../not_logged_in/auth/auth_screen.dart';
 import 'widgets/dashboard_card.dart';
 import 'widgets/estatistica_card.dart';
@@ -22,7 +25,11 @@ class AdminDashboardScreen extends StatefulWidget {
 class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Mock data para demonstração
+  // Dados do usuário logado
+  LoginModel? loginData;
+  UsuarioModel? usuarioData;
+
+  // Mock data para demonstração (usado como fallback)
   final Map<String, dynamic> adminData = {
     'nome': 'Admin Master',
     'email': 'admin@beachtennis.com',
@@ -72,6 +79,15 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       'foto': null,
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    // Obter dados do usuário logado
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    loginData = authProvider.loginData;
+    usuarioData = loginData?.usuario;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,17 +168,16 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.grey800,
-                  backgroundImage: adminData['foto'] != null ? NetworkImage(adminData['foto']) : null,
-                  child: adminData['foto'] == null
-                      ? Text(
-                          adminData['nome'].substring(0, 1).toUpperCase(),
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppStyles.white,
-                          ),
-                        )
-                      : null,
+                  child: Text(
+                    usuarioData != null 
+                        ? usuarioData!.iniciais
+                        : adminData['nome'].substring(0, 1).toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: AppStyles.white,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: AppStyles.mediumSpace),
                 Expanded(
@@ -170,7 +185,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        adminData['nome'],
+                        usuarioData?.nome ?? adminData['nome'],
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -213,7 +228,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 const Icon(Icons.email, size: 16, color: AppStyles.grey600),
                 const SizedBox(width: 4),
                 Text(
-                  adminData['email'],
+                  usuarioData?.email ?? adminData['email'],
                   style: const TextStyle(
                     fontSize: 14,
                     color: AppStyles.grey700,
@@ -448,21 +463,20 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: AppStyles.white,
-                  backgroundImage: adminData['foto'] != null ? NetworkImage(adminData['foto']) : null,
-                  child: adminData['foto'] == null
-                      ? Text(
-                          adminData['nome'].substring(0, 1).toUpperCase(),
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppStyles.grey800,
-                          ),
-                        )
-                      : null,
+                  child: Text(
+                    usuarioData != null 
+                        ? usuarioData!.iniciais
+                        : adminData['nome'].substring(0, 1).toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: AppStyles.grey800,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: AppStyles.smallSpace),
                 Text(
-                  adminData['nome'],
+                  usuarioData?.nome ?? adminData['nome'],
                   style: const TextStyle(
                     color: AppStyles.white,
                     fontSize: 18,
@@ -470,7 +484,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   ),
                 ),
                 Text(
-                  adminData['email'],
+                  usuarioData?.email ?? adminData['email'],
                   style: const TextStyle(
                     color: AppStyles.white,
                     fontSize: 12,

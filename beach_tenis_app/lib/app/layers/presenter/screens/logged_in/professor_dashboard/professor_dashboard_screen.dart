@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
+import '../../../../data/models/login_model.dart';
+import '../../../providers/auth_provider.dart';
 import '../../not_logged_in/auth/auth_screen.dart';
 import 'widgets/aluno_list_item.dart';
 import 'widgets/dashboard_card.dart';
@@ -21,8 +24,11 @@ class ProfessorDashboardScreen extends StatefulWidget {
 
 class _ProfessorDashboardScreenState extends State<ProfessorDashboardScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late AuthProvider authProvider;
+  late LoginModel? loginData;
+  late UsuarioModel? usuarioData;
 
-  // Mock data para demonstração
+  // Mock data para demonstração - será substituído pelos dados do usuário logado
   final Map<String, dynamic> professorData = {
     'nome': 'Carlos Silva',
     'especialidade': 'Técnica Avançada',
@@ -31,6 +37,21 @@ class _ProfessorDashboardScreenState extends State<ProfessorDashboardScreen> {
     'foto': null,
     'avaliacao': 4.8,
   };
+  
+  @override
+  void initState() {
+    super.initState();
+    authProvider = Provider.of<AuthProvider>(context, listen: false);
+    loginData = authProvider.loginData;
+    usuarioData = loginData?.usuario;
+    
+    // Se tiver dados do usuário logado, atualiza os dados do professor
+    if (usuarioData != null) {
+      professorData['nome'] = usuarioData!.nome;
+      professorData['email'] = usuarioData!.email;
+      // Outros campos que podem ser atualizados conforme disponibilidade
+    }
+  }
 
   final List<Map<String, dynamic>> proximosTreinos = [
     {
@@ -95,7 +116,7 @@ class _ProfessorDashboardScreenState extends State<ProfessorDashboardScreen> {
           statusBarIconBrightness: Brightness.light,
         ),
         title: Text(
-          'PROF.: ${professorData['nome']}',
+          'PROF.: ${usuarioData?.nome ?? professorData['nome']}',
           style: const TextStyle(
             color: AppStyles.white,
             fontSize: 18,
@@ -163,16 +184,25 @@ class _ProfessorDashboardScreenState extends State<ProfessorDashboardScreen> {
                   radius: 30,
                   backgroundColor: AppStyles.lightBlue,
                   backgroundImage: professorData['foto'] != null ? NetworkImage(professorData['foto']) : null,
-                  child: professorData['foto'] == null
+                  child: (usuarioData?.nome != null && usuarioData!.nome.isNotEmpty)
                       ? Text(
-                          professorData['nome'].substring(0, 1).toUpperCase(),
+                          usuarioData!.nome.substring(0, 1).toUpperCase(),
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                             color: AppStyles.white,
                           ),
                         )
-                      : null,
+                      : (professorData['foto'] == null
+                          ? Text(
+                              professorData['nome'].substring(0, 1).toUpperCase(),
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: AppStyles.white,
+                              ),
+                            )
+                          : null),
                 ),
                 const SizedBox(width: AppStyles.mediumSpace),
                 Expanded(
@@ -180,7 +210,7 @@ class _ProfessorDashboardScreenState extends State<ProfessorDashboardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        professorData['nome'],
+                        usuarioData?.nome ?? professorData['nome'],
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -470,20 +500,29 @@ class _ProfessorDashboardScreenState extends State<ProfessorDashboardScreen> {
                   radius: 30,
                   backgroundColor: AppStyles.white,
                   backgroundImage: professorData['foto'] != null ? NetworkImage(professorData['foto']) : null,
-                  child: professorData['foto'] == null
+                  child: (usuarioData?.nome != null && usuarioData!.nome.isNotEmpty)
                       ? Text(
-                          professorData['nome'].substring(0, 1).toUpperCase(),
+                          usuarioData!.nome.substring(0, 1).toUpperCase(),
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                             color: AppStyles.primaryBlue,
                           ),
                         )
-                      : null,
+                      : (professorData['foto'] == null
+                          ? Text(
+                              professorData['nome'].substring(0, 1).toUpperCase(),
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: AppStyles.primaryBlue,
+                              ),
+                            )
+                          : null),
                 ),
                 const SizedBox(height: AppStyles.smallSpace),
                 Text(
-                  'Prof. ${professorData['nome']}',
+                  'Prof. ${usuarioData?.nome ?? professorData['nome']}',
                   style: const TextStyle(
                     color: AppStyles.white,
                     fontSize: 18,
