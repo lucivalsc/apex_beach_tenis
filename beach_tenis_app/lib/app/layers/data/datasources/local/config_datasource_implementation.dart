@@ -121,7 +121,7 @@ class ConfigDatasourceImplementation implements IConfigDatasource {
   Future<String> loadConfig() async {
     try {
       final value = await Hive.openBox('configProviderState').then((box) => box.get('config'));
-      return value;
+      return value ?? "";
     } catch (e) {
       throw StorageException(message: e.toString());
     }

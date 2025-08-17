@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppStyles {
-  // Fertilink Brand Colors - Azul (confiança) e Verde (saúde)
-  static const Color primaryBlue = Color(0xFF2E7CE4); // Azul principal
-  static const Color primaryGreen = Color(0xFF4CAF50); // Verde principal
-  static const Color lightBlue = Color(0xFF64B5F6); // Azul claro
-  static const Color lightGreen = Color(0xFF81C784); // Verde claro
+  // Beach Tennis 40x40 Brand Colors
+  static const Color primaryBlue = Color(0xFF4A90E2); // Azul primário Beach Tennis
+  static const Color lightBlue = Color(0xFF87CEEB); // Azul claro Beach Tennis
   static const Color darkBlue = Color(0xFF1565C0); // Azul escuro
+  static const Color primaryGreen = Color(0xFF4CAF50); // Verde sucesso
+  static const Color lightGreen = Color(0xFF81C784); // Verde claro
   static const Color darkGreen = Color(0xFF388E3C); // Verde escuro
 
   // Neutral Colors
@@ -25,9 +25,17 @@ class AppStyles {
 
   // Status Colors
   static const Color success = Color(0xFF4CAF50);
-  static const Color error = Color(0xFFE53E3E);
-  static const Color warning = Color(0xFFFF9800);
+  static const Color error = Color(0xFFF44336);
+  static const Color warning = Color(0xFFFFC107);
   static const Color info = Color(0xFF2196F3);
+
+  // Beach Tennis Specific Colors
+  static const Color redAccent = Color(0xFFFF0000); // Vermelho para logo 40x40
+  static const Color facebookBlue = Color(0xFF1877F2); // Azul Facebook
+  static const Color backgroundGradientTop = lightBlue; // Topo do gradiente
+  static const Color backgroundGradientBottom = primaryBlue; // Base do gradiente
+
+  static const Color successColor = Color(0xFF4CAF50);
 
   // Gradient Colors
   static const LinearGradient primaryGradient = LinearGradient(
@@ -44,7 +52,7 @@ class AppStyles {
 
   // Legacy colors for compatibility
   final primaryColor = primaryBlue;
-  final primaryColorInt = 0xFF2E7CE4;
+  final primaryColorInt = 0xFF4A90E2;
   final blackColor = black;
   final secondaryColor2 = primaryGreen;
   final secondaryColor3 = grey500;
@@ -74,6 +82,21 @@ class AppStyles {
 
   // App paddings, margins and sizes:
   final screenPadding = const EdgeInsets.symmetric(horizontal: 20, vertical: 20);
+
+  // Beach Tennis specific spacing
+  static const double tinySpace = 4.0;
+  static const double smallSpace = 8.0;
+  static const double mediumSpace = 12.0;
+  static const double largeSpace = 16.0;
+  static const double xLargeSpace = 20.0;
+  static const double xxLargeSpace = 24.0;
+  static const double hugeSpace = 32.0;
+
+  // Border radius values
+  static const double radiusSmall = 8.0;
+  static const double radiusMedium = 12.0;
+  static const double radiusLarge = 16.0;
+  static const double radiusXLarge = 24.0;
 
   final loginPath = "lib/app/common/assets/png/logo.png";
   final logoPath = "lib/app/common/assets/png/logo.png";

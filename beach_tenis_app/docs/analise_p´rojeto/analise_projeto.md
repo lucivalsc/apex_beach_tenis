@@ -1,10 +1,10 @@
-# Análise Técnica Completa - Aplicativo 40x40 Beach Tennis
+# Análise Técnica Completa - Aplicativo Apex Sports - Beach Tenis
 
 ## 📱 Visão Geral do Projeto
 
 ### Identidade Visual
 
-- **Nome**: 40x40 - Análise de Alto Rendimento
+- **Nome**: Apex Sports - Beach Tenis - Análise de Alto Rendimento
 - **Mascote**: Pato estilizado com capacete colorido e asas abertas
 - **Paleta de Cores**:
   - Azul primário: `#4A90E2`
@@ -40,7 +40,7 @@ O aplicativo suporta 5 perfis distintos:
 - **Logo Central**:
   - Mascote do pato posicionado centralmente, ocupando aproximadamente 20% da altura da tela
   - Pato verde com capacete colorido (verde, roxo, azul) e asas brancas abertas
-  - Abaixo do mascote: texto "40x40" em fonte bold, cor vermelha
+  - Abaixo do mascote: texto "Apex Sports - Beach Tenis" em fonte bold, cor vermelha
   - Subtítulo "ANÁLISE DE ALTO RENDIMENTO" em fonte menor, cor branca
 
 **Elemento de Ação**:
@@ -813,7 +813,7 @@ O aplicativo suporta 5 perfis distintos:
 - **2º ponto**: 30
 - **3º ponto**: 40
 - **4º ponto**: Game
-- **Empate 40x40**: Próximo ponto vence (sem vantagem)
+- **Empate Apex Sports - Beach Tenis**: Próximo ponto vence (sem vantagem)
 
 #### Contagem de Games (Set)
 
@@ -1510,7 +1510,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 }
 ```
 
-Este documento agora está completo com todas as especificações técnicas necessárias para o desenvolvimento do aplicativo 40x40 Beach Tennis, cobrindo desde os detalhes visuais mais específicos até a arquitetura técnica recomendada.
+Este documento agora está completo com todas as especificações técnicas necessárias para o desenvolvimento do aplicativo Apex Sports - Beach Tenis, cobrindo desde os detalhes visuais mais específicos até a arquitetura técnica recomendada.
 
 ---
 
@@ -1875,7 +1875,7 @@ lib/
 - **PlayerAvatar**: Avatar de jogador
 - **ProgressBar**: Barra de progresso customizada
 
-Este documento fornece uma base técnica completa para o desenvolvimento do aplicativo 40x40, cobrindo todos os aspectos visuais, funcionais e técnicos identificados na análise do material fornecido.ações** (centro):
+Este documento fornece uma base técnica completa para o desenvolvimento do aplicativo Apex Sports - Beach Tenis, cobrindo todos os aspectos visuais, funcionais e técnicos identificados na análise do material fornecido.ações** (centro):
 
 - **Nome**: "Fulano Silva dos Santos" (bold, preto)
 - **Subtítulo**: Informações adicionais se disponível
@@ -2899,7 +2899,7 @@ Ciclano/Adriano     [4] [1] [0] [15]
 
 ---
 
-# Módulo Conexões e Estatísticas - 40x40 Beach Tennis
+# Módulo Conexões e Estatísticas - Apex Sports - Beach Tenis
 
 ## 🤝 Módulo Conexões/Amigos
 
@@ -3016,7 +3016,7 @@ Ciclano/Adriano     [4] [1] [0] [15]
 - **Card de Estado Vazio**:
   - Ícone: Icons.person_search (cinza, 64px)
   - Título: "Atleta não encontrado"
-  - Subtítulo: "Convide seus amigos para se juntarem ao 40x40"
+  - Subtítulo: "Convide seus amigos para se juntarem ao Apex Sports - Beach Tenis"
 
 **Opções de Compartilhamento**:
 
@@ -3522,4 +3522,4 @@ Ciclano/Adriano     [4] [1] [0] [15]
 - **Focus indicators**: Borda azul 2px
 - **Color blindness**: Padrões além de cores
 
-Este módulo completa a especificação técnica das funcionalidades sociais e analíticas do aplicativo 40x40, fornecendo base sólida para implementação das features mais avançadas de conexão entre usuários e análise de performance esportiva.
+Este módulo completa a especificação técnica das funcionalidades sociais e analíticas do aplicativo Apex Sports - Beach Tenis, fornecendo base sólida para implementação das features mais avançadas de conexão entre usuários e análise de performance esportiva.

@@ -48,6 +48,8 @@ import 'app/layers/data/repositories/auth_repository_implementation.dart';
 import 'app/layers/domain/repositories/auth_repository.dart';
 import 'app/layers/domain/usecases/auth/sign_in_usecase.dart';
 import 'app/layers/presenter/providers/auth_provider.dart';
+import 'app/layers/presenter/screens/logged_in/professors_list/professors_list_provider.dart';
+import 'app/layers/presenter/screens/logged_in/statistics/statistics_provider.dart';
 
 List<SingleChildWidget> providers = [
   ...independentServices,
@@ -132,6 +134,12 @@ List<SingleChildWidget> dependentServices = [
 ];
 
 List<SingleChildWidget> consumableProviders = [
+  ChangeNotifierProvider(
+    create: (context) => ProfessorsListProvider(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => StatisticsProvider(),
+  ),
   ChangeNotifierProvider(
     create: (context) => ConfigProvider(
       context.read(),

@@ -1,10 +1,10 @@
 import 'package:beach_tenis_app/app/layers/presenter/providers/auth_provider.dart';
 import 'package:beach_tenis_app/app/layers/presenter/providers/config_provider.dart';
 import 'package:beach_tenis_app/app/layers/presenter/providers/data_provider.dart';
+import 'package:beach_tenis_app/app/layers/presenter/screens/not_logged_in/auth/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'app/layers/presenter/screens/not_logged_in/login/login.dart';
 import 'app/layers/presenter/screens/not_logged_in/splash/splash_screen.dart';
 
 class Starter extends StatefulWidget {
@@ -18,46 +18,55 @@ class Starter extends StatefulWidget {
 
 class _StarterState extends State<Starter> {
   late Future<void> future;
-  late Widget nextScreen;
+  Widget nextScreen = const SplashScreen(); // Inicialização com valor padrão
   late ConfigProvider configProvider;
   late AuthProvider authProvider;
   late DataProvider dataProvider;
 
   Future<void> startApp() async {
-    configProvider = Provider.of<ConfigProvider>(context, listen: false);
-    authProvider = Provider.of<AuthProvider>(context, listen: false);
-    dataProvider = Provider.of<DataProvider>(context, listen: false);
+    try {
+      configProvider = Provider.of<ConfigProvider>(context, listen: false);
+      authProvider = Provider.of<AuthProvider>(context, listen: false);
+      dataProvider = Provider.of<DataProvider>(context, listen: false);
 
-    // Verificar se o usuário já está logado através do email salvo
-    String savedEmail = await configProvider.loadLastLoggedEmail();
-    String savedPassword = await configProvider.loadLastLoggedPassword();
-    String savedUserType = await configProvider.loadUserType();
-    bool isLoggedIn = savedEmail.isNotEmpty && savedPassword.isNotEmpty;
+      // Verificar se o usuário já está logado através do email salvo
+      String lastEmail = await configProvider.loadLastLoggedEmail();
+      bool isLoggedIn = lastEmail.isNotEmpty;
+      String savedUserType = await configProvider.loadUserType();
 
-    // Verificar se já passou pelo onboarding
-    // Como não temos um método específico para isso, vamos usar o mesmo indicador
-    // Se o usuário já fez login antes, consideramos que já viu o onboarding
-    bool hasSeenOnboarding = isLoggedIn;
+      // Verificar se já passou pelo onboarding
+      // Como não temos um método específico para isso, vamos usar o mesmo indicador
+      // Se o usuário já fez AuthScreen antes, consideramos que já viu o onboarding
+      bool hasSeenOnboarding = isLoggedIn;
 
-    if (isLoggedIn) {
-      // Tentar fazer login automático com as credenciais salvas
-      try {
-        // Verificar o tipo de usuário para navegar para a tela correta
-        if (savedUserType == 'tentante') {
-          nextScreen = const Login();
-        } else if (savedUserType == 'doador') {
-          nextScreen = const Login();
+      // Definir a próxima tela com base no estado de autenticação
+      setState(() {
+        if (isLoggedIn) {
+          // Usuário já está logado
+          if (savedUserType == 'arena') {
+            // Navegar para a tela principal da arena
+            nextScreen = const AuthScreen(); // Substitua pela tela principal da arena
+          } else if (savedUserType == 'atleta') {
+            // Navegar para a tela principal do atleta
+            nextScreen = const AuthScreen(); // Substitua pela tela principal do atleta
+          } else {
+            // Tipo de usuário não reconhecido ou não definido
+            nextScreen = const AuthScreen();
+          }
+        } else if (hasSeenOnboarding) {
+          // Usuário não logado mas já viu onboarding
+          nextScreen = const AuthScreen();
         } else {
-          // Se não conseguir identificar o tipo, vai para login
-          nextScreen = const Login();
+          // Usuário novo - mantém na SplashScreen e depois vai para onboarding
+          nextScreen = const AuthScreen(); // Substitua pela tela de onboarding quando existir
         }
-      } catch (e) {
-        // Em caso de erro, vai para login
-        nextScreen = const Login();
-      }
-    } else if (hasSeenOnboarding) {
-      // Usuário não logado mas já viu onboarding - vai para login
-      nextScreen = const Login();
+      });
+    } catch (e) {
+      // Em caso de erro, garantir que nextScreen tenha um valor válido
+      setState(() {
+        nextScreen = const AuthScreen();
+      });
+      print('Erro ao inicializar o aplicativo: $e');
     }
 
     // Aguardar pelo menos 3 segundos para mostrar a splash screen
