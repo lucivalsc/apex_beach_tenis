@@ -24,14 +24,14 @@ class _ArenaDashboardScreenState extends State<ArenaDashboardScreen> {
 
   // Mock data para demonstração
   final Map<String, dynamic> arenaData = {
-    'nome': 'Arena Beach Tennis 40x40',
+    'nome': 'Apex Sports - Beach Tennis',
     'status_assinatura': 'ATIVO',
     'data_vencimento': '2023-12-31',
     'endereco': 'Av. Beira Mar, 1000, Praia Grande',
     'telefone': '(11) 99999-9999',
     'whatsapp': true,
-    'instagram': '@arena40x40',
-    'facebook': 'arena40x40',
+    'instagram': '@apexsports',
+    'facebook': 'apexsports',
   };
 
   final List<Map<String, dynamic>> upcomingEvents = [
