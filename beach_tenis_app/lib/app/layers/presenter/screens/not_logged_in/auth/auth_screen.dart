@@ -1,6 +1,8 @@
+import 'package:beach_tenis_app/app/common/providers/theme_provider.dart';
 import 'package:beach_tenis_app/app/layers/presenter/screens/logged_in/arena_dashboard/arena_dashboard_screen.dart';
 import 'package:beach_tenis_app/navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -24,7 +26,6 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   final _registerConfirmPasswordController = TextEditingController();
 
   // Variáveis de estado da UI
-  bool _isDarkMode = false;
   bool _keepLoggedIn = false;
   final bool _isWhatsApp = false;
   bool _acceptTerms = false;
@@ -77,18 +78,14 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    // Acessa o ThemeProvider para obter o tema atual
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    
     return Scaffold(
       // resizeToAvoidBottomInset: true (padrão) já ajuda, mas o SingleChildScrollView é essencial
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF87CEEB), // Azul claro no topo
-              Color(0xFF4A90E2), // Azul primário na base
-            ],
-          ),
+        decoration: BoxDecoration(
+          gradient: themeProvider.backgroundGradient,
         ),
         // SingleChildScrollView permite que a tela inteira role quando o teclado aparece
         child: SingleChildScrollView(
@@ -446,18 +443,24 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
 
   /// Constrói o seletor de modo escuro.
   Widget _buildDarkModeToggle() {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Switch(
-          value: _isDarkMode,
-          onChanged: (value) => setState(() => _isDarkMode = value),
+          value: isDarkMode,
+          onChanged: (value) {
+            // Alterna o tema usando o ThemeProvider
+            themeProvider.toggleTheme();
+          },
           activeColor: Colors.white,
           inactiveThumbColor: Colors.white,
           inactiveTrackColor: Colors.white.withOpacity(0.3),
         ),
         const SizedBox(width: 12),
-        const Text(
+        Text(
           'Modo escuro',
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),

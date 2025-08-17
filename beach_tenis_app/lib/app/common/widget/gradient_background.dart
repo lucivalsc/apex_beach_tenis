@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../providers/theme_provider.dart';
 import '../styles/app_styles.dart';
+import 'package:provider/provider.dart';
 
 class GradientBackground extends StatelessWidget {
   final Widget child;
@@ -18,17 +20,18 @@ class GradientBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Acessa o ThemeProvider para obter o tema atual
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: true);
+    
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: begin ?? Alignment.topCenter,
-          end: end ?? Alignment.bottomCenter,
-          colors: colors ??
-              [
-                AppStyles.backgroundGradientTop,
-                AppStyles.backgroundGradientBottom,
-              ],
-        ),
+        gradient: colors != null
+            ? LinearGradient(
+                begin: begin ?? Alignment.topCenter,
+                end: end ?? Alignment.bottomCenter,
+                colors: colors!,
+              )
+            : themeProvider.backgroundGradient,
       ),
       child: child,
     );

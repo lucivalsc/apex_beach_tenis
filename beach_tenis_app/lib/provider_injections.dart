@@ -50,6 +50,7 @@ import 'app/layers/domain/usecases/auth/sign_in_usecase.dart';
 import 'app/layers/presenter/providers/auth_provider.dart';
 import 'app/layers/presenter/screens/logged_in/professors_list/professors_list_provider.dart';
 import 'app/layers/presenter/screens/logged_in/statistics/statistics_provider.dart';
+import 'app/common/providers/theme_provider.dart';
 
 List<SingleChildWidget> providers = [
   ...independentServices,
@@ -134,6 +135,9 @@ List<SingleChildWidget> dependentServices = [
 ];
 
 List<SingleChildWidget> consumableProviders = [
+  ChangeNotifierProvider(
+    create: (context) => ThemeProvider(),
+  ),
   ChangeNotifierProvider(
     create: (context) => ProfessorsListProvider(),
   ),
