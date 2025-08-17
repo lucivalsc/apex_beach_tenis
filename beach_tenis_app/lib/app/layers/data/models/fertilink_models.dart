@@ -1,9 +1,9 @@
 // Modelos de dados para a camada de dados do Fertilink
 // Estes modelos fazem a ponte entre os dados JSON e as entidades do domínio
 
-import 'package:beach_tenis_app/app/layers/domain/entities/donor_profile_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/entities/match_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/entities/user_entity.dart';
+import 'package:apex_sports/app/layers/domain/entities/donor_profile_entity.dart';
+import 'package:apex_sports/layers/domain/entities/match_entity.dart';
+import 'package:apex_sports/layers/domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
   const UserModel({

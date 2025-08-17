@@ -1,9 +1,9 @@
-import 'package:beach_tenis_app/app/layers/domain/entities/demandante_profile_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/entities/donor_profile_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/entities/user_entity.dart';
-import 'package:beach_tenis_app/app/layers/domain/repositories/demandante_repository.dart';
-import 'package:beach_tenis_app/app/layers/domain/repositories/donor_repository.dart';
-import 'package:beach_tenis_app/app/layers/domain/repositories/user_repository.dart';
+import 'package:apex_sports/app/layers/domain/entities/demandante_profile_entity.dart';
+import 'package:apex_sports/layers/domain/entities/donor_profile_entity.dart';
+import 'package:apex_sports/layers/domain/entities/user_entity.dart';
+import 'package:apex_sports/layers/domain/repositories/demandante_repository.dart';
+import 'package:apex_sports/layers/domain/repositories/donor_repository.dart';
+import 'package:apex_sports/layers/domain/repositories/user_repository.dart';
 
 class GetUserProfileUseCase {
   final IUserRepository userRepository;

@@ -1,6 +1,6 @@
-import 'package:beach_tenis_app/app/common/models/failure_models.dart';
-import 'package:beach_tenis_app/app/common/usecase.dart';
-import 'package:beach_tenis_app/app/layers/domain/repositories/config_repository.dart';
+import 'package:apex_sports/app/common/models/failure_models.dart';
+import 'package:apex_sports/common/usecase.dart';
+import 'package:apex_sports/layers/domain/repositories/config_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class CompanyUsecase implements Usecase<String, void> {
