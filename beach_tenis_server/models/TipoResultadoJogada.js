@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     },
-    updated_at: {
+    updatedAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'tipo_resultado_jogada',
     timestamps: true,
     createdAt: 'created_at',
-    updated_at: 'updated_at',
+    updatedAt: 'updated_at',
     indexes: [
       {
         name: 'idx_codigo',

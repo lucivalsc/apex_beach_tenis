@@ -45,26 +45,18 @@ module.exports = (sequelize, DataTypes) => {
     status_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'status_avaliacao',
+        model: 'status_avaliacoes',
         key: 'id'
       }
     },
     observacoes_gerais: {
       type: DataTypes.TEXT
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'avaliacoes',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: 'updated_at',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
     indexes: [
       {
         name: 'idx_arena',

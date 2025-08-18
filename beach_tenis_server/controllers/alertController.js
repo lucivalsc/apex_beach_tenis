@@ -24,7 +24,7 @@ const getInactiveClients = async (req, res) => {
                 'name', 
                 'address', 
                 'type',
-                'created_at',
+                'createdAt',
                 [Sequelize.literal('(SELECT MAX(check_in_time) FROM checks WHERE checks.client_id = Client.id)'), 'last_visit_date']
             ],
             include: [{

@@ -31,15 +31,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       defaultValue: DataTypes.NOW
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'arena_professores',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: false,
+    createdAt: 'createdAt',
+    updatedAt: false,
     indexes: [
       {
         name: 'idx_arena',

@@ -28,15 +28,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'itens_treino',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: false,
+    createdAt: 'createdAt',
+    updatedAt: false,
     indexes: [
       {
         name: 'idx_categoria',

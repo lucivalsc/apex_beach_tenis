@@ -35,19 +35,19 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     },
-    updated_at: {
+    updatedAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'jogo_sets',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: 'updated_at',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
     indexes: [
       {
         name: 'idx_jogo',

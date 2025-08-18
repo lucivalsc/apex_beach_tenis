@@ -42,15 +42,15 @@ module.exports = (sequelize, DataTypes) => {
     user_agent: {
       type: DataTypes.STRING(255)
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'logs_sistema',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: false,
+    createdAt: 'createdAt',
+    updatedAt: false,
     indexes: [
       {
         name: 'idx_usuario',
@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         name: 'idx_data',
-        fields: ['created_at']
+        fields: ['createdAt']
       }
     ]
   });

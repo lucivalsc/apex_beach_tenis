@@ -63,20 +63,12 @@ module.exports = (sequelize, DataTypes) => {
     ultimo_login: {
       type: DataTypes.DATE,
       allowNull: true
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'usuarios',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: 'updated_at',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
     indexes: [
       {
         name: 'idx_email',

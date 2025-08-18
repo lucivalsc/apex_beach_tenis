@@ -41,15 +41,15 @@ module.exports = (sequelize, DataTypes) => {
     data_leitura: {
       type: DataTypes.DATE
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'notificacoes',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: false,
+    createdAt: 'createdAt',
+    updatedAt: false,
     indexes: [
       {
         name: 'idx_usuario',
@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         name: 'idx_data',
-        fields: ['created_at']
+        fields: ['createdAt']
       }
     ]
   });

@@ -19,19 +19,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     },
-    updated_at: {
+    updatedAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'tipos_assinatura',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: 'updated_at'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   });
 
   TipoAssinatura.associate = function(models) {

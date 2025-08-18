@@ -79,8 +79,8 @@ router.post('/login', [
         tipo: usuario.tipo_principal,
         ativo: usuario.ativo,
         ultimo_login: usuario.ultimo_login,
-        created_at: usuario.created_at,
-        updated_at: usuario.updated_at,
+        createdAt: usuario.created_at,
+        updatedAt: usuario.updated_at,
       }
     });
   } catch (error) {
@@ -166,8 +166,8 @@ router.post('/registro', [
         instagram: novoUsuario.instagram,
         facebook: novoUsuario.facebook,
         linkedin: novoUsuario.linkedin,
-        created_at: novoUsuario.created_at,
-        updated_at: novoUsuario.updated_at
+        createdAt: novoUsuario.created_at,
+        updatedAt: novoUsuario.updated_at
       }
     });
   } catch (error) {

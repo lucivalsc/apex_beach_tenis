@@ -23,7 +23,7 @@ async function testSimples() {
     console.log('Código:', tipoTeste.codigo);
     console.log('Timestamps:', {
       createdAt: tipoTeste.createdAt,
-      updated_at: tipoTeste.updated_at
+      updatedAt: tipoTeste.updated_at
     });
     
     // Salvar resultado em arquivo
@@ -33,7 +33,7 @@ async function testSimples() {
       `Nome: ${tipoTeste.nome}\n` +
       `Código: ${tipoTeste.codigo}\n` +
       `CreatedAt: ${tipoTeste.createdAt}\n` +
-      `updated_at: ${tipoTeste.updated_at}\n` +
+      `updatedAt: ${tipoTeste.updated_at}\n` +
       `Sucesso: true\n`
     );
     

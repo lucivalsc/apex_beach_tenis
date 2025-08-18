@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     tipo_sexo_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'tipo_sexo',
+        model: 'tipos_sexo',
         key: 'id'
       }
     },
@@ -50,20 +50,10 @@ module.exports = (sequelize, DataTypes) => {
     ativo: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'professores',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: 'updated_at',
     indexes: [
       {
         name: 'idx_cpf',

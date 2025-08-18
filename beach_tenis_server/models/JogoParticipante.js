@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'tipo_equipe',
+        model: 'tipo_equipe_jogo',
         key: 'id'
       }
     },
@@ -43,15 +43,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'jogo_participantes',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: false,
+    createdAt: 'createdAt',
+    updatedAt: false,
     indexes: [
       {
         name: 'idx_jogo',
@@ -89,7 +89,7 @@ module.exports = (sequelize, DataTypes) => {
       as: 'atleta'
     });
     
-    JogoParticipante.belongsTo(models.TipoEquipe, {
+    JogoParticipante.belongsTo(models.TipoEquipeJogo, {
       foreignKey: 'tipo_equipe_id',
       as: 'tipoEquipe'
     });

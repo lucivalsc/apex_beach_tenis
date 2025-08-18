@@ -28,35 +28,35 @@ def process_file(file_path):
     changes = 0
     
     # Padronizar definição de campos timestamp
-    # Substituir createdAt: { ... } por created_at: { ... }
+    # Substituir createdAt: { ... } por createdAt: { ... }
     pattern_created = r'createdAt:\s*{([^}]*)}'
     if re.search(pattern_created, content):
-        content = re.sub(pattern_created, r'created_at: {\1}', content)
+        content = re.sub(pattern_created, r'createdAt: {\1}', content)
         changes += 1
     
-    # Substituir updated_at: { ... } por updated_at: { ... }
-    pattern_updated = r'updated_at:\s*{([^}]*)}'
+    # Substituir updatedAt: { ... } por updatedAt: { ... }
+    pattern_updated = r'updatedAt:\s*{([^}]*)}'
     if re.search(pattern_updated, content):
-        content = re.sub(pattern_updated, r'updated_at: {\1}', content)
+        content = re.sub(pattern_updated, r'updatedAt: {\1}', content)
         changes += 1
     
     # Padronizar configuração de timestamps
     # Substituir timestamps: true sem mapeamento
     pattern_timestamps = r'timestamps:\s*true,(?!\s*createdAt)'
     if re.search(pattern_timestamps, content):
-        content = re.sub(pattern_timestamps, r'timestamps: true,\n        createdAt: \'created_at\',\n        updated_at: \'updated_at\',', content)
+        content = re.sub(pattern_timestamps, r'timestamps: true,\n        createdAt: \'created_at\',\n        updatedAt: \'updated_at\',', content)
         changes += 1
     
-    # Substituir createdAt: 'createdAt' por createdAt: 'created_at'
+    # Substituir createdAt: 'createdAt' por createdAt: 'createdAt'
     pattern_created_map = r"createdAt:\s*['|\"]createdAt['|\"]"
     if re.search(pattern_created_map, content):
-        content = re.sub(pattern_created_map, r"createdAt: 'created_at'", content)
+        content = re.sub(pattern_created_map, r"createdAt: 'createdAt'", content)
         changes += 1
     
-    # Substituir updated_at: 'updated_at' por updated_at: 'updated_at'
-    pattern_updated_map = r"updated_at:\s*['|\"]updated_at['|\"]"
+    # Substituir updatedAt: 'updatedAt' por updatedAt: 'updatedAt'
+    pattern_updated_map = r"updatedAt:\s*['|\"]updated_at['|\"]"
     if re.search(pattern_updated_map, content):
-        content = re.sub(pattern_updated_map, r"updated_at: 'updated_at'", content)
+        content = re.sub(pattern_updated_map, r"updatedAt: 'updatedAt'", content)
         changes += 1
     
     # Padronizar defaultValue para timestamps
@@ -74,7 +74,7 @@ def process_file(file_path):
         items_text = match.group(3)
         
         # Verificar se já tem timestamps
-        if 'created_at' in items_text or 'createdAt' in items_text:
+        if 'createdAt' in items_text or 'createdAt' in items_text:
             return match.group(0)
         
         # Adicionar timestamps a cada objeto
@@ -83,9 +83,9 @@ def process_file(file_path):
         
         for item in items:
             if item.strip().endswith(','):
-                new_item = item + ' created_at: new Date(), updated_at: new Date()'
+                new_item = item + ' createdAt: new Date(), updatedAt: new Date()'
             else:
-                new_item = item + ', created_at: new Date(), updated_at: new Date()'
+                new_item = item + ', createdAt: new Date(), updatedAt: new Date()'
             new_items.append('{' + new_item + '}')
         
         return f'{indent}return {model_name}.bulkCreate([\n{indent}  ' + ',\n{indent}  '.join(new_items) + f'\n{indent}])'

@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     },
-    updated_at: {
+    updatedAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'tipo_equipe_jogo',
     timestamps: true,
     createdAt: 'created_at',
-    updated_at: 'updated_at',
+    updatedAt: 'updated_at',
     indexes: [
       {
         name: 'idx_codigo',
@@ -70,5 +70,33 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
 
+  // Adicionar associação com JogoParticipante
+  TipoEquipeJogo.associate = function(models) {
+    TipoEquipeJogo.hasMany(models.JogoParticipante, {
+      foreignKey: 'tipo_equipe_id',
+      as: 'participantes'
+    });
+    
+    TipoEquipeJogo.hasMany(models.JogoSet, {
+      foreignKey: 'vencedor_id',
+      as: 'setsVencidos'
+    });
+    
+    TipoEquipeJogo.hasMany(models.JogoGame, {
+      foreignKey: 'equipe_sacadora_id',
+      as: 'gamesSacando'
+    });
+    
+    TipoEquipeJogo.hasMany(models.JogoGame, {
+      foreignKey: 'vencedor_id',
+      as: 'gamesVencidos'
+    });
+    
+    TipoEquipeJogo.hasMany(models.JogoPonto, {
+      foreignKey: 'equipe_vencedora_id',
+      as: 'pontosVencidos'
+    });
+  };
+  
   return TipoEquipeJogo;
 };

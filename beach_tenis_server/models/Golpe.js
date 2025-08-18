@@ -22,15 +22,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'golpes',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: false
+    createdAt: 'createdAt',
+    updatedAt: false
   });
 
   Golpe.associate = function(models) {

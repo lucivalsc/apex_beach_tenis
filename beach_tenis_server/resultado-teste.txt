@@ -1,5 +1,5 @@
 Teste realizado em: 2025-08-18T12:09:05.319Z
-Erro: Unknown column 'created_at' in 'field list'
+Erro: Unknown column 'createdAt' in 'field list'
 
 Stack: Error
     at Query.run (C:\Projetos\Flutter\Lucival\beach_tenis\beach_tenis_server\node_modules\sequelize\lib\dialects\mysql\query.js:52:25)

@@ -54,8 +54,8 @@ async function testTipoEndereco() {
         id: residencial.id,
         nome: residencial.nome,
         codigo: residencial.codigo,
-        created_at: residencial.created_at,
-        updated_at: residencial.updated_at
+        createdAt: residencial.created_at,
+        updatedAt: residencial.updated_at
       }, null, 2)}`);
     }
     

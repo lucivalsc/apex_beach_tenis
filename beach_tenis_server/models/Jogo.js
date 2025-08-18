@@ -62,19 +62,19 @@ module.exports = (sequelize, DataTypes) => {
     observacoes: {
       type: DataTypes.TEXT
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     },
-    updated_at: {
+    updatedAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'jogos',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: 'updated_at',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
     indexes: [
       {
         name: 'idx_arena',

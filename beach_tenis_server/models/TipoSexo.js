@@ -20,20 +20,12 @@ module.exports = (sequelize, DataTypes) => {
     ativo: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'tipos_sexo',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: 'updated_at',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
     indexes: [
       {
         name: 'idx_codigo',

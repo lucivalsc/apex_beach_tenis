@@ -53,8 +53,8 @@ async function validateDatabase() {
             password: 'senha123',
             role: 'user',
             is_active: true,
-            created_at: new Date(),
-            updated_at: new Date()
+            createdAt: new Date(),
+            updatedAt: new Date()
         });
         console.log(`✅ Usuário criado com sucesso! ID: ${testUser.id}`);
 
@@ -67,8 +67,8 @@ async function validateDatabase() {
             longitude: -46.6333,
             type: 'Farmácia',
             created_by: testUser.id,
-            created_at: new Date(),
-            updated_at: new Date()
+            createdAt: new Date(),
+            updatedAt: new Date()
         });
         console.log(`✅ Cliente criado com sucesso! ID: ${testClient.id}`);
 
@@ -81,8 +81,8 @@ async function validateDatabase() {
             latitude_in: -23.5505,      // Campo obrigatório
             longitude_in: -46.6333,     // Campo obrigatório
             status: 'concluído',        // Campo obrigatório
-            created_at: new Date(),
-            updated_at: new Date()
+            createdAt: new Date(),
+            updatedAt: new Date()
         });
         console.log(`✅ Check criado com sucesso! ID: ${testCheck.id}`);
 
@@ -92,8 +92,8 @@ async function validateDatabase() {
             user_id: testUser.id,
             check_id: testCheck.id,
             observations: 'Observação de teste',
-            created_at: new Date(),
-            updated_at: new Date()
+            createdAt: new Date(),
+            updatedAt: new Date()
         });
         console.log(`✅ Visita criada com sucesso! ID: ${testVisit.id}`);
 
@@ -108,8 +108,8 @@ async function validateDatabase() {
             week: 1,
             month: 8,
             year: 2025,
-            created_at: new Date(),
-            updated_at: new Date()
+            createdAt: new Date(),
+            updatedAt: new Date()
         });
         console.log(`✅ Venda criada com sucesso! ID: ${testSale.id}`);
 
@@ -123,8 +123,8 @@ async function validateDatabase() {
             quantity: 100,
             month: 8,
             year: 2025,
-            created_at: new Date(),
-            updated_at: new Date()
+            createdAt: new Date(),
+            updatedAt: new Date()
         });
         console.log(`✅ Meta criada com sucesso! ID: ${testGoal.id}`);
 

@@ -62,51 +62,8 @@ sequelize.authenticate()
       console.log('Verificando e criando tabelas no banco de dados...');
 
       // Criamos as tabelas em ordem para evitar problemas com chaves estrangeiras
-      // 1. Primeiro as tabelas base sem dependências externas
-      await syncModel(Usuario, 'Usuario');
-      await syncModel(ConfiguracaoSistema, 'ConfiguracaoSistema');
-      await syncModel(TipoAssinatura, 'TipoAssinatura');
-      await syncModel(PacotePagamento, 'PacotePagamento');
-
-      // 2. Tabelas de perfis de usuários
-      await syncModel(Arena, 'Arena');
-      await syncModel(Professor, 'Professor');
-      await syncModel(Atleta, 'Atleta');
-      await syncModel(Aluno, 'Aluno');
-      await syncModel(ProfissionalTecnico, 'ProfissionalTecnico');
-
-      // 3. Tabelas de relacionamentos entre perfis
-      await syncModel(ArenaProfessor, 'ArenaProfessor');
-      await syncModel(ArenaAluno, 'ArenaAluno');
-      await syncModel(ProfessorAluno, 'ProfessorAluno');
-      await syncModel(ConexaoAtleta, 'ConexaoAtleta');
-      await syncModel(ProfissionalAtleta, 'ProfissionalAtleta');
-
-      // 4. Tabelas de pagamentos e assinaturas
-      await syncModel(Assinatura, 'Assinatura');
-      await syncModel(Pagamento, 'Pagamento');
-
-      // 5. Tabelas de treinos e avaliações
-      await syncModel(Golpe, 'Golpe');
-      await syncModel(ItemTreino, 'ItemTreino');
-      await syncModel(Treino, 'Treino');
-      await syncModel(TreinoItem, 'TreinoItem');
-      await syncModel(Avaliacao, 'Avaliacao');
-      await syncModel(AvaliacaoItem, 'AvaliacaoItem');
-
-      // 6. Tabelas de jogos e partidas
-      await syncModel(Jogo, 'Jogo');
-      await syncModel(JogoParticipante, 'JogoParticipante');
-      await syncModel(JogoSet, 'JogoSet');
-      await syncModel(JogoGame, 'JogoGame');
-      await syncModel(JogoPonto, 'JogoPonto');
-      await syncModel(JogoJogada, 'JogoJogada');
-
-      // 7. Tabelas de notificações e logs
-      await syncModel(Notificacao, 'Notificacao');
-      await syncModel(LogSistema, 'LogSistema');
-
-      // Sincronizar as novas tabelas de tipos
+      // 1. Primeiro as tabelas de tipos (sem dependências)
+      console.log('Criando tabelas de tipos...');
       await syncModel(TipoUsuario, 'TipoUsuario');
       await syncModel(TipoSexo, 'TipoSexo');
       await syncModel(StatusAssinatura, 'StatusAssinatura');
@@ -129,10 +86,69 @@ sequelize.authenticate()
       await syncModel(TipoPeriodicidade, 'TipoPeriodicidade');
       await syncModel(StatusProfissionalAtleta, 'StatusProfissionalAtleta');
       await syncModel(TipoEndereco, 'TipoEndereco');
+      await syncModel(TipoAssinatura, 'TipoAssinatura');
       
-      // 8. Novas tabelas adicionais que dependem das tabelas de tipos
-      await syncModel(Endereco, 'Endereco');
+      // 2. Tabelas base que dependem das tabelas de tipos
+      console.log('Criando tabelas base...');
+      await syncModel(Usuario, 'Usuario');
+      await syncModel(ConfiguracaoSistema, 'ConfiguracaoSistema');
+      await syncModel(PacotePagamento, 'PacotePagamento');
       await syncModel(UsuarioTipo, 'UsuarioTipo');
+      await syncModel(Endereco, 'Endereco');
+
+      // 3. Tabelas de perfis de usuários
+      console.log('Criando tabelas de perfis de usuários...');
+      await syncModel(Arena, 'Arena');
+      await syncModel(Professor, 'Professor');
+      await syncModel(Atleta, 'Atleta');
+      await syncModel(Aluno, 'Aluno');
+      await syncModel(ProfissionalTecnico, 'ProfissionalTecnico');
+
+      // 4. Tabelas de relacionamentos entre perfis
+      console.log('Criando tabelas de relacionamentos entre perfis...');
+      await syncModel(ArenaProfessor, 'ArenaProfessor');
+      await syncModel(ArenaAluno, 'ArenaAluno');
+      await syncModel(ProfessorAluno, 'ProfessorAluno');
+      await syncModel(ConexaoAtleta, 'ConexaoAtleta');
+      await syncModel(ProfissionalAtleta, 'ProfissionalAtleta');
+
+      // 5. Tabelas de pagamentos e assinaturas
+      console.log('Criando tabelas de pagamentos e assinaturas...');
+      await syncModel(Assinatura, 'Assinatura');
+      await syncModel(Pagamento, 'Pagamento');
+
+      // 6. Tabelas de treinos e avaliações (em ordem de dependência)
+      console.log('Criando tabelas de treinos e avaliações...');
+      // Primeiro as tabelas base de treinos
+      await syncModel(Golpe, 'Golpe');
+      await syncModel(ItemTreino, 'ItemTreino');
+      // Depois a tabela principal de treinos
+      await syncModel(Treino, 'Treino');
+      // Depois a tabela de relacionamento treino-item
+      await syncModel(TreinoItem, 'TreinoItem');
+      // Depois a tabela principal de avaliações
+      await syncModel(Avaliacao, 'Avaliacao');
+      // Por último a tabela de itens de avaliação
+      await syncModel(AvaliacaoItem, 'AvaliacaoItem');
+
+      // 7. Tabelas de jogos e partidas (em ordem de dependência)
+      console.log('Criando tabelas de jogos e partidas...');
+      // Primeiro a tabela principal de jogos
+      await syncModel(Jogo, 'Jogo');
+      // Depois as tabelas que dependem diretamente de Jogo
+      await syncModel(JogoParticipante, 'JogoParticipante');
+      await syncModel(JogoSet, 'JogoSet');
+      // Depois as tabelas que dependem de JogoSet
+      await syncModel(JogoGame, 'JogoGame');
+      // Depois as tabelas que dependem de JogoGame
+      await syncModel(JogoPonto, 'JogoPonto');
+      // Por último a tabela de jogadas que depende de Jogo
+      await syncModel(JogoJogada, 'JogoJogada');
+
+      // 8. Tabelas de notificações e logs
+      console.log('Criando tabelas de notificações e logs...');
+      await syncModel(Notificacao, 'Notificacao');
+      await syncModel(LogSistema, 'LogSistema');
 
       console.log('Todas as tabelas foram verificadas e processadas!');
 

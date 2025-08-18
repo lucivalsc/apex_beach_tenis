@@ -58,20 +58,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     data_vencimento: {
       type: DataTypes.DATEONLY
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'arenas',
     timestamps: true,
-    created_at: 'created_at',
-    updated_at: 'updated_at',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
     indexes: [
       {
         name: 'idx_cnpj',

@@ -57,15 +57,15 @@ module.exports = (sequelize, DataTypes) => {
     observacoes: {
       type: DataTypes.TEXT
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'jogo_jogadas',
     timestamps: true,
-    createdAt: 'created_at',
-    updated_at: false,
+    createdAt: 'createdAt',
+    updatedAt: false,
     indexes: [
       {
         name: 'idx_jogo',
