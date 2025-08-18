@@ -1,0 +1,19 @@
+[2025-08-18T12:03:51.501Z] Testando conexão com o banco de dados...
+[2025-08-18T12:03:51.749Z] ✅ Conexão estabelecida com sucesso!
+[2025-08-18T12:03:51.749Z] 
+Verificando tabela TipoEndereco...
+[2025-08-18T12:03:51.771Z] Tabela TipoEndereco existe
+[2025-08-18T12:03:51.772Z] 
+Verificando tabela TipoUsuario...
+[2025-08-18T12:03:51.792Z] Tabela TipoUsuario existe
+[2025-08-18T12:03:51.794Z] 
+Verificando tabela Endereco...
+[2025-08-18T12:03:51.817Z] Tabela Endereco existe
+[2025-08-18T12:03:51.818Z] 
+Verificando tabela UsuarioTipo...
+[2025-08-18T12:03:51.839Z] Tabela UsuarioTipo existe
+[2025-08-18T12:03:51.840Z] 
+Tentando criar tabelas na ordem correta...
+[2025-08-18T12:03:51.840Z] 
+✅ Teste concluído com sucesso!
+[2025-08-18T12:03:51.842Z] Teste finalizado.

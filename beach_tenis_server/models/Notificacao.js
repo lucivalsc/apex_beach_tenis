@@ -15,9 +15,13 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    tipo: {
-      type: DataTypes.ENUM('SISTEMA', 'TREINO', 'AVALIACAO', 'JOGO', 'PAGAMENTO', 'CONEXAO', 'OUTRO'),
-      allowNull: false
+    tipo_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'tipo_notificacao',
+        key: 'id'
+      }
     },
     titulo: {
       type: DataTypes.STRING(255),
@@ -53,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         name: 'idx_tipo',
-        fields: ['tipo']
+        fields: ['tipo_id']
       },
       {
         name: 'idx_lida',
@@ -71,6 +75,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'usuario_id',
       as: 'usuario',
       onDelete: 'CASCADE'
+    });
+    
+    Notificacao.belongsTo(models.TipoNotificacao, {
+      foreignKey: 'tipo_id',
+      as: 'tipo'
     });
   };
 

@@ -48,9 +48,13 @@ module.exports = (sequelize, DataTypes) => {
     facebook: {
       type: DataTypes.STRING(100)
     },
-    status_assinatura: {
-      type: DataTypes.ENUM('ATIVO', 'INATIVO', 'SUSPENSO', 'CANCELADO'),
-      defaultValue: 'ATIVO'
+    status_assinatura_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'status_assinaturas',
+        key: 'id'
+      }
     },
     data_vencimento: {
       type: DataTypes.DATEONLY
@@ -74,8 +78,8 @@ module.exports = (sequelize, DataTypes) => {
         fields: ['cnpj']
       },
       {
-        name: 'idx_status',
-        fields: ['status_assinatura']
+        name: 'idx_status_assinatura',
+        fields: ['status_assinatura_id']
       }
     ]
   });
@@ -85,6 +89,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'usuario_id',
       as: 'usuario',
       onDelete: 'CASCADE'
+    });
+    
+    Arena.belongsTo(models.StatusAssinatura, {
+      foreignKey: 'status_assinatura_id',
+      as: 'statusAssinatura'
     });
     
     Arena.hasMany(models.ArenaProfessor, {

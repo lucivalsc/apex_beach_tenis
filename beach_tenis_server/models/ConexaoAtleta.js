@@ -23,9 +23,12 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    status: {
-      type: DataTypes.ENUM('PENDENTE', 'ACEITO', 'BLOQUEADO'),
-      defaultValue: 'PENDENTE'
+    status_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'status_conexao_atleta',
+        key: 'id'
+      }
     },
     data_solicitacao: {
       type: DataTypes.DATE,
@@ -49,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         name: 'idx_status',
-        fields: ['status']
+        fields: ['status_id']
       },
       {
         name: 'unique_conexao',
@@ -70,6 +73,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'atleta_destino_id',
       as: 'atletaDestino',
       onDelete: 'CASCADE'
+    });
+    
+    ConexaoAtleta.belongsTo(models.StatusConexaoAtleta, {
+      foreignKey: 'status_id',
+      as: 'status'
     });
   };
 

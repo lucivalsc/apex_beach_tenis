@@ -5,24 +5,26 @@
 // node server.js
 // ncc build server.js -o dist
 
-// ATUALIZAR BANCO DE DADOS
-// npx sequelize-cli db:migrate
-// npx sequelize-cli migration:generate --name Novas-tabelas
-// EXECUTAR
-// npx sequelize-cli db:migrate
-
-
 const sequelize = require('./config/database');
+const initializeEnumTables = require('./utils/initializeEnumTables');
 
 // Importar todos os modelos que representam as tabelas do esquema
-const { 
+const {
   Usuario, ConfiguracaoSistema, TipoAssinatura, PacotePagamento,
   Arena, Professor, Atleta, Aluno, ProfissionalTecnico,
-  ArenaProfessor, ArenaAluno, ConexaoAtleta, ProfissionalAtleta,
+  ArenaProfessor, ArenaAluno, ProfessorAluno, ConexaoAtleta, ProfissionalAtleta,
   Assinatura, Pagamento,
   Golpe, ItemTreino, Treino, TreinoItem, Avaliacao, AvaliacaoItem,
   Jogo, JogoParticipante, JogoSet, JogoGame, JogoPonto, JogoJogada,
-  Notificacao, LogSistema
+  Notificacao, LogSistema,
+  // Novos modelos de tipos
+  TipoUsuario, TipoSexo, StatusAssinatura, TipoJogo, StatusJogo,
+  StatusAvaliacao, TipoEquipe, TipoPosicao, TipoMetodoPagamento, StatusPagamento,
+  StatusTreino, StatusConexaoAtleta, TipoNotificacao, TipoConfiguracao,
+  DificuldadeItemTreino, TipoEquipeJogo, TipoResultadoJogada, TipoPonto,
+  TipoLog, TipoPeriodicidade, StatusProfissionalAtleta, TipoEndereco,
+  // Novos modelos adicionais
+  Endereco, UsuarioTipo
 } = require('./models/index');
 
 // Função para verificar/criar tabelas sem alterar estrutura existente
@@ -65,24 +67,25 @@ sequelize.authenticate()
       await syncModel(ConfiguracaoSistema, 'ConfiguracaoSistema');
       await syncModel(TipoAssinatura, 'TipoAssinatura');
       await syncModel(PacotePagamento, 'PacotePagamento');
-      
+
       // 2. Tabelas de perfis de usuários
       await syncModel(Arena, 'Arena');
       await syncModel(Professor, 'Professor');
       await syncModel(Atleta, 'Atleta');
       await syncModel(Aluno, 'Aluno');
       await syncModel(ProfissionalTecnico, 'ProfissionalTecnico');
-      
+
       // 3. Tabelas de relacionamentos entre perfis
       await syncModel(ArenaProfessor, 'ArenaProfessor');
       await syncModel(ArenaAluno, 'ArenaAluno');
+      await syncModel(ProfessorAluno, 'ProfessorAluno');
       await syncModel(ConexaoAtleta, 'ConexaoAtleta');
       await syncModel(ProfissionalAtleta, 'ProfissionalAtleta');
-      
+
       // 4. Tabelas de pagamentos e assinaturas
       await syncModel(Assinatura, 'Assinatura');
       await syncModel(Pagamento, 'Pagamento');
-      
+
       // 5. Tabelas de treinos e avaliações
       await syncModel(Golpe, 'Golpe');
       await syncModel(ItemTreino, 'ItemTreino');
@@ -90,7 +93,7 @@ sequelize.authenticate()
       await syncModel(TreinoItem, 'TreinoItem');
       await syncModel(Avaliacao, 'Avaliacao');
       await syncModel(AvaliacaoItem, 'AvaliacaoItem');
-      
+
       // 6. Tabelas de jogos e partidas
       await syncModel(Jogo, 'Jogo');
       await syncModel(JogoParticipante, 'JogoParticipante');
@@ -98,12 +101,66 @@ sequelize.authenticate()
       await syncModel(JogoGame, 'JogoGame');
       await syncModel(JogoPonto, 'JogoPonto');
       await syncModel(JogoJogada, 'JogoJogada');
-      
+
       // 7. Tabelas de notificações e logs
       await syncModel(Notificacao, 'Notificacao');
       await syncModel(LogSistema, 'LogSistema');
 
+      // Sincronizar as novas tabelas de tipos
+      await syncModel(TipoUsuario, 'TipoUsuario');
+      await syncModel(TipoSexo, 'TipoSexo');
+      await syncModel(StatusAssinatura, 'StatusAssinatura');
+      await syncModel(TipoJogo, 'TipoJogo');
+      await syncModel(StatusJogo, 'StatusJogo');
+      await syncModel(StatusAvaliacao, 'StatusAvaliacao');
+      await syncModel(TipoEquipe, 'TipoEquipe');
+      await syncModel(TipoPosicao, 'TipoPosicao');
+      await syncModel(TipoMetodoPagamento, 'TipoMetodoPagamento');
+      await syncModel(StatusPagamento, 'StatusPagamento');
+      await syncModel(StatusTreino, 'StatusTreino');
+      await syncModel(StatusConexaoAtleta, 'StatusConexaoAtleta');
+      await syncModel(TipoNotificacao, 'TipoNotificacao');
+      await syncModel(TipoConfiguracao, 'TipoConfiguracao');
+      await syncModel(DificuldadeItemTreino, 'DificuldadeItemTreino');
+      await syncModel(TipoEquipeJogo, 'TipoEquipeJogo');
+      await syncModel(TipoResultadoJogada, 'TipoResultadoJogada');
+      await syncModel(TipoPonto, 'TipoPonto');
+      await syncModel(TipoLog, 'TipoLog');
+      await syncModel(TipoPeriodicidade, 'TipoPeriodicidade');
+      await syncModel(StatusProfissionalAtleta, 'StatusProfissionalAtleta');
+      await syncModel(TipoEndereco, 'TipoEndereco');
+      
+      // 8. Novas tabelas adicionais que dependem das tabelas de tipos
+      await syncModel(Endereco, 'Endereco');
+      await syncModel(UsuarioTipo, 'UsuarioTipo');
+
       console.log('Todas as tabelas foram verificadas e processadas!');
+
+      // Inicializar as tabelas de tipos com valores padrão
+      await initializeEnumTables({
+        TipoUsuario,
+        TipoSexo,
+        StatusAssinatura,
+        TipoJogo,
+        StatusJogo,
+        TipoEndereco,
+        StatusAvaliacao,
+        TipoEquipe,
+        TipoPosicao,
+        TipoMetodoPagamento,
+        StatusPagamento,
+        StatusTreino,
+        StatusConexaoAtleta,
+        TipoNotificacao,
+        TipoConfiguracao,
+        DificuldadeItemTreino,
+        TipoEquipeJogo,
+        TipoResultadoJogada,
+        TipoPonto,
+        TipoLog,
+        TipoPeriodicidade,
+        StatusProfissionalAtleta
+      });
     } catch (error) {
       console.error('Erro ao sincronizar tabelas:', error);
       // Não propagar o erro para permitir que o servidor inicie mesmo com problemas de sincronização

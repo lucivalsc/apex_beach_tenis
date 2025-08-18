@@ -14,10 +14,13 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    tipo: {
-      type: DataTypes.ENUM('INFO', 'AVISO', 'ERRO', 'CRITICO', 'SEGURANCA', 'AUDITORIA'),
+    tipo_id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 'INFO'
+      references: {
+        model: 'tipo_log',
+        key: 'id'
+      }
     },
     modulo: {
       type: DataTypes.STRING(100),
@@ -55,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         name: 'idx_tipo',
-        fields: ['tipo']
+        fields: ['tipo_id']
       },
       {
         name: 'idx_modulo',
@@ -72,6 +75,11 @@ module.exports = (sequelize, DataTypes) => {
     LogSistema.belongsTo(models.Usuario, {
       foreignKey: 'usuario_id',
       as: 'usuario'
+    });
+    
+    LogSistema.belongsTo(models.TipoLog, {
+      foreignKey: 'tipo_id',
+      as: 'tipo'
     });
   };
 

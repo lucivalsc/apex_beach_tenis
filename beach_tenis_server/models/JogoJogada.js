@@ -46,9 +46,13 @@ module.exports = (sequelize, DataTypes) => {
     posicao_quadra: {
       type: DataTypes.JSON
     },
-    resultado: {
-      type: DataTypes.ENUM('SUCESSO', 'ERRO', 'NEUTRO'),
-      allowNull: false
+    resultado_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'tipo_resultado_jogada',
+        key: 'id'
+      }
     },
     observacoes: {
       type: DataTypes.TEXT
@@ -76,6 +80,10 @@ module.exports = (sequelize, DataTypes) => {
         fields: ['golpe_id']
       },
       {
+        name: 'idx_resultado',
+        fields: ['resultado_id']
+      },
+      {
         name: 'idx_set_game_ponto',
         fields: ['set_numero', 'game_numero', 'ponto_numero']
       }
@@ -97,6 +105,11 @@ module.exports = (sequelize, DataTypes) => {
     JogoJogada.belongsTo(models.Golpe, {
       foreignKey: 'golpe_id',
       as: 'golpe'
+    });
+    
+    JogoJogada.belongsTo(models.TipoResultadoJogada, {
+      foreignKey: 'resultado_id',
+      as: 'resultado'
     });
   };
 

@@ -18,9 +18,12 @@ module.exports = (sequelize, DataTypes) => {
     descricao: {
       type: DataTypes.STRING(255)
     },
-    tipo: {
-      type: DataTypes.ENUM('STRING', 'INTEGER', 'BOOLEAN', 'JSON'),
-      defaultValue: 'STRING'
+    tipo_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'tipo_configuracao',
+        key: 'id'
+      }
     },
     updated_at: {
       type: DataTypes.DATE,
@@ -32,6 +35,13 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: false,
     updatedAt: 'updated_at'
   });
+
+  ConfiguracaoSistema.associate = function(models) {
+    ConfiguracaoSistema.belongsTo(models.TipoConfiguracao, {
+      foreignKey: 'tipo_id',
+      as: 'tipo'
+    });
+  };
 
   return ConfiguracaoSistema;
 };

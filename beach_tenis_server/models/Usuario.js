@@ -36,9 +36,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    tipo_principal: {
-      type: DataTypes.ENUM('ARENA', 'ATLETA', 'ALUNO', 'PROFESSOR', 'PROFISSIONAL_TECNICO', 'ADMIN'),
-      allowNull: false
+    tipo_usuario_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'tipos_usuario',
+        key: 'id'
+      }
+    },
+    tipo_sexo_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'tipos_sexo',
+        key: 'id'
+      }
     },
     ativo: {
       type: DataTypes.BOOLEAN,
@@ -68,11 +80,16 @@ module.exports = (sequelize, DataTypes) => {
     indexes: [
       {
         name: 'idx_email',
-        fields: ['email']
+        fields: ['email'],
+        unique: true
       },
       {
-        name: 'idx_tipo',
-        fields: ['tipo_principal']
+        name: 'idx_tipo_usuario',
+        fields: ['tipo_usuario_id']
+      },
+      {
+        name: 'idx_tipo_sexo',
+        fields: ['tipo_sexo_id']
       },
       {
         name: 'idx_ativo',
@@ -82,6 +99,18 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Usuario.associate = function (models) {
+    // Associação com tipo de usuário
+    Usuario.belongsTo(models.TipoUsuario, {
+      foreignKey: 'tipo_usuario_id',
+      as: 'tipoUsuario'
+    });
+    
+    // Associação com tipo de sexo
+    Usuario.belongsTo(models.TipoSexo, {
+      foreignKey: 'tipo_sexo_id',
+      as: 'tipoSexo'
+    });
+    
     // Associações com os perfis específicos
     Usuario.hasOne(models.Arena, {
       foreignKey: 'usuario_id',
@@ -125,6 +154,19 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'usuario_id',
       as: 'logs'
     });
+    
+    // Associação com endereços
+    Usuario.hasMany(models.Endereco, {
+      foreignKey: 'usuario_id',
+      as: 'enderecos'
+    });
+    
+    // Associação com tipos de usuário
+    Usuario.hasMany(models.UsuarioTipo, {
+      foreignKey: 'usuario_id',
+      as: 'tipos'
+    });
+  
   };
 
   return Usuario;

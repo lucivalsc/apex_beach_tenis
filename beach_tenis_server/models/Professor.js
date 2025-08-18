@@ -27,8 +27,12 @@ module.exports = (sequelize, DataTypes) => {
     data_nascimento: {
       type: DataTypes.DATEONLY
     },
-    sexo: {
-      type: DataTypes.ENUM('MASCULINO', 'FEMININO', 'OUTRO')
+    tipo_sexo_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'tipo_sexo',
+        key: 'id'
+      }
     },
     telefone: {
       type: DataTypes.STRING(20)
@@ -72,6 +76,10 @@ module.exports = (sequelize, DataTypes) => {
       {
         name: 'idx_ativo',
         fields: ['ativo']
+      },
+      {
+        name: 'idx_tipo_sexo',
+        fields: ['tipo_sexo_id']
       }
     ]
   });
@@ -81,6 +89,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'usuario_id',
       as: 'usuario',
       onDelete: 'CASCADE'
+    });
+    
+    Professor.belongsTo(models.TipoSexo, {
+      foreignKey: 'tipo_sexo_id',
+      as: 'tipoSexo'
     });
     
     // Relação com arenas
@@ -99,6 +112,14 @@ module.exports = (sequelize, DataTypes) => {
     Professor.hasMany(models.Avaliacao, {
       foreignKey: 'professor_id',
       as: 'avaliacoes'
+    });
+    
+    // Relação com alunos
+    Professor.belongsToMany(models.Aluno, {
+      through: models.ProfessorAluno,
+      foreignKey: 'professor_id',
+      otherKey: 'aluno_id',
+      as: 'alunos'
     });
   };
 

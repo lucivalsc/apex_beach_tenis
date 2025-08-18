@@ -42,9 +42,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       allowNull: false
     },
-    status: {
-      type: DataTypes.ENUM('AGENDADA', 'REALIZADA', 'CANCELADA'),
-      defaultValue: 'AGENDADA'
+    status_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'status_avaliacao',
+        key: 'id'
+      }
     },
     observacoes_gerais: {
       type: DataTypes.TEXT
@@ -81,7 +84,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         name: 'idx_status',
-        fields: ['status']
+        fields: ['status_id']
       }
     ]
   });
@@ -90,6 +93,11 @@ module.exports = (sequelize, DataTypes) => {
     Avaliacao.belongsTo(models.Arena, {
       foreignKey: 'arena_id',
       as: 'arena'
+    });
+    
+    Avaliacao.belongsTo(models.StatusAvaliacao, {
+      foreignKey: 'status_id',
+      as: 'status'
     });
     
     Avaliacao.belongsTo(models.Professor, {

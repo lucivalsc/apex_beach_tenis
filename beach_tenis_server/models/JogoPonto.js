@@ -19,9 +19,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    equipe_vencedora: {
-      type: DataTypes.ENUM('A', 'B'),
-      allowNull: false
+    equipe_vencedora_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'tipo_equipe_jogo',
+        key: 'id'
+      }
     },
     atleta_id: {
       type: DataTypes.INTEGER,
@@ -30,9 +34,13 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    tipo_ponto: {
-      type: DataTypes.ENUM('WINNER', 'ERRO_ADVERSARIO', 'ACE', 'DUPLA_FALTA'),
-      allowNull: false
+    tipo_ponto_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'tipo_ponto',
+        key: 'id'
+      }
     },
     created_at: {
       type: DataTypes.DATE,
@@ -53,8 +61,12 @@ module.exports = (sequelize, DataTypes) => {
         fields: ['atleta_id']
       },
       {
-        name: 'idx_tipo',
-        fields: ['tipo_ponto']
+        name: 'idx_tipo_ponto',
+        fields: ['tipo_ponto_id']
+      },
+      {
+        name: 'idx_equipe_vencedora',
+        fields: ['equipe_vencedora_id']
       },
       {
         name: 'unique_game_ponto',
@@ -74,6 +86,16 @@ module.exports = (sequelize, DataTypes) => {
     JogoPonto.belongsTo(models.Atleta, {
       foreignKey: 'atleta_id',
       as: 'atleta'
+    });
+    
+    JogoPonto.belongsTo(models.TipoEquipeJogo, {
+      foreignKey: 'equipe_vencedora_id',
+      as: 'equipeVencedora'
+    });
+    
+    JogoPonto.belongsTo(models.TipoPonto, {
+      foreignKey: 'tipo_ponto_id',
+      as: 'tipoPonto'
     });
   };
 

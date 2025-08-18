@@ -27,8 +27,12 @@ module.exports = (sequelize, DataTypes) => {
     data_nascimento: {
       type: DataTypes.DATEONLY
     },
-    sexo: {
-      type: DataTypes.ENUM('MASCULINO', 'FEMININO', 'OUTRO')
+    tipo_sexo_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'tipo_sexo',
+        key: 'id'
+      }
     },
     cidade: {
       type: DataTypes.STRING(100)
@@ -46,9 +50,12 @@ module.exports = (sequelize, DataTypes) => {
     facebook: {
       type: DataTypes.STRING(100)
     },
-    status_assinatura: {
-      type: DataTypes.ENUM('ATIVO', 'INATIVO', 'SUSPENSO', 'CANCELADO'),
-      defaultValue: 'ATIVO'
+    status_assinatura_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'status_assinatura',
+        key: 'id'
+      }
     },
     data_vencimento: {
       type: DataTypes.DATEONLY
@@ -76,8 +83,12 @@ module.exports = (sequelize, DataTypes) => {
         fields: ['nome']
       },
       {
-        name: 'idx_status',
-        fields: ['status_assinatura']
+        name: 'idx_status_assinatura',
+        fields: ['status_assinatura_id']
+      },
+      {
+        name: 'idx_tipo_sexo',
+        fields: ['tipo_sexo_id']
       }
     ]
   });
@@ -87,6 +98,16 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'usuario_id',
       as: 'usuario',
       onDelete: 'CASCADE'
+    });
+    
+    Atleta.belongsTo(models.TipoSexo, {
+      foreignKey: 'tipo_sexo_id',
+      as: 'tipoSexo'
+    });
+    
+    Atleta.belongsTo(models.StatusAssinatura, {
+      foreignKey: 'status_assinatura_id',
+      as: 'statusAssinatura'
     });
     
     // Conexões entre atletas (rede social)

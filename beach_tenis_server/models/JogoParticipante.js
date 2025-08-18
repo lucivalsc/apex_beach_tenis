@@ -23,13 +23,21 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    equipe: {
-      type: DataTypes.ENUM('A', 'B'),
-      allowNull: false
+    tipo_equipe_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'tipo_equipe',
+        key: 'id'
+      }
     },
-    posicao: {
-      type: DataTypes.ENUM('DIREITA', 'ESQUERDA'),
-      allowNull: true
+    tipo_posicao_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'tipo_posicao',
+        key: 'id'
+      }
     },
     confirmado: {
       type: DataTypes.BOOLEAN,
@@ -54,8 +62,12 @@ module.exports = (sequelize, DataTypes) => {
         fields: ['atleta_id']
       },
       {
-        name: 'idx_equipe',
-        fields: ['equipe']
+        name: 'idx_tipo_equipe',
+        fields: ['tipo_equipe_id']
+      },
+      {
+        name: 'idx_tipo_posicao',
+        fields: ['tipo_posicao_id']
       },
       {
         name: 'unique_jogo_atleta',
@@ -75,6 +87,16 @@ module.exports = (sequelize, DataTypes) => {
     JogoParticipante.belongsTo(models.Atleta, {
       foreignKey: 'atleta_id',
       as: 'atleta'
+    });
+    
+    JogoParticipante.belongsTo(models.TipoEquipe, {
+      foreignKey: 'tipo_equipe_id',
+      as: 'tipoEquipe'
+    });
+    
+    JogoParticipante.belongsTo(models.TipoPosicao, {
+      foreignKey: 'tipo_posicao_id',
+      as: 'tipoPosicao'
     });
   };
 

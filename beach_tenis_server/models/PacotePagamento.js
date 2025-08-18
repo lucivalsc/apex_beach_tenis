@@ -26,9 +26,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false
     },
-    periodicidade: {
-      type: DataTypes.ENUM('MENSAL', 'TRIMESTRAL', 'SEMESTRAL', 'ANUAL'),
-      allowNull: false
+    periodicidade_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'tipo_periodicidade',
+        key: 'id'
+      }
     },
     quantidade_alunos: {
       type: DataTypes.INTEGER,
@@ -50,13 +54,32 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'pacotes_pagamento',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    updatedAt: 'updated_at',
+    indexes: [
+      {
+        name: 'idx_tipo_assinatura',
+        fields: ['tipo_assinatura_id']
+      },
+      {
+        name: 'idx_periodicidade',
+        fields: ['periodicidade_id']
+      },
+      {
+        name: 'idx_ativo',
+        fields: ['ativo']
+      }
+    ]
   });
 
   PacotePagamento.associate = function(models) {
     PacotePagamento.belongsTo(models.TipoAssinatura, {
       foreignKey: 'tipo_assinatura_id',
       as: 'tipoAssinatura'
+    });
+    
+    PacotePagamento.belongsTo(models.TipoPeriodicidade, {
+      foreignKey: 'periodicidade_id',
+      as: 'periodicidade'
     });
     
     PacotePagamento.hasMany(models.Assinatura, {

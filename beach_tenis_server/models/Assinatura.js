@@ -23,9 +23,13 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    status: {
-      type: DataTypes.ENUM('ATIVA', 'CANCELADA', 'SUSPENSA', 'VENCIDA'),
-      defaultValue: 'ATIVA'
+    status_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'status_assinaturas',
+        key: 'id'
+      }
     },
     data_inicio: {
       type: DataTypes.DATEONLY,
@@ -59,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         name: 'idx_status',
-        fields: ['status']
+        fields: ['status_id']
       },
       {
         name: 'idx_vencimento',
@@ -78,6 +82,11 @@ module.exports = (sequelize, DataTypes) => {
     Assinatura.belongsTo(models.PacotePagamento, {
       foreignKey: 'pacote_id',
       as: 'pacote'
+    });
+    
+    Assinatura.belongsTo(models.StatusAssinatura, {
+      foreignKey: 'status_id',
+      as: 'status'
     });
     
     Assinatura.hasMany(models.Pagamento, {

@@ -27,9 +27,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0
     },
-    vencedor: {
-      type: DataTypes.ENUM('A', 'B'),
-      allowNull: true
+    vencedor_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'tipo_equipe_jogo',
+        key: 'id'
+      }
     },
     created_at: {
       type: DataTypes.DATE,
@@ -54,6 +58,10 @@ module.exports = (sequelize, DataTypes) => {
         fields: ['numero_set']
       },
       {
+        name: 'idx_vencedor',
+        fields: ['vencedor_id']
+      },
+      {
         name: 'unique_jogo_set',
         unique: true,
         fields: ['jogo_id', 'numero_set']
@@ -71,6 +79,11 @@ module.exports = (sequelize, DataTypes) => {
     JogoSet.hasMany(models.JogoGame, {
       foreignKey: 'set_id',
       as: 'games'
+    });
+    
+    JogoSet.belongsTo(models.TipoEquipeJogo, {
+      foreignKey: 'vencedor_id',
+      as: 'vencedor'
     });
   };
 

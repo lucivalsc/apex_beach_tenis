@@ -19,13 +19,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false
     },
-    metodo_pagamento: {
-      type: DataTypes.ENUM('CARTAO_CREDITO', 'PIX', 'BOLETO'),
-      allowNull: false
+    metodo_pagamento_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'tipo_metodo_pagamento',
+        key: 'id'
+      }
     },
-    status: {
-      type: DataTypes.ENUM('PENDENTE', 'PROCESSANDO', 'APROVADO', 'RECUSADO', 'CANCELADO'),
-      defaultValue: 'PENDENTE'
+    status_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'status_pagamento',
+        key: 'id'
+      }
     },
     referencia_externa: {
       type: DataTypes.STRING(255)
@@ -60,7 +67,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         name: 'idx_status',
-        fields: ['status']
+        fields: ['status_id']
+      },
+      {
+        name: 'idx_metodo_pagamento',
+        fields: ['metodo_pagamento_id']
       },
       {
         name: 'idx_referencia',
@@ -74,6 +85,16 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'assinatura_id',
       as: 'assinatura',
       onDelete: 'CASCADE'
+    });
+    
+    Pagamento.belongsTo(models.TipoMetodoPagamento, {
+      foreignKey: 'metodo_pagamento_id',
+      as: 'metodoPagamento'
+    });
+    
+    Pagamento.belongsTo(models.StatusPagamento, {
+      foreignKey: 'status_id',
+      as: 'status'
     });
   };
 

@@ -50,9 +50,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TIME,
       allowNull: false
     },
-    status: {
-      type: DataTypes.ENUM('AGENDADO', 'REALIZADO', 'CANCELADO'),
-      defaultValue: 'AGENDADO'
+    status_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'status_treino',
+        key: 'id'
+      }
     },
     observacoes: {
       type: DataTypes.TEXT
@@ -89,7 +92,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         name: 'idx_status',
-        fields: ['status']
+        fields: ['status_id']
       }
     ]
   });
@@ -98,6 +101,11 @@ module.exports = (sequelize, DataTypes) => {
     Treino.belongsTo(models.Arena, {
       foreignKey: 'arena_id',
       as: 'arena'
+    });
+    
+    Treino.belongsTo(models.StatusTreino, {
+      foreignKey: 'status_id',
+      as: 'status'
     });
     
     Treino.belongsTo(models.Professor, {

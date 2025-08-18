@@ -40,13 +40,21 @@ module.exports = (sequelize, DataTypes) => {
     hora_fim: {
       type: DataTypes.TIME
     },
-    tipo_jogo: {
-      type: DataTypes.ENUM('SIMPLES', 'DUPLAS'),
-      allowNull: false
+    tipo_jogo_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'tipos_jogo',
+        key: 'id'
+      }
     },
-    status: {
-      type: DataTypes.ENUM('AGENDADO', 'EM_ANDAMENTO', 'FINALIZADO', 'CANCELADO'),
-      defaultValue: 'AGENDADO'
+    status_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'status_jogos',
+        key: 'id'
+      }
     },
     resultado: {
       type: DataTypes.JSON
@@ -82,11 +90,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         name: 'idx_status',
-        fields: ['status']
+        fields: ['status_id']
       },
       {
         name: 'idx_tipo',
-        fields: ['tipo_jogo']
+        fields: ['tipo_jogo_id']
       }
     ]
   });
@@ -100,6 +108,16 @@ module.exports = (sequelize, DataTypes) => {
     Jogo.belongsTo(models.ProfissionalTecnico, {
       foreignKey: 'profissional_tecnico_id',
       as: 'profissionalTecnico'
+    });
+    
+    Jogo.belongsTo(models.TipoJogo, {
+      foreignKey: 'tipo_jogo_id',
+      as: 'tipoJogo'
+    });
+    
+    Jogo.belongsTo(models.StatusJogo, {
+      foreignKey: 'status_id',
+      as: 'status'
     });
     
     Jogo.hasMany(models.JogoParticipante, {

@@ -17,9 +17,12 @@ module.exports = (sequelize, DataTypes) => {
     categoria: {
       type: DataTypes.STRING(100)
     },
-    dificuldade: {
-      type: DataTypes.ENUM('INICIANTE', 'INTERMEDIARIO', 'AVANCADO'),
-      defaultValue: 'INICIANTE'
+    dificuldade_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'dificuldade_item_treino',
+        key: 'id'
+      }
     },
     ativo: {
       type: DataTypes.BOOLEAN,
@@ -41,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         name: 'idx_dificuldade',
-        fields: ['dificuldade']
+        fields: ['dificuldade_id']
       }
     ]
   });
@@ -50,6 +53,11 @@ module.exports = (sequelize, DataTypes) => {
     ItemTreino.hasMany(models.TreinoItem, {
       foreignKey: 'item_treino_id',
       as: 'treinoItens'
+    });
+    
+    ItemTreino.belongsTo(models.DificuldadeItemTreino, {
+      foreignKey: 'dificuldade_id',
+      as: 'dificuldade'
     });
   };
 

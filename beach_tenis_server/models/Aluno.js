@@ -27,8 +27,12 @@ module.exports = (sequelize, DataTypes) => {
     data_nascimento: {
       type: DataTypes.DATEONLY
     },
-    sexo: {
-      type: DataTypes.ENUM('MASCULINO', 'FEMININO', 'OUTRO')
+    tipo_sexo_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'tipos_sexo',
+        key: 'id'
+      }
     },
     cidade: {
       type: DataTypes.STRING(100)
@@ -65,12 +69,17 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: 'updated_at',
     indexes: [
       {
-        name: 'idx_cpf',
-        fields: ['cpf']
+        name: 'idx_usuario',
+        fields: ['usuario_id']
       },
       {
-        name: 'idx_nome',
-        fields: ['nome']
+        name: 'idx_cpf',
+        fields: ['cpf'],
+        unique: true
+      },
+      {
+        name: 'idx_tipo_sexo',
+        fields: ['tipo_sexo_id']
       },
       {
         name: 'idx_ativo',
@@ -82,26 +91,31 @@ module.exports = (sequelize, DataTypes) => {
   Aluno.associate = function(models) {
     Aluno.belongsTo(models.Usuario, {
       foreignKey: 'usuario_id',
-      as: 'usuario',
-      onDelete: 'CASCADE'
+      as: 'usuario'
     });
     
-    // Relação com arenas
-    Aluno.hasMany(models.ArenaAluno, {
-      foreignKey: 'aluno_id',
-      as: 'arenasVinculadas'
+    Aluno.belongsTo(models.TipoSexo, {
+      foreignKey: 'tipo_sexo_id',
+      as: 'tipoSexo'
     });
-    
-    // Treinos realizados
-    Aluno.hasMany(models.Treino, {
+
+    Aluno.belongsToMany(models.Arena, {
+      through: models.ArenaAluno,
       foreignKey: 'aluno_id',
-      as: 'treinos'
+      otherKey: 'arena_id',
+      as: 'arenas'
     });
-    
-    // Avaliações recebidas
-    Aluno.hasMany(models.Avaliacao, {
+
+    Aluno.belongsToMany(models.Professor, {
+      through: models.ProfessorAluno,
       foreignKey: 'aluno_id',
-      as: 'avaliacoes'
+      otherKey: 'professor_id',
+      as: 'professores'
+    });
+
+    Aluno.hasMany(models.Jogo, {
+      foreignKey: 'aluno_id',
+      as: 'jogos'
     });
   };
 
