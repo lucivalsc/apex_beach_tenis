@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'jogo_sets',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    updated_at: 'updated_at',
     indexes: [
       {
         name: 'idx_jogo',

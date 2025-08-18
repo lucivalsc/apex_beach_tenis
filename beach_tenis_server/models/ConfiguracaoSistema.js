@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'configuracoes_sistema',
     timestamps: true,
     createdAt: false,
-    updatedAt: 'updated_at'
+    updated_at: 'updated_at'
   });
 
   ConfiguracaoSistema.associate = function(models) {

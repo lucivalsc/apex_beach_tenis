@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'golpes',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: false
+    updated_at: false
   });
 
   Golpe.associate = function(models) {

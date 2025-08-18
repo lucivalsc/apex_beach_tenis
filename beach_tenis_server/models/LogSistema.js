@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'logs_sistema',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: false,
+    updated_at: false,
     indexes: [
       {
         name: 'idx_usuario',

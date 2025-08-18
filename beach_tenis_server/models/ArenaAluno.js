@@ -38,8 +38,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     tableName: 'arena_alunos',
     timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: false,
+    created_at: 'created_at',
+    updated_at: false,
     indexes: [
       {
         name: 'idx_arena',

@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'profissionais_tecnicos',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    updated_at: 'updated_at',
     indexes: [
       {
         name: 'idx_cpf',

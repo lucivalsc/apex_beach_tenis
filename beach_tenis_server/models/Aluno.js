@@ -65,8 +65,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     tableName: 'alunos',
     timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    created_at: 'created_at',
+    updated_at: 'updated_at',
     indexes: [
       {
         name: 'idx_usuario',
@@ -88,12 +88,12 @@ module.exports = (sequelize, DataTypes) => {
     ]
   });
 
-  Aluno.associate = function(models) {
+  Aluno.associate = function (models) {
     Aluno.belongsTo(models.Usuario, {
       foreignKey: 'usuario_id',
       as: 'usuario'
     });
-    
+
     Aluno.belongsTo(models.TipoSexo, {
       foreignKey: 'tipo_sexo_id',
       as: 'tipoSexo'

@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'tipos_assinatura',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    updated_at: 'updated_at'
   });
 
   TipoAssinatura.associate = function(models) {

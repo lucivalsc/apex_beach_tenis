@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'pacotes_pagamento',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    updated_at: 'updated_at',
     indexes: [
       {
         name: 'idx_tipo_assinatura',

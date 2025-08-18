@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'notificacoes',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: false,
+    updated_at: false,
     indexes: [
       {
         name: 'idx_usuario',

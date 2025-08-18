@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false
     },
-    updatedAt: {
+    updated_at: {
       type: DataTypes.DATE,
       allowNull: false
     }
@@ -68,12 +68,12 @@ module.exports = (sequelize, DataTypes) => {
     ]
   });
 
-  ProfessorAluno.associate = function(models) {
+  ProfessorAluno.associate = function (models) {
     ProfessorAluno.belongsTo(models.Professor, {
       foreignKey: 'professor_id',
       as: 'professor'
     });
-    
+
     ProfessorAluno.belongsTo(models.Aluno, {
       foreignKey: 'aluno_id',
       as: 'aluno'

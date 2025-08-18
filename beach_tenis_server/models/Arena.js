@@ -70,8 +70,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     tableName: 'arenas',
     timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    created_at: 'created_at',
+    updated_at: 'updated_at',
     indexes: [
       {
         name: 'idx_cnpj',

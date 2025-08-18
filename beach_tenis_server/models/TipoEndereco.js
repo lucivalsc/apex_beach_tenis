@@ -24,17 +24,19 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         },
-        createdAt: {
+        created_at: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW
         },
-        updatedAt: {
+        updated_at: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW
         }
     }, {
         tableName: 'tipos_endereco',
         timestamps: true,
+        createdAt: 'created_at',
+        updated_at: 'updated_at',
         indexes: [
             {
                 name: 'idx_tipo_endereco_codigo',
@@ -322,8 +324,8 @@ module.exports = (sequelize, DataTypes) => {
             // Adicionar timestamps aos dados
             const tipoComTimestamps = {
                 ...tipo,
-                createdAt: now,
-                updatedAt: now
+                created_at: now,
+                updated_at: now
             };
             
             const [record, created] = await this.findOrCreate({
