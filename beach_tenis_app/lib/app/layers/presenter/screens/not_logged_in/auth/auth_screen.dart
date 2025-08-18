@@ -1,8 +1,11 @@
+/// Widget para a linha de checkbox.import 'package:apex_sports/app/common/providers/theme_provider.dart';
 import 'package:apex_sports/app/common/providers/theme_provider.dart';
 import 'package:apex_sports/app/layers/presenter/providers/auth_provider.dart';
 import 'package:apex_sports/app/layers/presenter/screens/logged_in/arena_dashboard/arena_dashboard_screen.dart';
 import 'package:apex_sports/navigation.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -20,7 +23,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   late AuthProvider authProvider;
 
   // Controllers para os campos de texto
-  final _loginEmailController = TextEditingController(text: 'professor@exemplo.com');
+  final _loginEmailController = TextEditingController(text: 'arena@exemplo.com');
   final _loginPasswordController = TextEditingController(text: '912167');
   final _registerNameController = TextEditingController();
   final _registerEmailController = TextEditingController();
@@ -38,11 +41,32 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   bool _obscureRegisterPassword = true;
   bool _obscureConfirmPassword = true;
 
+  // Dropdown para tipo de acesso
+  String? _selectedAccessType;
+  final List<Map<String, String>> _accessTypes = [
+    {'id': 'ARENA', 'label': 'Arena'},
+    {'id': 'ATLETA', 'label': 'Atleta'},
+    {'id': 'ALUNO', 'label': 'Aluno'},
+    {'id': 'PROFESSOR', 'label': 'Professor'},
+    {'id': 'PROFISSIONAL_TECNICO', 'label': 'Profissional Técnico'},
+    {'id': 'ADMIN', 'label': 'Administrador'},
+  ];
+
+  // Controle de validação do formulário
+  bool _isFormValid = false;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    // Adicionar listeners para os campos do registro
+    _registerNameController.addListener(_validateForm);
+    _registerEmailController.addListener(_validateForm);
+    _registerPhoneController.addListener(_validateForm);
+    _registerPasswordController.addListener(_validateForm);
+    _registerConfirmPasswordController.addListener(_validateForm);
   }
 
   @override
@@ -71,6 +95,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   void _handleRegister() {
     // TODO: Implementar lógica de registro
     print("Register attempt for: ${_registerEmailController.text}");
+    print("Access type: $_selectedAccessType");
     push(context, const ArenaDashboardScreen());
   }
 
@@ -80,6 +105,57 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
 
   void _handleGoogleLogin() {
     // TODO: Implementar login com Google
+  }
+
+  /// Valida todos os campos do formulário de registro
+  void _validateForm() {
+    final isNameValid = _isValidName(_registerNameController.text);
+    final isEmailValid = _isValidEmail(_registerEmailController.text);
+    final isPhoneValid = _isValidPhone(_registerPhoneController.text);
+    final isPasswordValid = _isValidPassword(_registerPasswordController.text);
+    final isConfirmPasswordValid = _registerPasswordController.text == _registerConfirmPasswordController.text;
+    final isAccessTypeSelected = _selectedAccessType != null;
+    final areTermsAccepted = _acceptTerms;
+
+    final newIsFormValid = isNameValid &&
+        isEmailValid &&
+        isPhoneValid &&
+        isPasswordValid &&
+        isConfirmPasswordValid &&
+        isAccessTypeSelected &&
+        areTermsAccepted;
+
+    if (_isFormValid != newIsFormValid) {
+      setState(() {
+        _isFormValid = newIsFormValid;
+      });
+    }
+  }
+
+  /// Valida se o nome tem mais de uma palavra
+  bool _isValidName(String name) {
+    if (name.trim().isEmpty) return false;
+    return name.trim().split(' ').where((word) => word.isNotEmpty).length > 1;
+  }
+
+  /// Valida formato de email
+  bool _isValidEmail(String email) {
+    if (email.trim().isEmpty) return false;
+    return RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(email.trim());
+  }
+
+  /// Valida telefone brasileiro (formato com máscara)
+  bool _isValidPhone(String phone) {
+    if (phone.trim().isEmpty) return false;
+    // Remove formatação para validar
+    String cleanPhone = phone.replaceAll(RegExp(r'[^\d]'), '');
+    // Telefone brasileiro: 11 dígitos (celular) ou 10 dígitos (fixo)
+    return cleanPhone.length == 10 || cleanPhone.length == 11;
+  }
+
+  /// Valida se a senha tem no mínimo 9 caracteres
+  bool _isValidPassword(String password) {
+    return password.length >= 9;
   }
 
   @override
@@ -165,6 +241,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   Widget _buildAuthCard() {
     return Container(
       decoration: BoxDecoration(
+        // Cor de fundo do card
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
@@ -178,6 +255,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
       child: Column(
         children: [
           Container(
+            // Cor de fundo do tabbar
             decoration: BoxDecoration(
               color: Colors.grey[100],
               borderRadius: const BorderRadius.only(
@@ -188,24 +266,37 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
             child: TabBar(
               controller: _tabController,
               indicator: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xFF4A90E2),
+                borderRadius: BorderRadius.circular(30),
               ),
-              labelColor: const Color(0xFF4A90E2),
+              // Importante: ajustar o container pai do TabBar
+              padding: const EdgeInsets.all(6),
+              labelColor: Colors.white,
               unselectedLabelColor: Colors.grey[600],
               labelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-              tabs: const [
-                Tab(text: 'Entrar'),
-                Tab(text: 'Registrar'),
+              tabs: [
+                Tab(
+                  child: Container(
+                    height: 45,
+                    alignment: Alignment.center,
+                    child: const Text('Entrar'),
+                  ),
+                ),
+                Tab(
+                  child: Container(
+                    height: 45,
+                    alignment: Alignment.center,
+                    child: const Text('Registrar'),
+                  ),
+                ),
               ],
             ),
           ),
           // Usamos um SizedBox para dar uma altura máxima ao TabBarView,
           // mas ele se ajustará ao conteúdo.
           SizedBox(
-            // Altura pode ser ajustada conforme necessidade.
-            // O conteúdo interno ainda será rolável se exceder.
-            height: 450,
+            // Altura aumentada para acomodar o novo campo
+            height: 500,
             child: TabBarView(
               controller: _tabController,
               children: [
@@ -231,7 +322,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
             labelText: 'Usuário ou e-mail',
             prefixIcon: Icons.person,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 6),
           _buildTextField(
             controller: _loginPasswordController,
             labelText: 'Senha',
@@ -242,7 +333,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               onPressed: () => setState(() => _obscureLoginPassword = !_obscureLoginPassword),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 6),
           Row(
             children: [
               Checkbox(
@@ -258,9 +349,9 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 6),
           _buildAuthButton(text: 'ENTRAR', onPressed: _handleLogin),
-          const SizedBox(height: 24),
+          const SizedBox(height: 6),
           _buildSocialButton(
             text: 'Login com Facebook',
             icon: Icons.facebook,
@@ -268,7 +359,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
             backgroundColor: const Color(0xFF1877F2),
             foregroundColor: Colors.white,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 6),
           _buildSocialButton(
             text: 'Login com Google',
             icon: Icons.g_mobiledata, // Ícone de exemplo
@@ -289,19 +380,23 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
         children: [
           _buildTextField(
               controller: _registerNameController, labelText: 'Nome Completo', prefixIcon: Icons.person_outline),
-          const SizedBox(height: 16),
+          const SizedBox(height: 6),
+          _buildAccessTypeDropdown(),
+          const SizedBox(height: 6),
           _buildTextField(
               controller: _registerEmailController,
               labelText: 'E-mail',
               prefixIcon: Icons.email_outlined,
               keyboardType: TextInputType.emailAddress),
-          const SizedBox(height: 16),
+          const SizedBox(height: 6),
           _buildTextField(
-              controller: _registerPhoneController,
-              labelText: 'Telefone',
-              prefixIcon: Icons.phone_outlined,
-              keyboardType: TextInputType.phone),
-          const SizedBox(height: 16),
+            controller: _registerPhoneController,
+            labelText: 'Telefone',
+            prefixIcon: Icons.phone_outlined,
+            keyboardType: TextInputType.phone,
+            inputFormatters: [TelefoneInputFormatter()],
+          ),
+          const SizedBox(height: 6),
           _buildTextField(
             controller: _registerPasswordController,
             labelText: 'Senha',
@@ -312,7 +407,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               onPressed: () => setState(() => _obscureRegisterPassword = !_obscureRegisterPassword),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 6),
           _buildTextField(
             controller: _registerConfirmPasswordController,
             labelText: 'Confirmar Senha',
@@ -323,11 +418,14 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 6),
           _buildCheckboxRow(
             label: 'Aceito os Termos de Uso',
             value: _acceptTerms,
-            onChanged: (value) => setState(() => _acceptTerms = value ?? false),
+            onChanged: (value) {
+              setState(() => _acceptTerms = value ?? false);
+              _validateForm(); // Revalidar quando mudar os termos
+            },
             isLink: true,
           ),
           _buildCheckboxRow(
@@ -335,13 +433,52 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
             value: _acceptCommunications,
             onChanged: (value) => setState(() => _acceptCommunications = value ?? false),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 6),
+          // Feedback visual da validação
+          _buildValidationFeedback(),
+          const SizedBox(height: 6),
           _buildAuthButton(
             text: 'REGISTRAR',
-            onPressed: _acceptTerms ? _handleRegister : null, // Habilita/desabilita o botão
+            onPressed: _isFormValid ? _handleRegister : null,
           ),
         ],
       ),
+    );
+  }
+
+  /// Widget para o dropdown de tipo de acesso.
+  Widget _buildAccessTypeDropdown() {
+    return DropdownButtonFormField<String>(
+      value: _selectedAccessType,
+      decoration: InputDecoration(
+        labelText: 'Tipo de Acesso',
+        prefixIcon: const Icon(Icons.security, color: Color(0xFF4A90E2)),
+        filled: true,
+        fillColor: const Color(0xFFF8F9FA),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+      ),
+      hint: const Text('Selecione o tipo de acesso'),
+      items: _accessTypes.map((accessType) {
+        return DropdownMenuItem<String>(
+          value: accessType['id'],
+          child: Text(accessType['label']!),
+        );
+      }).toList(),
+      onChanged: (String? newValue) {
+        setState(() {
+          _selectedAccessType = newValue;
+        });
+        _validateForm(); // Revalidar quando mudar o tipo de acesso
+      },
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Por favor, selecione um tipo de acesso';
+        }
+        return null;
+      },
     );
   }
 
@@ -353,11 +490,13 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
     TextInputType? keyboardType,
     bool obscureText = false,
     Widget? suffixIcon,
+    List<TextInputFormatter>? inputFormatters,
   }) {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
+      inputFormatters: inputFormatters,
       decoration: InputDecoration(
         labelText: labelText,
         prefixIcon: Icon(prefixIcon, color: const Color(0xFF4A90E2)),
@@ -399,7 +538,6 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
     bool isOutlined = false,
   }) {
     return SizedBox(
-      height: 45,
       child: isOutlined
           ? OutlinedButton.icon(
               onPressed: onPressed,
@@ -422,7 +560,97 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
     );
   }
 
-  /// Widget para a linha de checkbox.
+  /// Widget para mostrar feedback de validação
+  Widget _buildValidationFeedback() {
+    if (_isFormValid) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.green.shade50,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.green.shade200),
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.check_circle, color: Colors.green.shade600, size: 16),
+            const SizedBox(width: 8),
+            Text(
+              'Todos os campos estão válidos',
+              style: TextStyle(color: Colors.green.shade700, fontSize: 12),
+            ),
+          ],
+        ),
+      );
+    }
+
+    // Lista de validações que falharam
+    List<String> errors = [];
+
+    if (!_isValidName(_registerNameController.text)) {
+      errors.add('Nome deve conter nome e sobrenome');
+    }
+    if (_selectedAccessType == null) {
+      errors.add('Selecione um tipo de acesso');
+    }
+    if (!_isValidEmail(_registerEmailController.text)) {
+      errors.add('Email inválido');
+    }
+    if (!_isValidPhone(_registerPhoneController.text)) {
+      errors.add('Telefone inválido');
+    }
+    if (!_isValidPassword(_registerPasswordController.text)) {
+      errors.add('Senha deve ter no mínimo 9 caracteres');
+    }
+    if (_registerPasswordController.text != _registerConfirmPasswordController.text) {
+      errors.add('Senhas não coincidem');
+    }
+    if (!_acceptTerms) {
+      errors.add('Aceite os termos de uso');
+    }
+
+    if (errors.isEmpty) return const SizedBox.shrink();
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.orange.shade50,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.orange.shade200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.info_outline, color: Colors.orange.shade600, size: 16),
+              const SizedBox(width: 8),
+              Text(
+                'Complete os seguintes campos:',
+                style: TextStyle(color: Colors.orange.shade700, fontSize: 12, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          ...errors.take(3).map((error) => Padding(
+                padding: const EdgeInsets.only(left: 24, top: 2),
+                child: Text(
+                  '• $error',
+                  style: TextStyle(color: Colors.orange.shade600, fontSize: 11),
+                ),
+              )),
+          if (errors.length > 3)
+            Padding(
+              padding: const EdgeInsets.only(left: 24, top: 2),
+              child: Text(
+                '• e mais ${errors.length - 3} validação${errors.length - 3 > 1 ? 'ões' : ''}...',
+                style: TextStyle(color: Colors.orange.shade600, fontSize: 11),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildCheckboxRow({
     required String label,
     required bool value,
