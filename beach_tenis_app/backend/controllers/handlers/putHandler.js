@@ -9,10 +9,7 @@
 const cache = require('../../utils/cache');
 const { DataTypes } = require('sequelize');
 const { ApiError, ErrorCodes } = require('../../utils/errorHandler');
-const logger = require('../../utils/logger');
 
-// Criar um logger específico para operações PUT
-const putLogger = logger.getSubLogger('putHandler');
 const putHandler = async (req, res, sequelize, Sequelize, buildWhereClause) => {
     const { entity, data, filter } = req.body;
 
@@ -23,12 +20,12 @@ const putHandler = async (req, res, sequelize, Sequelize, buildWhereClause) => {
     const tableName = `\`${entity}\``;
     let query = '';
     let replacements = {};
-    
+
     // Obter o modelo correspondente à entidade para identificar campos de data
     const model = Object.values(sequelize.models).find(
         m => m.tableName.toLowerCase() === entity.toLowerCase()
     );
-    
+
     if (!model) {
         return res.status(400).json({
             success: false,
@@ -36,36 +33,36 @@ const putHandler = async (req, res, sequelize, Sequelize, buildWhereClause) => {
             failure: true
         });
     }
-    
+
     // Criar uma cópia dos dados para não modificar o original
     const dataToUpdate = { ...data };
-    
+
     // Identificar campos de data no modelo
     const modelAttributes = model.rawAttributes;
-    const dateFields = Object.keys(modelAttributes).filter(attr => 
-        modelAttributes[attr].type instanceof DataTypes.DATE || 
+    const dateFields = Object.keys(modelAttributes).filter(attr =>
+        modelAttributes[attr].type instanceof DataTypes.DATE ||
         modelAttributes[attr].type instanceof DataTypes.DATEONLY
     );
-    
+
     // Preservar os campos de data enviados no body
     for (const dateField of dateFields) {
         if (dataToUpdate[dateField] === undefined || dataToUpdate[dateField] === null) {
             // Se o campo não foi fornecido, não fazemos nada
             continue;
         }
-        
+
         // Se o campo foi fornecido, garantimos que seja usado exatamente como está
         // Sem nenhuma conversão automática de timezone
         if (typeof dataToUpdate[dateField] === 'string') {
             // Já é uma string de data, mantemos como está
-            putLogger.debug(`Preservando data original para campo ${dateField}:`, {
+            console.log(`Preservando data original para campo ${dateField}:`, {
                 value: dataToUpdate[dateField]
             });
             continue;
         } else if (dataToUpdate[dateField] instanceof Date) {
             // Convertemos para string ISO para evitar conversões automáticas
             dataToUpdate[dateField] = dataToUpdate[dateField].toISOString();
-            putLogger.debug(`Convertendo objeto Date para string ISO para campo ${dateField}:`, {
+            console.log(`Convertendo objeto Date para string ISO para campo ${dateField}:`, {
                 value: dataToUpdate[dateField]
             });
         }
@@ -86,12 +83,12 @@ const putHandler = async (req, res, sequelize, Sequelize, buildWhereClause) => {
     query = `UPDATE ${tableName} SET ${updates} ${whereClausePart}`;
 
     // Executando a query de atualização
-    putLogger.debug('Executando query de atualização', {
+    console.log('Executando query de atualização', {
         query,
         entity,
         updates
     });
-    
+
     // Executar a query com typeCast para preservar o formato original das datas
     await sequelize.query(query, {
         type: Sequelize.QueryTypes.UPDATE,
@@ -107,11 +104,11 @@ const putHandler = async (req, res, sequelize, Sequelize, buildWhereClause) => {
     });
 
     // Buscando os registros atualizados para retornar
-    putLogger.debug('Buscando registros atualizados', {
+    console.log('Buscando registros atualizados', {
         query: `SELECT * FROM ${tableName} ${whereClausePart}`,
         entity
     });
-    
+
     // Usar typeCast para preservar o formato original das datas na consulta de seleção
     const [updatedData] = await sequelize.query(
         `SELECT * FROM ${tableName} ${whereClausePart}`,
@@ -128,7 +125,7 @@ const putHandler = async (req, res, sequelize, Sequelize, buildWhereClause) => {
             }
         }
     );
-    
+
     // Restaurar os campos de data originais do body para o resultado
     // Se os dados retornados forem um array
     if (Array.isArray(updatedData)) {
@@ -140,7 +137,7 @@ const putHandler = async (req, res, sequelize, Sequelize, buildWhereClause) => {
                 }
             }
         });
-    } 
+    }
     // Se os dados retornados forem um único objeto
     else if (updatedData) {
         for (const dateField of dateFields) {

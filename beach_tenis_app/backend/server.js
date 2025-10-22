@@ -3,6 +3,9 @@
 
 // Executar servidor no terminal
 // node server.js
+
+// Para compilar o servidor para produção
+// npm install -g @vercel/ncc
 // ncc build server.js -o dist
 
 const sequelize = require('./config/database');

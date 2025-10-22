@@ -8,10 +8,7 @@
 const cache = require('../../utils/cache');
 const { DataTypes } = require('sequelize');
 const { ApiError, ErrorCodes } = require('../../utils/errorHandler');
-const logger = require('../../utils/logger');
 
-// Criar um logger específico para operações POST
-const postLogger = logger.getSubLogger('postHandler');
 const postHandler = async (req, res, sequelize, Sequelize) => {
     const { entity, data } = req.body;
 
@@ -74,14 +71,14 @@ const postHandler = async (req, res, sequelize, Sequelize) => {
                     // Sem nenhuma conversão automática de timezone pelo Sequelize
                     if (typeof itemToCreate[dateField] === 'string') {
                         // Já é uma string de data, mantemos como está
-                        postLogger.debug(`Preservando data original para campo ${dateField}:`, {
+                        console.log(`Preservando data original para campo ${dateField}:`, {
                             value: itemToCreate[dateField]
                         });
                         continue;
                     } else if (itemToCreate[dateField] instanceof Date) {
                         // Convertemos para string ISO para evitar conversões automáticas
                         itemToCreate[dateField] = itemToCreate[dateField].toISOString();
-                        postLogger.debug(`Convertendo objeto Date para string ISO para campo ${dateField}:`, {
+                        console.log(`Convertendo objeto Date para string ISO para campo ${dateField}:`, {
                             value: itemToCreate[dateField]
                         });
                     }
@@ -96,7 +93,7 @@ const postHandler = async (req, res, sequelize, Sequelize) => {
                 // Construir a query SQL INSERT
                 const insertQuery = `INSERT INTO ${model.tableName} (${fields.join(', ')}) VALUES (${placeholders})`;
                 
-                postLogger.debug('Executando query de inserção', {
+                console.log('Executando query de inserção', {
                     query: insertQuery,
                     entity,
                     fields

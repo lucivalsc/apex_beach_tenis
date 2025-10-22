@@ -2,13 +2,13 @@
  * Middleware para tratamento centralizado de erros e logging
  */
 const { sendErrorResponse } = require('../utils/errorHandler');
-const logger = require('../utils/logger');
 
 /**
  * Middleware para registrar requisições HTTP
  */
 const requestLogger = (req, res, next) => {
-    logger.logRequest(req, res, next);
+    console.log(`Requisição: ${req.method} ${req.originalUrl}`);
+    next();
 };
 
 /**
@@ -16,10 +16,8 @@ const requestLogger = (req, res, next) => {
  */
 const errorHandler = (err, req, res, next) => {
     // Registrar o erro no logger
-    logger.logError(err, req, res, () => {
-        // Usar o utilitário de tratamento de erros para enviar a resposta
-        sendErrorResponse(err, res);
-    });
+    console.log(`Erro: ${err.message}`);
+    next(err);
 };
 
 /**
@@ -27,7 +25,7 @@ const errorHandler = (err, req, res, next) => {
  */
 const notFoundHandler = (req, res, next) => {
     // Registrar no logger a tentativa de acesso a uma rota inexistente
-    logger.warn(`Rota não encontrada: ${req.method} ${req.originalUrl}`, {
+    console.log(`Rota não encontrada: ${req.method} ${req.originalUrl}`, {
         method: req.method,
         url: req.originalUrl,
         ip: req.ip

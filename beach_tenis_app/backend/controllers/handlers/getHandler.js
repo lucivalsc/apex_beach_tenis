@@ -6,18 +6,14 @@
  * @param {Function} buildWhereClause - Função para construir cláusulas WHERE
  */
 const { ApiError, ErrorCodes } = require('../../utils/errorHandler');
-const { 
-    sanitizeTableName, 
-    sanitizeColumnNames, 
+const {
+    sanitizeTableName,
+    sanitizeColumnNames,
     sanitizeOrderBy,
     sanitizeJoins
 } = require('../../utils/sqlSanitizer');
 const cache = require('../../utils/cache');
-const logger = require('../../utils/logger');
 const { Sequelize } = require('sequelize');
-
-// Criar um logger específico para operações GET
-const getLogger = logger.getSubLogger('getHandler');
 
 /**
  * Função para mapear operadores para SQL
@@ -91,7 +87,7 @@ function buildWhereClauseForDbmGet(filters) {
 const getHandler = async (req, res, sequelize, buildWhereClause) => {
     try {
         const {
-            entity, alias, data, joins, filter, groupBy, orderBy, offset, limit, 
+            entity, alias, data, joins, filter, groupBy, orderBy, offset, limit,
             select, addSelect, joinType
         } = req.body;
 
@@ -102,25 +98,25 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
 
         const actualLimit = limit || 100;
         const actualOffset = offset || 0;
-        
+
         // --- CACHE DE CONSULTAS ---
         // Incluir todos os parâmetros relevantes na chave de cache, incluindo os novos parâmetros
-        const cacheParams = { 
-            joins, 
-            filter, 
-            groupBy, 
-            orderBy, 
-            offset: actualOffset, 
+        const cacheParams = {
+            joins,
+            filter,
+            groupBy,
+            orderBy,
+            offset: actualOffset,
             limit: actualLimit,
             // Incluir os novos parâmetros
             select: select || (data && data.select) || null,
             addSelect: addSelect || null,
             joinType: joinType || null
         };
-        
+
         const cacheResult = cache.get(entity, cacheParams);
         if (cacheResult) {
-            getLogger.debug(`Resultado obtido do cache para entidade: ${entity}`, {
+            console.log(`Resultado obtido do cache para entidade: ${entity}`, {
                 entity,
                 params: {
                     ...cacheParams,
@@ -129,7 +125,7 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
                     filter: filter ? 'presente' : 'ausente'
                 }
             });
-            
+
             return res.status(200).json({
                 success: true,
                 data: cacheResult.data,
@@ -139,8 +135,8 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
                 failure: false
             });
         }
-        
-        getLogger.debug(`Consultando banco de dados para entidade: ${entity}`, {
+
+        console.log(`Consultando banco de dados para entidade: ${entity}`, {
             entity,
             params: cacheParams
         });
@@ -158,7 +154,7 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
 
             // Query para contagem total de registros
             let countQuery = `SELECT COUNT(*) as total FROM ${tableName} ${alias || ''}`;
-            
+
             // Adicionando JOINs à query de contagem se existirem
             if (joins && Array.isArray(joins) && joins.length > 0) {
                 try {
@@ -168,44 +164,44 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
                         if (!join.table) {
                             throw new ApiError(ErrorCodes.INVALID_PARAMETER, 'Tabela não especificada no join');
                         }
-                        
+
                         // Sanitizar o nome da tabela
                         const joinTable = sanitizeTableName(join.table);
-                        
+
                         // Determinar o tipo de join (padrão é INNER JOIN se não especificado)
                         let type = 'INNER JOIN';
-                        
+
                         // Se o tipo de join for especificado no próprio join
                         if (join.type) {
                             const validTypes = ['INNER JOIN', 'LEFT JOIN', 'RIGHT JOIN', 'OUTER JOIN', 'FULL OUTER JOIN', 'CROSS JOIN'];
                             const upperType = join.type.toUpperCase();
-                            
+
                             if (!validTypes.includes(upperType)) {
                                 throw new ApiError(ErrorCodes.INVALID_PARAMETER, `Tipo de join inválido: ${join.type}`);
                             }
-                            
+
                             type = upperType;
                         }
                         // Se o tipo de join for especificado globalmente (para todos os joins)
                         else if (joinType) {
                             const validTypes = ['INNER', 'LEFT', 'RIGHT', 'OUTER', 'FULL OUTER', 'CROSS'];
                             const upperType = joinType.toUpperCase();
-                            
+
                             if (!validTypes.includes(upperType)) {
                                 throw new ApiError(ErrorCodes.INVALID_PARAMETER, `Tipo de join global inválido: ${joinType}`);
                             }
-                            
+
                             type = `${upperType} JOIN`;
                         }
-                        
+
                         // Construir a cláusula JOIN
                         let joinClause = `${type} ${joinTable}`;
-                        
+
                         // Adicionar alias se fornecido
                         if (join.alias) {
                             joinClause += ` AS ${join.alias}`;
                         }
-                        
+
                         // Adicionar condição ON
                         if (join.on) {
                             // Sanitizar a condição ON
@@ -214,10 +210,10 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
                         } else {
                             throw new ApiError(ErrorCodes.INVALID_PARAMETER, 'Condição ON não especificada no join');
                         }
-                        
+
                         return joinClause;
                     });
-                    
+
                     countQuery += ` ${processedJoins.join(' ')}`;
                 } catch (error) {
                     throw new ApiError(ErrorCodes.INVALID_PARAMETER, 'Definição de joins inválida', {
@@ -225,7 +221,7 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
                     });
                 }
             }
-            
+
             if (whereClause) {
                 countQuery += ` WHERE ${whereClause}`;
             }
@@ -237,7 +233,7 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
 
             // Query principal para buscar os dados
             let dataQuery = `SELECT `;
-            
+
             // Sanitizar colunas selecionadas
             try {
                 // Verificar se há select específico no novo formato
@@ -249,12 +245,12 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
                 else if (data && data.select && Array.isArray(data.select) && data.select.length > 0) {
                     const sanitizedColumns = sanitizeColumnNames(data.select);
                     dataQuery += sanitizedColumns.join(', ');
-                } 
+                }
                 // Se não houver select específico, selecionar todas as colunas
                 else {
                     dataQuery += '*';
                 }
-                
+
                 // Adicionar funções agregadas (COUNT, SUM, etc.) se existirem
                 if (addSelect && Array.isArray(addSelect) && addSelect.length > 0) {
                     // Verificar se estamos usando * e precisamos substituir por colunas específicas
@@ -264,12 +260,12 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
                         dataQuery = dataQuery.slice(0, -1);
                         // Adicionar vírgula após o asterisco
                         dataQuery += ', ';
-                    } 
+                    }
                     // Se já temos colunas selecionadas, adicionar vírgula
                     else if ((select && select.length > 0) || (data && data.select && data.select.length > 0)) {
                         dataQuery += ', ';
                     }
-                    
+
                     // Processar cada expressão adicional (COUNT, SUM, etc.)
                     const sanitizedAddSelects = addSelect.map(item => {
                         // Verificar se o item é uma string direta ou um objeto estruturado
@@ -282,30 +278,30 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
                             if (!item.function || !item.column) {
                                 throw new ApiError(ErrorCodes.INVALID_PARAMETER, 'Função ou coluna não especificada em addSelect');
                             }
-                            
+
                             // Lista de funções permitidas
                             const allowedFunctions = ['COUNT', 'SUM', 'AVG', 'MIN', 'MAX', 'DISTINCT'];
                             const func = item.function.toUpperCase();
-                            
+
                             if (!allowedFunctions.includes(func)) {
                                 throw new ApiError(ErrorCodes.INVALID_PARAMETER, `Função não permitida: ${item.function}`);
                             }
-                            
+
                             // Sanitizar o nome da coluna
                             const sanitizedColumn = sanitizeColumnNames([item.column])[0];
-                            
+
                             // Construir a expressão com alias se fornecido
                             let expression = `${func}(${sanitizedColumn})`;
                             if (item.alias) {
                                 expression += ` AS \`${item.alias}\``;
                             }
-                            
+
                             return expression;
                         } else {
                             throw new ApiError(ErrorCodes.INVALID_PARAMETER, 'Formato inválido em addSelect. Use string ou objeto.');
                         }
                     });
-                    
+
                     dataQuery += sanitizedAddSelects.join(', ');
                 }
             } catch (error) {
@@ -313,63 +309,63 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
                     details: error.message
                 });
             }
-            
+
             dataQuery += ` FROM ${tableName} ${alias || ''}`;
-            
+
             // Adicionando JOINs se existirem
             if (joins && Array.isArray(joins) && joins.length > 0) {
                 try {
-                    getLogger.debug('Processando joins', {
+                    console.log('Processando joins', {
                         joins,
                         entity,
                         alias,
                         joinType
                     });
-                    
+
                     // Processar cada join com seu tipo específico
                     const processedJoins = joins.map(join => {
                         // Verificar se o join tem as propriedades necessárias
                         if (!join.table) {
                             throw new ApiError(ErrorCodes.INVALID_PARAMETER, 'Tabela não especificada no join');
                         }
-                        
+
                         // Sanitizar o nome da tabela
                         const joinTable = sanitizeTableName(join.table);
-                        
+
                         // Determinar o tipo de join (padrão é INNER JOIN se não especificado)
                         let type = 'INNER JOIN';
-                        
+
                         // Se o tipo de join for especificado no próprio join
                         if (join.type) {
                             const validTypes = ['INNER JOIN', 'LEFT JOIN', 'RIGHT JOIN', 'OUTER JOIN', 'FULL OUTER JOIN', 'CROSS JOIN'];
                             const upperType = join.type.toUpperCase();
-                            
+
                             if (!validTypes.includes(upperType)) {
                                 throw new ApiError(ErrorCodes.INVALID_PARAMETER, `Tipo de join inválido: ${join.type}`);
                             }
-                            
+
                             type = upperType;
                         }
                         // Se o tipo de join for especificado globalmente (para todos os joins)
                         else if (joinType) {
                             const validTypes = ['INNER', 'LEFT', 'RIGHT', 'OUTER', 'FULL OUTER', 'CROSS'];
                             const upperType = joinType.toUpperCase();
-                            
+
                             if (!validTypes.includes(upperType)) {
                                 throw new ApiError(ErrorCodes.INVALID_PARAMETER, `Tipo de join global inválido: ${joinType}`);
                             }
-                            
+
                             type = `${upperType} JOIN`;
                         }
-                        
+
                         // Construir a cláusula JOIN
                         let joinClause = `${type} ${joinTable}`;
-                        
+
                         // Adicionar alias se fornecido
                         if (join.alias) {
                             joinClause += ` AS ${join.alias}`;
                         }
-                        
+
                         // Adicionar condição ON
                         if (join.on) {
                             // Sanitizar a condição ON
@@ -378,10 +374,10 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
                         } else {
                             throw new ApiError(ErrorCodes.INVALID_PARAMETER, 'Condição ON não especificada no join');
                         }
-                        
+
                         return joinClause;
                     });
-                    
+
                     dataQuery += ` ${processedJoins.join(' ')}`;
                 } catch (error) {
                     throw new ApiError(ErrorCodes.INVALID_PARAMETER, 'Definição de joins inválida', {
@@ -426,30 +422,30 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
 
             // Executando as queries
             try {
-                getLogger.debug('Executando query de contagem', {
+                console.log('Executando query de contagem', {
                     query: countQuery,
                     entity
                 });
-                
+
                 const [countResults] = await sequelize.query(countQuery, { replacements });
-                
+
                 // Verificar se há resultados da contagem
                 if (!countResults || countResults.length === 0) {
                     // Tabela não existe ou está vazia
                     throw new ApiError(ErrorCodes.ENTITY_NOT_FOUND, `Entidade '${entity}' não encontrada`, { entity });
                 }
-                
+
                 // Calculando a quantidade total de itens
                 const totalItems = countResults[0]?.total || 0;
-                
+
                 // Executar a query principal para buscar os dados
-                getLogger.debug('Executando query principal', {
+                console.log('Executando query principal', {
                     query: dataQuery,
                     entity
                 });
-                
+
                 // Adicionar typeCast para preservar o formato original das datas
-                const [results] = await sequelize.query(dataQuery, { 
+                const [results] = await sequelize.query(dataQuery, {
                     replacements,
                     // Função typeCast para preservar o formato original das datas
                     typeCast: function (field, next) {
@@ -463,7 +459,7 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
 
                 // Calculando a quantidade total de páginas
                 const totalPages = Math.ceil(totalItems / actualLimit);
-                
+
                 // Processar os resultados para garantir que as datas estão no formato correto
                 if (results && results.length > 0) {
                     results.forEach(record => {
@@ -477,12 +473,12 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
                 }
 
                 // Salvar no cache antes de retornar
-                getLogger.debug(`Salvando resultado no cache para entidade: ${entity}`, {
+                console.log(`Salvando resultado no cache para entidade: ${entity}`, {
                     entity,
                     totalItems,
                     totalPages
                 });
-                
+
                 cache.set(entity, cacheParams, {
                     data: results,
                     totalItems,
@@ -502,13 +498,13 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
                 });
             } catch (queryError) {
                 // Erro específico para problemas na execução da query
-                getLogger.error(`Erro ao executar consulta para entidade: ${entity}`, {
+                console.error(`Erro ao executar consulta para entidade: ${entity}`, {
                     entity,
                     error: queryError.message,
                     stack: queryError.stack,
                     query: dataQuery
                 });
-                
+
                 throw new ApiError(ErrorCodes.QUERY_ERROR, 'Erro ao executar consulta SQL', {
                     entity,
                     details: queryError.message
@@ -516,13 +512,13 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
             }
         } catch (filterError) {
             // Erro específico para problemas na construção do filtro
-            getLogger.error(`Erro ao processar filtros para entidade: ${entity}`, {
+            console.error(`Erro ao processar filtros para entidade: ${entity}`, {
                 entity,
                 filter,
                 error: filterError.message,
                 stack: filterError.stack
             });
-            
+
             if (filterError instanceof ApiError) {
                 throw filterError;
             }
@@ -536,12 +532,12 @@ const getHandler = async (req, res, sequelize, buildWhereClause) => {
             throw error;
         }
         // Caso contrário, cria um erro genérico
-        getLogger.error('Erro inesperado ao processar consulta', {
+        console.error('Erro inesperado ao processar consulta', {
             entity,
             error: error.message,
             stack: error.stack
         });
-        
+
         throw new ApiError(ErrorCodes.UNEXPECTED_ERROR, 'Erro ao processar consulta', {
             details: error.message
         });
@@ -565,7 +561,7 @@ getHandler.dbmGet = async (req, res, sequelize) => {
         // Início da consulta
         let query = `SELECT ${select && select.length > 0 ? select.join(', ') : '*'} FROM \`${entity}\` ${alias ? alias : ''}`;
 
-        getLogger.debug(`Início da consulta dbmGet para entidade: ${entity}`);
+        console.log(`Início da consulta dbmGet para entidade: ${entity}`);
 
         // Adicionando LEFT JOINs
         if (leftJoin && leftJoin.length > 0) {
@@ -573,21 +569,21 @@ getHandler.dbmGet = async (req, res, sequelize) => {
                 query += ` LEFT JOIN \`${join.table}\` ${join.alias} ON ${join.condition}`;
             });
         }
-        
+
         // Adicionando INNER JOINs
         if (innerJoin && innerJoin.length > 0) {
             innerJoin.forEach(join => {
                 query += ` INNER JOIN \`${join.table}\` ${join.alias} ON ${join.condition}`;
             });
         }
-        
+
         // Adicionando RIGHT JOINs
         if (rightJoin && rightJoin.length > 0) {
             rightJoin.forEach(join => {
                 query += ` RIGHT JOIN \`${join.table}\` ${join.alias} ON ${join.condition}`;
             });
         }
-        
+
         // Adicionando OUTER JOINs (FULL OUTER JOIN)
         if (outerJoin && outerJoin.length > 0) {
             outerJoin.forEach(join => {
@@ -628,10 +624,10 @@ getHandler.dbmGet = async (req, res, sequelize) => {
             query += ` OFFSET ${parseInt(offset, 10)}`;
         }
 
-        getLogger.debug(`Executando consulta dbmGet: ${query}`);
+        console.log(`Executando consulta dbmGet: ${query}`);
 
         // Executando a consulta com typeCast para preservar o formato original das datas
-        const [results] = await sequelize.query(query, { 
+        const [results] = await sequelize.query(query, {
             replacements,
             typeCast: getHandler.typeCast
         });
@@ -642,12 +638,12 @@ getHandler.dbmGet = async (req, res, sequelize) => {
             failure: false
         });
     } catch (error) {
-        getLogger.error(`Erro ao executar dbmGet para entidade: ${entity}`, {
+        console.error(`Erro ao executar dbmGet para entidade: ${entity}`, {
             entity,
             error: error.message,
             stack: error.stack
         });
-        
+
         res.status(500).json({
             success: false,
             message: 'Erro ao executar a consulta no banco de dados.',
