@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_button.dart';
 import '../../../../../common/widget/gradient_background.dart';
+import '../../../../data/models/login_model.dart';
+import '../../../providers/auth_provider.dart';
 import '../admin_dashboard/admin_dashboard_screen.dart';
 import '../aluno_dashboard/aluno_dashboard_screen.dart';
 import '../arena_dashboard/arena_dashboard_screen.dart';
@@ -21,33 +24,9 @@ class PerfilSelectionScreen extends StatefulWidget {
 }
 
 class _PerfilSelectionScreenState extends State<PerfilSelectionScreen> {
-  // Mock data para demonstração
-  final Map<String, dynamic> userData = {
-    'nome': 'João Silva',
-    'email': 'joao.silva@email.com',
-    'foto': null,
-  };
-
-  final List<Map<String, dynamic>> perfis = [
-    {
-      'tipo': 'ATLETA',
-      'descricao': 'Atleta de Beach Tênis',
-      'cor': AppStyles.primaryGreen,
-      'icone': Icons.sports_tennis,
-    },
-    {
-      'tipo': 'PROFESSOR',
-      'descricao': 'Professor de Beach Tênis',
-      'cor': AppStyles.primaryBlue,
-      'icone': Icons.school,
-    },
-    {
-      'tipo': 'ARENA',
-      'descricao': 'Administrador de Arena',
-      'cor': AppStyles.primaryBlue,
-      'icone': Icons.location_on,
-    },
-  ];
+  UsuarioModel? get usuario => context.read<AuthProvider>().loginData?.usuario;
+  
+  List<TipoUsuarioModel> get perfisAtivos => usuario?.tiposAtivos ?? [];
 
   @override
   Widget build(BuildContext context) {
@@ -114,19 +93,14 @@ class _PerfilSelectionScreenState extends State<PerfilSelectionScreen> {
             CircleAvatar(
               radius: 30,
               backgroundColor: AppStyles.grey800,
-              backgroundImage: userData['foto'] != null
-                  ? NetworkImage(userData['foto'])
-                  : null,
-              child: userData['foto'] == null
-                  ? Text(
-                      userData['nome'].substring(0, 1).toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: AppStyles.white,
-                      ),
-                    )
-                  : null,
+              child: Text(
+                usuario?.iniciais ?? 'U',
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: AppStyles.white,
+                ),
+              ),
             ),
             const SizedBox(width: AppStyles.mediumSpace),
             Expanded(
@@ -134,7 +108,7 @@ class _PerfilSelectionScreenState extends State<PerfilSelectionScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    userData['nome'],
+                    usuario?.nome ?? 'Usuário',
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -143,7 +117,7 @@ class _PerfilSelectionScreenState extends State<PerfilSelectionScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    userData['email'],
+                    usuario?.email ?? '',
                     style: const TextStyle(
                       fontSize: 14,
                       color: AppStyles.grey700,
@@ -162,7 +136,7 @@ class _PerfilSelectionScreenState extends State<PerfilSelectionScreen> {
                           borderRadius: BorderRadius.circular(AppStyles.radiusSmall),
                         ),
                         child: Text(
-                          '${perfis.length} PERFIS DISPONÍVEIS',
+                          '${perfisAtivos.length} PERFIS DISPONÍVEIS',
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
@@ -182,12 +156,30 @@ class _PerfilSelectionScreenState extends State<PerfilSelectionScreen> {
   }
 
   Widget _buildPerfisList() {
+    if (perfisAtivos.isEmpty) {
+      return const Card(
+        child: Padding(
+          padding: EdgeInsets.all(AppStyles.largeSpace),
+          child: Text(
+            'Nenhum perfil ativo encontrado.',
+            style: TextStyle(
+              fontSize: 16,
+              color: AppStyles.grey700,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: perfis.length,
+      itemCount: perfisAtivos.length,
       itemBuilder: (context, index) {
-        final perfil = perfis[index];
+        final perfil = perfisAtivos[index];
+        final perfilInfo = _getPerfilInfo(perfil.codigoTipo);
+        
         return Card(
           elevation: 2,
           margin: const EdgeInsets.only(bottom: AppStyles.mediumSpace),
@@ -195,7 +187,7 @@ class _PerfilSelectionScreenState extends State<PerfilSelectionScreen> {
             borderRadius: BorderRadius.circular(AppStyles.radiusMedium),
           ),
           child: InkWell(
-            onTap: () => _navigateToDashboard(perfil['tipo']),
+            onTap: () => _navigateToDashboard(perfil.codigoTipo),
             borderRadius: BorderRadius.circular(AppStyles.radiusMedium),
             child: Padding(
               padding: const EdgeInsets.all(AppStyles.mediumSpace),
@@ -203,9 +195,9 @@ class _PerfilSelectionScreenState extends State<PerfilSelectionScreen> {
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundColor: perfil['cor'],
+                    backgroundColor: perfilInfo['cor'],
                     child: Icon(
-                      perfil['icone'],
+                      perfilInfo['icone'],
                       color: AppStyles.white,
                       size: 30,
                     ),
@@ -216,7 +208,7 @@ class _PerfilSelectionScreenState extends State<PerfilSelectionScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _getTipoFormatado(perfil['tipo']),
+                          perfil.nomeTipo,
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -225,12 +217,32 @@ class _PerfilSelectionScreenState extends State<PerfilSelectionScreen> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          perfil['descricao'],
+                          perfilInfo['descricao'],
                           style: const TextStyle(
                             fontSize: 14,
                             color: AppStyles.grey700,
                           ),
                         ),
+                        if (perfil.principal)
+                          Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppStyles.success,
+                              borderRadius: BorderRadius.circular(AppStyles.radiusSmall),
+                            ),
+                            child: const Text(
+                              'PRINCIPAL',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w500,
+                                color: AppStyles.white,
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -239,7 +251,7 @@ class _PerfilSelectionScreenState extends State<PerfilSelectionScreen> {
                     icon: const Icon(Icons.arrow_forward, size: 16),
                     type: ButtonType.primary,
                     height: 40,
-                    onPressed: () => _navigateToDashboard(perfil['tipo']),
+                    onPressed: () => _navigateToDashboard(perfil.codigoTipo),
                   ),
                 ],
               ),
@@ -250,22 +262,50 @@ class _PerfilSelectionScreenState extends State<PerfilSelectionScreen> {
     );
   }
 
-  String _getTipoFormatado(String tipo) {
+  Map<String, dynamic> _getPerfilInfo(String tipo) {
     switch (tipo) {
       case 'ARENA':
-        return 'Arena';
+        return {
+          'descricao': 'Administrador de Arena',
+          'cor': AppStyles.primaryBlue,
+          'icone': Icons.location_on,
+        };
       case 'ATLETA':
-        return 'Atleta';
+        return {
+          'descricao': 'Atleta de Beach Tênis',
+          'cor': AppStyles.primaryGreen,
+          'icone': Icons.sports_tennis,
+        };
       case 'ALUNO':
-        return 'Aluno';
+        return {
+          'descricao': 'Aluno de Beach Tênis',
+          'cor': AppStyles.warning,
+          'icone': Icons.school_outlined,
+        };
       case 'PROFESSOR':
-        return 'Professor';
+        return {
+          'descricao': 'Professor de Beach Tênis',
+          'cor': AppStyles.primaryBlue,
+          'icone': Icons.school,
+        };
       case 'PROFISSIONAL_TECNICO':
-        return 'Profissional Técnico';
+        return {
+          'descricao': 'Profissional Técnico',
+          'cor': AppStyles.info,
+          'icone': Icons.medical_services,
+        };
       case 'ADMIN':
-        return 'Administrador';
+        return {
+          'descricao': 'Administrador do Sistema',
+          'cor': AppStyles.error,
+          'icone': Icons.admin_panel_settings,
+        };
       default:
-        return tipo;
+        return {
+          'descricao': 'Perfil de Usuário',
+          'cor': AppStyles.grey600,
+          'icone': Icons.person,
+        };
     }
   }
 

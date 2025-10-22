@@ -7,7 +7,7 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(.7),
+      backgroundColor: Colors.black.withValues(alpha: .7),
       body: Center(
         child: Lottie.asset(
           'lib/app/common/assets/lottie/loading.json',

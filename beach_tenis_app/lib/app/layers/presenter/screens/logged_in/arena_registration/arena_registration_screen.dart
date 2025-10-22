@@ -15,7 +15,8 @@ class ArenaRegistrationScreen extends StatefulWidget {
   static const String route = "arena-registration";
 
   @override
-  State<ArenaRegistrationScreen> createState() => _ArenaRegistrationScreenState();
+  State<ArenaRegistrationScreen> createState() =>
+      _ArenaRegistrationScreenState();
 }
 
 class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
@@ -175,7 +176,8 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
 
               // Indicador de progresso
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 child: Row(
                   children: List.generate(3, (index) {
                     return Expanded(
@@ -183,7 +185,9 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
                         margin: EdgeInsets.only(right: index < 2 ? 8 : 0),
                         height: 4,
                         decoration: BoxDecoration(
-                          color: index <= _currentStep ? Colors.white : Colors.white.withOpacity(0.3),
+                          color: index <= _currentStep
+                              ? Colors.white
+                              : Colors.white.withValues(alpha: 0.3),
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
@@ -224,7 +228,9 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
                     if (_currentStep > 0) const SizedBox(width: 16),
                     Expanded(
                       child: CustomButton(
-                        text: _currentStep == 2 ? 'FINALIZAR CADASTRO' : 'PRÓXIMO',
+                        text: _currentStep == 2
+                            ? 'FINALIZAR CADASTRO'
+                            : 'PRÓXIMO',
                         onPressed: _currentStep == 2 ? _submitForm : _nextStep,
                         type: ButtonType.primary,
                       ),
@@ -290,10 +296,14 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 14) {
-                  if (text.length > 2) text = '${text.substring(0, 2)}.${text.substring(2)}';
-                  if (text.length > 6) text = '${text.substring(0, 6)}.${text.substring(6)}';
-                  if (text.length > 10) text = '${text.substring(0, 10)}/${text.substring(10)}';
-                  if (text.length > 15) text = '${text.substring(0, 15)}-${text.substring(15)}';
+                  if (text.length > 2)
+                    text = '${text.substring(0, 2)}.${text.substring(2)}';
+                  if (text.length > 6)
+                    text = '${text.substring(0, 6)}.${text.substring(6)}';
+                  if (text.length > 10)
+                    text = '${text.substring(0, 10)}/${text.substring(10)}';
+                  if (text.length > 15)
+                    text = '${text.substring(0, 15)}-${text.substring(15)}';
                 }
                 return TextEditingValue(
                   text: text,
@@ -317,8 +327,10 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 11) {
-                  if (text.length > 2) text = '(${text.substring(0, 2)}) ${text.substring(2)}';
-                  if (text.length > 9) text = '${text.substring(0, 10)}-${text.substring(10)}';
+                  if (text.length > 2)
+                    text = '(${text.substring(0, 2)}) ${text.substring(2)}';
+                  if (text.length > 9)
+                    text = '${text.substring(0, 10)}-${text.substring(10)}';
                 }
                 return TextEditingValue(
                   text: text,
@@ -365,7 +377,9 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
                 Row(
                   children: [
                     IconButton(
-                      onPressed: _numberOfCourts > 1 ? () => setState(() => _numberOfCourts--) : null,
+                      onPressed: _numberOfCourts > 1
+                          ? () => setState(() => _numberOfCourts--)
+                          : null,
                       icon: const Icon(Icons.remove_circle_outline),
                       color: Colors.white,
                     ),
@@ -436,7 +450,8 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 8) {
-                  if (text.length > 5) text = '${text.substring(0, 5)}-${text.substring(5)}';
+                  if (text.length > 5)
+                    text = '${text.substring(0, 5)}-${text.substring(5)}';
                 }
                 return TextEditingValue(
                   text: text,
@@ -598,14 +613,20 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                _buildAmenityCheckbox('Estacionamento', _hasParking, (value) => setState(() => _hasParking = value)),
-                _buildAmenityCheckbox('Vestiário/Chuveiro', _hasShower, (value) => setState(() => _hasShower = value)),
-                _buildAmenityCheckbox('Lanchonete', _hasSnackBar, (value) => setState(() => _hasSnackBar = value)),
-                _buildAmenityCheckbox('Aluguel de Equipamentos', _hasEquipmentRental,
-                    (value) => setState(() => _hasEquipmentRental = value)),
-                _buildAmenityCheckbox('Wi-Fi', _hasWifi, (value) => setState(() => _hasWifi = value)),
+                _buildAmenityCheckbox('Estacionamento', _hasParking,
+                    (value) => setState(() => _hasParking = value)),
+                _buildAmenityCheckbox('Vestiário/Chuveiro', _hasShower,
+                    (value) => setState(() => _hasShower = value)),
+                _buildAmenityCheckbox('Lanchonete', _hasSnackBar,
+                    (value) => setState(() => _hasSnackBar = value)),
                 _buildAmenityCheckbox(
-                    'Acessibilidade', _hasAccessibility, (value) => setState(() => _hasAccessibility = value)),
+                    'Aluguel de Equipamentos',
+                    _hasEquipmentRental,
+                    (value) => setState(() => _hasEquipmentRental = value)),
+                _buildAmenityCheckbox('Wi-Fi', _hasWifi,
+                    (value) => setState(() => _hasWifi = value)),
+                _buildAmenityCheckbox('Acessibilidade', _hasAccessibility,
+                    (value) => setState(() => _hasAccessibility = value)),
               ],
             ),
           ),
@@ -653,7 +674,8 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
     );
   }
 
-  Widget _buildAmenityCheckbox(String title, bool value, Function(bool) onChanged) {
+  Widget _buildAmenityCheckbox(
+      String title, bool value, Function(bool) onChanged) {
     return CheckboxListTile(
       title: Text(
         title,

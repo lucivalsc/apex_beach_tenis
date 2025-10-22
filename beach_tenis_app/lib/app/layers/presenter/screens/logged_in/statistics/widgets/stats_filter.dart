@@ -80,7 +80,7 @@ class StatsFilter extends StatelessWidget {
       selected: isSelected,
       onSelected: (_) => onPeriodChanged(period),
       backgroundColor: Colors.white,
-      selectedColor: AppStyles.primaryBlue.withOpacity(0.2),
+      selectedColor: AppStyles.primaryBlue.withValues(alpha: 0.2),
       checkmarkColor: AppStyles.primaryBlue,
       labelStyle: TextStyle(
         color: isSelected ? AppStyles.primaryBlue : AppStyles.grey700,

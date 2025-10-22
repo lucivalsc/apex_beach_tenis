@@ -2,15 +2,14 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { Usuario } = require('../models');
-const authenticateToken = require('../middleware/authMiddleware').authenticateToken;
+const { body, validationResult } = require('express-validator');
+const models = require('../models');
+const { Usuario } = models;
+const sequelize = require('../config/database');
+const { authenticateToken } = require('../middleware/authMiddleware');
 
 // Chave secreta para JWT - Em produção, use variáveis de ambiente
 const JWT_SECRET = 'beach_tennis_secret_key_2025';
-
-
-// Middleware para validação de dados
-const { body, validationResult } = require('express-validator');
 
 // Rota para login
 router.post('/login', [
@@ -29,8 +28,32 @@ router.post('/login', [
 
     const { email, senha } = req.body;
 
-    // Buscar usuário pelo email
-    const usuario = await Usuario.findOne({ where: { email } });
+    // Buscar usuário pelo email com tipos, endereços e tipo de sexo associados
+    const usuario = await Usuario.findOne({ 
+      where: { email },
+      include: [
+        {
+          model: models.UsuarioTipo,
+          as: 'tipos',
+          include: [{
+            model: models.TipoUsuario,
+            as: 'tipo_usuario'
+          }]
+        },
+        {
+          model: models.Endereco,
+          as: 'enderecos',
+          include: [{
+            model: models.TipoEndereco,
+            as: 'tipo_endereco'
+          }]
+        },
+        {
+          model: models.TipoSexo,
+          as: 'tipoSexo'
+        }
+      ]
+    });
     if (!usuario) {
       return res.status(401).json({
         success: false,
@@ -76,11 +99,43 @@ router.post('/login', [
         facebook: usuario.facebook,
         linkedin: usuario.linkedin,
         email: usuario.email,
-        tipo: usuario.tipo_principal,
+        tipo_usuario_id: usuario.tipo_usuario_id,
+        tipo_sexo_id: usuario.tipo_sexo_id,
+        // Incluir dados do tipo de sexo
+        tipo_sexo: usuario.tipoSexo ? {
+          id: usuario.tipoSexo.id,
+          nome: usuario.tipoSexo.nome,
+          codigo: usuario.tipoSexo.codigo
+        } : null,
         ativo: usuario.ativo,
         ultimo_login: usuario.ultimo_login,
-        createdAt: usuario.created_at,
-        updatedAt: usuario.updated_at,
+        createdAt: usuario.createdAt,
+        updatedAt: usuario.updatedAt,
+        // Incluir tipos de usuário associados
+        tipos: usuario.tipos ? usuario.tipos.map(tipo => ({
+          id: tipo.id,
+          tipo_usuario_id: tipo.tipo_usuario_id,
+          nome_tipo: tipo.tipo_usuario ? tipo.tipo_usuario.nome : null,
+          codigo_tipo: tipo.tipo_usuario ? tipo.tipo_usuario.codigo : null,
+          principal: tipo.principal,
+          ativo: tipo.ativo
+        })) : [],
+        // Incluir endereços associados
+        enderecos: usuario.enderecos ? usuario.enderecos.map(endereco => ({
+          id: endereco.id,
+          cep: endereco.cep,
+          logradouro: endereco.logradouro,
+          numero: endereco.numero,
+          complemento: endereco.complemento,
+          bairro: endereco.bairro,
+          cidade: endereco.cidade,
+          estado: endereco.estado,
+          pais: endereco.pais,
+          principal: endereco.principal,
+          tipo_endereco_id: endereco.tipo_endereco_id,
+          nome_tipo: endereco.tipo_endereco ? endereco.tipo_endereco.nome : null,
+          ativo: endereco.ativo
+        })) : []
       }
     });
   } catch (error) {
@@ -94,11 +149,18 @@ router.post('/login', [
 
 // Rota para registro de novo usuário
 router.post('/registro', [
-  body('nome').notEmpty().withMessage('Nome é obrigatório'),
+  body('nome').optional(),
   body('email').isEmail().withMessage('Email inválido'),
   body('senha').isLength({ min: 6 }).withMessage('Senha deve ter pelo menos 6 caracteres'),
-  body('tipo').isIn(['ADMIN', 'ARENA', 'PROFESSOR', 'ATLETA', 'ALUNO', 'PROFISSIONAL_TECNICO'])
-    .withMessage('Tipo de usuário inválido')
+  body('tipo_usuario_id').isInt().withMessage('ID do tipo de usuário inválido'),
+  body('tipo_sexo_id').isInt().withMessage('ID do tipo de sexo inválido'),
+  body('endereco.cep').optional().isString().withMessage('CEP inválido'),
+  body('endereco.logradouro').optional().isString().withMessage('Logradouro inválido'),
+  body('endereco.numero').optional().isString().withMessage('Número inválido'),
+  body('endereco.bairro').optional().isString().withMessage('Bairro inválido'),
+  body('endereco.cidade').optional().isString().withMessage('Cidade inválida'),
+  body('endereco.estado').optional().isString().isLength({ min: 2, max: 2 }).withMessage('Estado inválido'),
+  body('endereco.tipo_endereco_id').optional().isInt().withMessage('Tipo de endereço inválido')
 ], async (req, res) => {
   try {
     // Verificar erros de validação
@@ -114,11 +176,15 @@ router.post('/registro', [
       nome, 
       email, 
       senha, 
-      tipo, 
+      tipo_usuario_id,
+      tipo_sexo_id,
       telefone, 
       instagram, 
       facebook, 
-      linkedin 
+      linkedin,
+      ativo,
+      email_verificado,
+      endereco
     } = req.body;
 
     // Verificar se o email já está em uso
@@ -134,13 +200,14 @@ router.post('/registro', [
     const saltRounds = 10;
     const password_hash = await bcrypt.hash(senha, saltRounds);
 
-    // Criar novo usuário com todos os campos possíveis do modelo
-    // Incluindo apenas os que foram fornecidos no body
+    // Criar novo usuário com os campos obrigatórios
     const dadosUsuario = {
       email,
       password_hash,
-      tipo_principal: tipo, // Mapear o tipo para tipo_principal
-      ativo: true
+      tipo_usuario_id,
+      tipo_sexo_id,
+      ativo: ativo !== undefined ? ativo : true,
+      email_verificado: email_verificado !== undefined ? email_verificado : false
     };
     
     // Adicionar campos opcionais apenas se foram fornecidos
@@ -150,28 +217,84 @@ router.post('/registro', [
     if (facebook !== undefined) dadosUsuario.facebook = facebook;
     if (linkedin !== undefined) dadosUsuario.linkedin = linkedin;
     
-    // Criar o usuário com os dados fornecidos
-    const novoUsuario = await Usuario.create(dadosUsuario);
-
-    res.status(201).json({
-      success: true,
-      message: 'Usuário registrado com sucesso',
-      usuario: {
-        id: novoUsuario.id,
-        nome: novoUsuario.nome,
-        email: novoUsuario.email,
-        tipo: novoUsuario.tipo_principal,
-        ativo: novoUsuario.ativo,
-        telefone: novoUsuario.telefone,
-        instagram: novoUsuario.instagram,
-        facebook: novoUsuario.facebook,
-        linkedin: novoUsuario.linkedin,
-        createdAt: novoUsuario.created_at,
-        updatedAt: novoUsuario.updated_at
+    // Iniciar uma transação para garantir que todas as operações sejam atômicas
+    const t = await sequelize.transaction();
+    
+    try {
+      // Criar o usuário com os dados fornecidos
+      const novoUsuario = await Usuario.create(dadosUsuario, { transaction: t });
+      
+      // Criar o registro de UsuarioTipo para associar o usuário ao tipo
+      await models.UsuarioTipo.create({
+        usuario_id: novoUsuario.id,
+        tipo_usuario_id: tipo_usuario_id,
+        principal: true,
+        ativo: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }, { transaction: t });
+      
+      // Se foram fornecidos dados de endereço, criar o endereço
+      let novoEndereco = null;
+      if (endereco && Object.keys(endereco).length > 0) {
+        // Verificar se temos os campos mínimos necessários
+        if (endereco.cep && endereco.logradouro && endereco.numero && endereco.bairro && 
+            endereco.cidade && endereco.estado && endereco.tipo_endereco_id) {
+          
+          novoEndereco = await models.Endereco.create({
+            usuario_id: novoUsuario.id,
+            cep: endereco.cep,
+            logradouro: endereco.logradouro,
+            numero: endereco.numero,
+            complemento: endereco.complemento || null,
+            bairro: endereco.bairro,
+            cidade: endereco.cidade,
+            estado: endereco.estado,
+            pais: endereco.pais || 'Brasil',
+            principal: endereco.principal !== undefined ? endereco.principal : true,
+            tipo_endereco_id: endereco.tipo_endereco_id,
+            ativo: endereco.ativo !== undefined ? endereco.ativo : true,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          }, { transaction: t });
+        }
       }
-    });
+      
+      // Confirmar a transação
+      await t.commit();
+      
+      // Retornar o usuário criado com informações de endereço e tipo
+      res.status(201).json({
+        success: true,
+        message: 'Usuário registrado com sucesso',
+        usuario: {
+          id: novoUsuario.id,
+          nome: novoUsuario.nome,
+          email: novoUsuario.email,
+          tipo_usuario_id: novoUsuario.tipo_usuario_id,
+          tipo_sexo_id: novoUsuario.tipo_sexo_id,
+          ativo: novoUsuario.ativo,
+          telefone: novoUsuario.telefone,
+          instagram: novoUsuario.instagram,
+          facebook: novoUsuario.facebook,
+          linkedin: novoUsuario.linkedin,
+          createdAt: novoUsuario.createdAt,
+          updatedAt: novoUsuario.updatedAt
+        },
+        endereco: novoEndereco
+      });
+    } catch (error) {
+      // Em caso de erro, reverter a transação
+      await t.rollback();
+      console.error('Erro no registro:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Erro ao processar registro',
+        error: error.message
+      });
+    }
   } catch (error) {
-    console.error('Erro no registro:', error);
+    console.error('Erro no registro (fora da transação):', error);
     res.status(500).json({
       success: false,
       message: 'Erro ao processar registro'

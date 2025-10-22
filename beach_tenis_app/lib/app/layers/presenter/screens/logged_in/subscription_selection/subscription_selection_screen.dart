@@ -11,10 +11,12 @@ class SubscriptionSelectionScreen extends StatefulWidget {
   static const String route = "subscription-selection";
 
   @override
-  State<SubscriptionSelectionScreen> createState() => _SubscriptionSelectionScreenState();
+  State<SubscriptionSelectionScreen> createState() =>
+      _SubscriptionSelectionScreenState();
 }
 
-class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScreen> {
+class _SubscriptionSelectionScreenState
+    extends State<SubscriptionSelectionScreen> {
   String? _selectedPlan;
   bool _isAnnual = false;
 
@@ -143,7 +145,7 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                         'Escolha o plano que melhor atende às necessidades da sua arena',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white.withValues(alpha: 0.9),
                           height: 1.4,
                         ),
                         textAlign: TextAlign.center,
@@ -155,7 +157,7 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                       Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
@@ -164,15 +166,20 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                               child: GestureDetector(
                                 onTap: () => setState(() => _isAnnual = false),
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 12),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
                                   decoration: BoxDecoration(
-                                    color: !_isAnnual ? Colors.white : Colors.transparent,
+                                    color: !_isAnnual
+                                        ? Colors.white.withValues(alpha: 0.2)
+                                        : Colors.transparent,
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
                                     'Mensal',
                                     style: TextStyle(
-                                      color: !_isAnnual ? AppStyles().primaryColor : Colors.white,
+                                      color: !_isAnnual
+                                          ? AppStyles().primaryColor
+                                          : Colors.white,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16,
                                     ),
@@ -185,9 +192,12 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                               child: GestureDetector(
                                 onTap: () => setState(() => _isAnnual = true),
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 12),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
                                   decoration: BoxDecoration(
-                                    color: _isAnnual ? Colors.white : Colors.transparent,
+                                    color: _isAnnual
+                                        ? Colors.white
+                                        : Colors.transparent,
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Column(
@@ -195,7 +205,9 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                                       Text(
                                         'Anual',
                                         style: TextStyle(
-                                          color: _isAnnual ? AppStyles().primaryColor : Colors.white,
+                                          color: _isAnnual
+                                              ? AppStyles().primaryColor
+                                              : Colors.white,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 16,
                                         ),
@@ -230,10 +242,10 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                           ),
                         ),
                         child: Row(
@@ -259,7 +271,8 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                                   Text(
                                     'Cancele a qualquer momento. Sem compromisso.',
                                     style: TextStyle(
-                                      color: Colors.white.withOpacity(0.8),
+                                      color:
+                                          Colors.white.withValues(alpha: 0.8),
                                       fontSize: 14,
                                     ),
                                   ),
@@ -276,13 +289,17 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                       SizedBox(
                         height: 56,
                         child: ElevatedButton(
-                          onPressed: _selectedPlan != null ? _continueToPayment : null,
+                          onPressed:
+                              _selectedPlan != null ? _continueToPayment : null,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: _selectedPlan != null ? Colors.white : Colors.white.withOpacity(0.3),
-                            foregroundColor:
-                                _selectedPlan != null ? AppStyles().primaryColor : Colors.white.withOpacity(0.5),
+                            backgroundColor: _selectedPlan != null
+                                ? Colors.white
+                                : Colors.white.withValues(alpha: 0.3),
+                            foregroundColor: _selectedPlan != null
+                                ? AppStyles().primaryColor
+                                : Colors.white.withValues(alpha: 0.5),
                             elevation: _selectedPlan != null ? 8 : 0,
-                            shadowColor: Colors.black.withOpacity(0.3),
+                            shadowColor: Colors.black.withValues(alpha: 0.3),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -323,7 +340,7 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                             child: Text(
                               'Termos de Serviço',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withValues(alpha: 0.7),
                                 fontSize: 12,
                                 decoration: TextDecoration.underline,
                               ),
@@ -332,7 +349,7 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                           Text(
                             ' • ',
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.7),
+                              color: Colors.white.withValues(alpha: 0.7),
                               fontSize: 12,
                             ),
                           ),
@@ -343,7 +360,7 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                             child: Text(
                               'Política de Privacidade',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withValues(alpha: 0.7),
                                 fontSize: 12,
                                 decoration: TextDecoration.underline,
                               ),
@@ -377,7 +394,9 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
             child: Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: isSelected ? Colors.white : Colors.white.withOpacity(0.9),
+                color: isSelected
+                    ? Colors.white
+                    : Colors.white.withValues(alpha: 0.9),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
                   color: isSelected ? plan['color'] : Colors.transparent,
@@ -385,7 +404,7 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 10,
                     offset: const Offset(0, 5),
                   ),
@@ -400,7 +419,7 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: plan['color'].withOpacity(0.1),
+                          color: plan['color'].withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Icon(
@@ -503,7 +522,8 @@ class _SubscriptionSelectionScreenState extends State<SubscriptionSelectionScree
               top: -8,
               right: 20,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 decoration: BoxDecoration(
                   color: AppStyles().primaryColor,
                   borderRadius: BorderRadius.circular(12),

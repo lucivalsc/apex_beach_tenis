@@ -13,7 +13,8 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
   late AnimationController _waveController;
   late AnimationController _ballController;
   late AnimationController _logoController;
@@ -156,10 +157,16 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                       final screenWidth = MediaQuery.of(context).size.width;
                       final screenHeight = MediaQuery.of(context).size.height;
 
-                      final ballX =
-                          (screenWidth * 0.1) + (screenWidth * 0.8 * ((index + _ballAnimation.value) % 6) / 6);
-                      final ballY =
-                          (screenHeight * 0.2) + (screenHeight * 0.6 * math.sin(_ballAnimation.value + index)) * 0.3;
+                      final ballX = (screenWidth * 0.1) +
+                          (screenWidth *
+                              0.8 *
+                              ((index + _ballAnimation.value) % 6) /
+                              6);
+                      final ballY = (screenHeight * 0.2) +
+                          (screenHeight *
+                                  0.6 *
+                                  math.sin(_ballAnimation.value + index)) *
+                              0.3;
 
                       return Positioned(
                         left: ballX,
@@ -169,14 +176,14 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                           height: 12 + (index % 3) * 4,
                           decoration: BoxDecoration(
                             color: [
-                              Colors.white.withOpacity(0.3),
-                              const Color(0xFF4CAF50).withOpacity(0.4),
-                              const Color(0xFFFF0000).withOpacity(0.3),
+                              Colors.white.withValues(alpha: 0.3),
+                              const Color(0xFF4CAF50).withValues(alpha: 0.4),
+                              const Color(0xFFFF0000).withValues(alpha: 0.3),
                             ][index % 3],
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
+                                color: Colors.black.withValues(alpha: 0.1),
                                 blurRadius: 4,
                                 offset: const Offset(0, 2),
                               ),
@@ -200,19 +207,31 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                           Text(
                             '08:00',
                             style: TextStyle(
-                              color: _isDarkMode ? Colors.grey[300] : Colors.white,
+                              color:
+                                  _isDarkMode ? Colors.grey[300] : Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Row(
                             children: [
-                              Icon(Icons.wifi, color: _isDarkMode ? Colors.grey[300] : Colors.white, size: 18),
+                              Icon(Icons.wifi,
+                                  color: _isDarkMode
+                                      ? Colors.grey[300]
+                                      : Colors.white,
+                                  size: 18),
                               const SizedBox(width: 4),
                               Icon(Icons.signal_cellular_4_bar,
-                                  color: _isDarkMode ? Colors.grey[300] : Colors.white, size: 18),
+                                  color: _isDarkMode
+                                      ? Colors.grey[300]
+                                      : Colors.white,
+                                  size: 18),
                               const SizedBox(width: 4),
-                              Icon(Icons.battery_full, color: _isDarkMode ? Colors.grey[300] : Colors.white, size: 18),
+                              Icon(Icons.battery_full,
+                                  color: _isDarkMode
+                                      ? Colors.grey[300]
+                                      : Colors.white,
+                                  size: 18),
                             ],
                           ),
                         ],
@@ -235,11 +254,19 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                                       animation: _waveAnimation,
                                       builder: (context, child) {
                                         return Container(
-                                          width: 140 + math.sin(_waveAnimation.value * 2) * 10,
-                                          height: 140 + math.sin(_waveAnimation.value * 2) * 10,
+                                          width: 140 +
+                                              math.sin(_waveAnimation.value *
+                                                      2) *
+                                                  10,
+                                          height: 140 +
+                                              math.sin(_waveAnimation.value *
+                                                      2) *
+                                                  10,
                                           decoration: BoxDecoration(
-                                            color: const Color(0xFF4CAF50).withOpacity(0.2),
-                                            borderRadius: BorderRadius.circular(80),
+                                            color: const Color(0xFF4CAF50)
+                                                .withValues(alpha: 0.2),
+                                            borderRadius:
+                                                BorderRadius.circular(80),
                                           ),
                                         );
                                       },
@@ -253,7 +280,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                                         borderRadius: BorderRadius.circular(60),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.black.withOpacity(0.3),
+                                            color: Colors.black
+                                                .withValues(alpha: 0.3),
                                             blurRadius: 15,
                                             offset: const Offset(0, 8),
                                           ),
@@ -274,10 +302,13 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                                   style: TextStyle(
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold,
-                                    color: _isDarkMode ? const Color(0xFFFF6B6B) : const Color(0xFFFF0000),
+                                    color: _isDarkMode
+                                        ? const Color(0xFFFF6B6B)
+                                        : const Color(0xFFFF0000),
                                     shadows: [
                                       Shadow(
-                                        color: Colors.black.withOpacity(0.3),
+                                        color:
+                                            Colors.black.withValues(alpha: 0.3),
                                         offset: const Offset(0, 2),
                                         blurRadius: 4,
                                       ),
@@ -292,11 +323,14 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: _isDarkMode ? Colors.grey[300] : Colors.white,
+                                    color: _isDarkMode
+                                        ? Colors.grey[300]
+                                        : Colors.white,
                                     letterSpacing: 1.2,
                                     shadows: [
                                       Shadow(
-                                        color: Colors.black.withOpacity(0.2),
+                                        color:
+                                            Colors.black.withValues(alpha: 0.2),
                                         offset: const Offset(0, 1),
                                         blurRadius: 2,
                                       ),
@@ -312,7 +346,9 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                                   child: CircularProgressIndicator(
                                     strokeWidth: 3,
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                      _isDarkMode ? Colors.grey[300]! : Colors.white,
+                                      _isDarkMode
+                                          ? Colors.grey[300]!
+                                          : Colors.white,
                                     ),
                                   ),
                                 ),
@@ -333,15 +369,17 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                                 _isDarkMode = value;
                               });
                             },
-                            activeColor: const Color(0xFF4CAF50),
+                            activeThumbColor: const Color(0xFF4CAF50),
                             inactiveThumbColor: Colors.white,
-                            inactiveTrackColor: Colors.white.withOpacity(0.3),
+                            inactiveTrackColor:
+                                Colors.white.withValues(alpha: 0.3),
                           ),
                           const SizedBox(width: 12),
                           Text(
                             'Modo escuro',
                             style: TextStyle(
-                              color: _isDarkMode ? Colors.grey[300] : Colors.white,
+                              color:
+                                  _isDarkMode ? Colors.grey[300] : Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
                             ),
@@ -375,19 +413,41 @@ class BackgroundWavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     // Primeira camada de ondas (mais baixa e transparente)
-    _drawWave(canvas, size, animation, size.height * 0.7, 40.0,
-        isDarkMode ? Colors.white.withOpacity(0.03) : Colors.white.withOpacity(0.05));
+    _drawWave(
+        canvas,
+        size,
+        animation,
+        size.height * 0.7,
+        40.0,
+        isDarkMode
+            ? Colors.white.withValues(alpha: 0.03)
+            : Colors.white.withValues(alpha: 0.05));
 
     // Segunda camada de ondas (meio)
-    _drawWave(canvas, size, animation + 1.0, size.height * 0.8, 30.0,
-        isDarkMode ? Colors.white.withOpacity(0.05) : Colors.white.withOpacity(0.08));
+    _drawWave(
+        canvas,
+        size,
+        animation + 1.0,
+        size.height * 0.8,
+        30.0,
+        isDarkMode
+            ? Colors.white.withValues(alpha: 0.05)
+            : Colors.white.withValues(alpha: 0.08));
 
     // Terceira camada de ondas (mais alta)
-    _drawWave(canvas, size, animation + 2.0, size.height * 0.9, 20.0,
-        isDarkMode ? Colors.white.withOpacity(0.08) : Colors.white.withOpacity(0.12));
+    _drawWave(
+        canvas,
+        size,
+        animation + 2.0,
+        size.height * 0.9,
+        20.0,
+        isDarkMode
+            ? Colors.white.withValues(alpha: 0.08)
+            : Colors.white.withValues(alpha: 0.12));
   }
 
-  void _drawWave(Canvas canvas, Size size, double phase, double baseY, double amplitude, Color color) {
+  void _drawWave(Canvas canvas, Size size, double phase, double baseY,
+      double amplitude, Color color) {
     final paint = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
@@ -399,7 +459,8 @@ class BackgroundWavePainter extends CustomPainter {
     path.lineTo(0, baseY);
 
     for (double x = 0; x <= size.width; x += 2) {
-      final y = baseY + amplitude * math.sin((x / waveLength * 2 * math.pi) + phase);
+      final y =
+          baseY + amplitude * math.sin((x / waveLength * 2 * math.pi) + phase);
       path.lineTo(x, y);
     }
 
@@ -411,7 +472,8 @@ class BackgroundWavePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(BackgroundWavePainter oldDelegate) {
-    return oldDelegate.animation != animation || oldDelegate.isDarkMode != isDarkMode;
+    return oldDelegate.animation != animation ||
+        oldDelegate.isDarkMode != isDarkMode;
   }
 }
 
@@ -439,7 +501,8 @@ class WavePainter extends CustomPainter {
     path.moveTo(0, size.height);
 
     for (double x = 0; x <= size.width; x++) {
-      final y = size.height - waveHeight * math.sin((x / waveLength * 2 * math.pi) + animation);
+      final y = size.height -
+          waveHeight * math.sin((x / waveLength * 2 * math.pi) + animation);
       path.lineTo(x, y);
     }
 

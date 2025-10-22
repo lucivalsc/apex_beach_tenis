@@ -1,30 +1,30 @@
-import 'package:apex_sports/app/layers/presenter/providers/professor_provider.dart';
+import 'package:apex_sports/app/layers/presenter/providers/aluno_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_app_bar.dart';
 import '../../../../../common/widget/custom_button.dart';
-import '../arena_dashboard/widgets/professor_list_item.dart';
-import '../../../../data/models/professor_model.dart';
-import 'widgets/add_professor_dialog.dart';
+import '../../../../data/models/aluno_model.dart';
+import 'widgets/add_aluno_dialog.dart';
+import 'widgets/aluno_list_item.dart';
 
-class ProfessorsListScreen extends StatefulWidget {
-  const ProfessorsListScreen({Key? key}) : super(key: key);
+class AlunosListScreen extends StatefulWidget {
+  const AlunosListScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfessorsListScreen> createState() => _ProfessorsListScreenState();
+  State<AlunosListScreen> createState() => _AlunosListScreenState();
 }
 
-class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
-  late ProfessorProvider _provider;
+class _AlunosListScreenState extends State<AlunosListScreen> {
+  late AlunoProvider _provider;
   final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _provider = Provider.of<ProfessorProvider>(context, listen: false);
+    _provider = Provider.of<AlunoProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _provider.getProfessores();
+      _provider.getAlunos();
     });
   }
 
@@ -38,7 +38,7 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Professores',
+        title: 'Alunos',
         showBackButton: true,
         actions: [
           IconButton(
@@ -51,7 +51,7 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
         children: [
           _buildSearchBar(),
           Expanded(
-            child: Consumer<ProfessorProvider>(
+            child: Consumer<AlunoProvider>(
               builder: (context, provider, _) {
                 if (provider.isLoading) {
                   return const Center(child: CircularProgressIndicator());
@@ -61,11 +61,11 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
                   return _buildErrorState(provider.errorMessage!);
                 }
 
-                if (provider.professores.isEmpty) {
+                if (provider.alunos.isEmpty) {
                   return _buildEmptyState();
                 }
 
-                return _buildProfessorsList(provider);
+                return _buildAlunosList(provider);
               },
             ),
           ),
@@ -73,7 +73,7 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppStyles.primaryBlue,
-        onPressed: () => _showAddProfessorDialog(context),
+        onPressed: () => _showAddAlunoDialog(context),
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
@@ -85,7 +85,7 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
       child: TextField(
         controller: _searchController,
         decoration: InputDecoration(
-          hintText: 'Buscar professor...',
+          hintText: 'Buscar aluno...',
           prefixIcon: const Icon(Icons.search, color: AppStyles.grey400),
           filled: true,
           fillColor: Colors.white,
@@ -102,23 +102,20 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
             borderSide: const BorderSide(color: AppStyles.primaryBlue),
           ),
         ),
-        onChanged: (value) => _provider.searchProfessores(value),
+        onChanged: (value) => _provider.searchAlunos(value),
       ),
     );
   }
 
-  Widget _buildProfessorsList(ProfessorProvider provider) {
+  Widget _buildAlunosList(AlunoProvider provider) {
     return ListView.builder(
       padding: const EdgeInsets.all(AppStyles.mediumSpace),
-      itemCount: provider.filteredProfessores.length,
+      itemCount: provider.filteredAlunos.length,
       itemBuilder: (context, index) {
-        final professor = provider.filteredProfessores[index];
-        return ProfessorListItem(
-          name: professor.nome,
-          photoUrl: professor.foto,
-          specialty: professor.especialidade ?? '',
-          studentCount: professor.alunosIds.length,
-          onTap: () => _showProfessorDetails(context, professor),
+        final aluno = provider.filteredAlunos[index];
+        return AlunoListItem(
+          aluno: aluno,
+          onTap: () => _showAlunoDetails(context, aluno),
         );
       },
     );
@@ -130,13 +127,13 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            Icons.person_off,
+            Icons.school_outlined,
             size: 80,
-            color: AppStyles.grey400.withValues(alpha: 0.5),
+            color: AppStyles.grey400.withOpacity(0.5),
           ),
           const SizedBox(height: AppStyles.mediumSpace),
           const Text(
-            'Nenhum professor encontrado',
+            'Nenhum aluno encontrado',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -145,7 +142,7 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
           ),
           const SizedBox(height: AppStyles.smallSpace),
           const Text(
-            'Adicione professores à sua arena',
+            'Adicione alunos à sua arena',
             style: TextStyle(
               fontSize: 14,
               color: AppStyles.grey500,
@@ -153,8 +150,8 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
           ),
           const SizedBox(height: AppStyles.largeSpace),
           CustomButton(
-            text: 'Adicionar Professor',
-            onPressed: () => _showAddProfessorDialog(context),
+            text: 'Adicionar Aluno',
+            onPressed: () => _showAddAlunoDialog(context),
             type: ButtonType.primary,
           ),
         ],
@@ -170,11 +167,11 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
           Icon(
             Icons.error_outline,
             size: 80,
-            color: AppStyles.grey400.withValues(alpha: 0.5),
+            color: AppStyles.grey400.withOpacity(0.5),
           ),
           const SizedBox(height: AppStyles.mediumSpace),
           const Text(
-            'Erro ao carregar professores',
+            'Erro ao carregar alunos',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -195,7 +192,7 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
             text: 'Tentar Novamente',
             onPressed: () {
               _provider.clearError();
-              _provider.getProfessores();
+              _provider.getAlunos();
             },
             type: ButtonType.primary,
           ),
@@ -227,16 +224,23 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
                 ),
               ),
               const SizedBox(height: AppStyles.mediumSpace),
-              _buildFilterOption('Todos os professores', Icons.people, () {
-                _provider.searchProfessores('');
+              _buildFilterOption('Todos os alunos', Icons.people, () {
+                _provider.searchAlunos('');
                 Navigator.pop(context);
               }),
               _buildFilterOption('Apenas ativos', Icons.check_circle, () {
-                // Implementação futura para filtrar apenas professores ativos
+                Navigator.pop(context);
+              }),
+              _buildFilterOption('Nível Iniciante', Icons.star_border, () {
+                Navigator.pop(context);
+              }),
+              _buildFilterOption('Nível Intermediário', Icons.star_half, () {
+                Navigator.pop(context);
+              }),
+              _buildFilterOption('Nível Avançado', Icons.star, () {
                 Navigator.pop(context);
               }),
               _buildFilterOption('Ordem alfabética', Icons.sort_by_alpha, () {
-                // Implementação futura para ordenação
                 Navigator.pop(context);
               }),
             ],
@@ -268,16 +272,16 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
     );
   }
 
-  void _showAddProfessorDialog(BuildContext context) {
+  void _showAddAlunoDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AddProfessorDialog(
-        onSave: (professor) async {
-          final success = await _provider.createProfessor(professor);
+      builder: (context) => AddAlunoDialog(
+        onSave: (aluno) async {
+          final success = await _provider.createAluno(aluno);
           if (success && mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Professor adicionado com sucesso!'),
+                content: Text('Aluno adicionado com sucesso!'),
                 backgroundColor: Colors.green,
               ),
             );
@@ -287,36 +291,63 @@ class _ProfessorsListScreenState extends State<ProfessorsListScreen> {
     );
   }
 
-  void _showProfessorDetails(BuildContext context, ProfessorModel professor) {
+  void _showAlunoDetails(BuildContext context, AlunoModel aluno) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(professor.nome),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('CPF: ${professor.cpfFormatado}'),
-            Text('Email: ${professor.email}'),
-            Text('Telefone: ${professor.telefoneFormatado}'),
-            Text('Especialidade: ${professor.especialidade}'),
-            Text('Alunos: ${professor.alunosIds.length}'),
-            Text('Status: ${professor.ativo ? "Ativo" : "Inativo"}'),
-          ],
+        title: Text(aluno.nome),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('CPF: ${aluno.cpfFormatado}'),
+              const SizedBox(height: 8),
+              Text('Email: ${aluno.email}'),
+              const SizedBox(height: 8),
+              Text('Telefone: ${aluno.telefoneFormatado}'),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Text('Nível: ${aluno.nivel}'),
+                  const SizedBox(width: 8),
+                  Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      color: Color(
+                          int.parse('0xFF${aluno.corNivel.substring(1)}')),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text('Idade: ${aluno.idade} anos'),
+              const SizedBox(height: 8),
+              Text('Professores: ${aluno.professoresIds.length}'),
+              const SizedBox(height: 8),
+              Text('Status: ${aluno.ativo ? "Ativo" : "Inativo"}'),
+              if (aluno.bio != null) ...[
+                const SizedBox(height: 8),
+                Text('Bio: ${aluno.bio}'),
+              ],
+            ],
+          ),
         ),
         actions: [
-          if (!professor.ativo)
+          if (!aluno.ativo)
             TextButton(
               onPressed: () {
-                _provider.ativarDesativarProfessor(professor.id, true);
+                _provider.ativarDesativarAluno(aluno.id, true);
                 Navigator.pop(context);
               },
               child: const Text('Ativar'),
             ),
-          if (professor.ativo)
+          if (aluno.ativo)
             TextButton(
               onPressed: () {
-                _provider.ativarDesativarProfessor(professor.id, false);
+                _provider.ativarDesativarAluno(aluno.id, false);
                 Navigator.pop(context);
               },
               child: const Text('Desativar'),

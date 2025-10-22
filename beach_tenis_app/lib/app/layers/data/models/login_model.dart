@@ -21,36 +21,152 @@ String formatTelefone(String? telefone) {
   return telefone; // Retorna original se não conseguir formatar
 }
 
-/// Enum para tipos de usuário
-enum TipoUsuario { ALUNO, PROFESSOR, ADMIN, CONVIDADO }
+/// Model para Tipo de Sexo
+class TipoSexoModel {
+  final int id;
+  final String nome;
+  final String codigo;
 
-extension TipoUsuarioExtension on TipoUsuario {
-  String get value {
-    switch (this) {
-      case TipoUsuario.ALUNO:
-        return 'ALUNO';
-      case TipoUsuario.PROFESSOR:
-        return 'PROFESSOR';
-      case TipoUsuario.ADMIN:
-        return 'ADMIN';
-      case TipoUsuario.CONVIDADO:
-        return 'CONVIDADO';
-    }
+  TipoSexoModel({
+    required this.id,
+    required this.nome,
+    required this.codigo,
+  });
+
+  factory TipoSexoModel.fromJson(Map<String, dynamic> json) {
+    return TipoSexoModel(
+      id: json['id'] ?? 0,
+      nome: json['nome']?.toString() ?? '',
+      codigo: json['codigo']?.toString() ?? '',
+    );
   }
 
-  static TipoUsuario fromString(String tipo) {
-    switch (tipo.toUpperCase()) {
-      case 'ALUNO':
-        return TipoUsuario.ALUNO;
-      case 'PROFESSOR':
-        return TipoUsuario.PROFESSOR;
-      case 'ADMIN':
-        return TipoUsuario.ADMIN;
-      case 'CONVIDADO':
-        return TipoUsuario.CONVIDADO;
-      default:
-        return TipoUsuario.ALUNO; // Default
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nome': nome,
+      'codigo': codigo,
+    };
+  }
+}
+
+/// Model para Tipo de Usuário
+class TipoUsuarioModel {
+  final int id;
+  final int tipoUsuarioId;
+  final String nomeTipo;
+  final String codigoTipo;
+  final bool principal;
+  final bool ativo;
+
+  TipoUsuarioModel({
+    required this.id,
+    required this.tipoUsuarioId,
+    required this.nomeTipo,
+    required this.codigoTipo,
+    required this.principal,
+    required this.ativo,
+  });
+
+  factory TipoUsuarioModel.fromJson(Map<String, dynamic> json) {
+    return TipoUsuarioModel(
+      id: json['id'] ?? 0,
+      tipoUsuarioId: json['tipo_usuario_id'] ?? 0,
+      nomeTipo: json['nome_tipo']?.toString() ?? '',
+      codigoTipo: json['codigo_tipo']?.toString() ?? '',
+      principal: json['principal'] ?? false,
+      ativo: json['ativo'] ?? false,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'tipo_usuario_id': tipoUsuarioId,
+      'nome_tipo': nomeTipo,
+      'codigo_tipo': codigoTipo,
+      'principal': principal,
+      'ativo': ativo,
+    };
+  }
+}
+
+/// Model para Endereço
+class EnderecoModel {
+  final int id;
+  final String cep;
+  final String logradouro;
+  final String numero;
+  final String? complemento;
+  final String bairro;
+  final String cidade;
+  final String estado;
+  final String pais;
+  final bool principal;
+  final int tipoEnderecoId;
+  final String nomeTipo;
+  final bool ativo;
+
+  EnderecoModel({
+    required this.id,
+    required this.cep,
+    required this.logradouro,
+    required this.numero,
+    this.complemento,
+    required this.bairro,
+    required this.cidade,
+    required this.estado,
+    required this.pais,
+    required this.principal,
+    required this.tipoEnderecoId,
+    required this.nomeTipo,
+    required this.ativo,
+  });
+
+  factory EnderecoModel.fromJson(Map<String, dynamic> json) {
+    return EnderecoModel(
+      id: json['id'] ?? 0,
+      cep: json['cep']?.toString() ?? '',
+      logradouro: json['logradouro']?.toString() ?? '',
+      numero: json['numero']?.toString() ?? '',
+      complemento: json['complemento']?.toString(),
+      bairro: json['bairro']?.toString() ?? '',
+      cidade: json['cidade']?.toString() ?? '',
+      estado: json['estado']?.toString() ?? '',
+      pais: json['pais']?.toString() ?? '',
+      principal: json['principal'] ?? false,
+      tipoEnderecoId: json['tipo_endereco_id'] ?? 0,
+      nomeTipo: json['nome_tipo']?.toString() ?? '',
+      ativo: json['ativo'] ?? false,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'cep': cep,
+      'logradouro': logradouro,
+      'numero': numero,
+      'complemento': complemento,
+      'bairro': bairro,
+      'cidade': cidade,
+      'estado': estado,
+      'pais': pais,
+      'principal': principal,
+      'tipo_endereco_id': tipoEnderecoId,
+      'nome_tipo': nomeTipo,
+      'ativo': ativo,
+    };
+  }
+
+  /// Getter para endereço completo formatado
+  String get enderecoCompleto {
+    String endereco = '$logradouro, $numero';
+    if (complemento != null && complemento!.isNotEmpty) {
+      endereco += ', $complemento';
     }
+    endereco += ', $bairro, $cidade - $estado, $pais';
+    return endereco;
   }
 }
 
@@ -64,11 +180,15 @@ class UsuarioModel {
   final String? facebook;
   final String? linkedin;
   final String email;
-  final TipoUsuario tipo;
+  final int tipoUsuarioId;
+  final int tipoSexoId;
+  final TipoSexoModel? tipoSexo;
   final bool ativo;
   final DateTime? ultimoLogin;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final List<TipoUsuarioModel> tipos;
+  final List<EnderecoModel> enderecos;
 
   UsuarioModel({
     required this.id,
@@ -79,15 +199,41 @@ class UsuarioModel {
     this.facebook,
     this.linkedin,
     required this.email,
-    required this.tipo,
+    required this.tipoUsuarioId,
+    required this.tipoSexoId,
+    this.tipoSexo,
     required this.ativo,
     this.ultimoLogin,
     this.createdAt,
     this.updatedAt,
+    this.tipos = const [],
+    this.enderecos = const [],
   });
 
   factory UsuarioModel.fromJson(Map<String, dynamic> json) {
     String? telefoneOriginal = json['telefone']?.toString();
+
+    // Parse tipos
+    List<TipoUsuarioModel> tiposList = [];
+    if (json['tipos'] != null) {
+      tiposList = (json['tipos'] as List)
+          .map((tipo) => TipoUsuarioModel.fromJson(tipo))
+          .toList();
+    }
+
+    // Parse endereços
+    List<EnderecoModel> enderecosList = [];
+    if (json['enderecos'] != null) {
+      enderecosList = (json['enderecos'] as List)
+          .map((endereco) => EnderecoModel.fromJson(endereco))
+          .toList();
+    }
+
+    // Parse tipo_sexo
+    TipoSexoModel? tipoSexo;
+    if (json['tipo_sexo'] != null) {
+      tipoSexo = TipoSexoModel.fromJson(json['tipo_sexo']);
+    }
 
     return UsuarioModel(
       id: json['id'] ?? 0,
@@ -98,11 +244,15 @@ class UsuarioModel {
       facebook: json['facebook']?.toString(),
       linkedin: json['linkedin']?.toString(),
       email: json['email']?.toString() ?? '',
-      tipo: TipoUsuarioExtension.fromString(json['tipo']?.toString() ?? 'ALUNO'),
+      tipoUsuarioId: json['tipo_usuario_id'] ?? 0,
+      tipoSexoId: json['tipo_sexo_id'] ?? 0,
+      tipoSexo: tipoSexo,
       ativo: json['ativo'] ?? false,
       ultimoLogin: json['ultimo_login'] != null ? DateTime.tryParse(json['ultimo_login'].toString()) : null,
-      createdAt: json['created_at'] != null ? DateTime.tryParse(json['created_at'].toString()) : null,
-      updatedAt: json['updated_at'] != null ? DateTime.tryParse(json['updated_at'].toString()) : null,
+      createdAt: json['createdAt'] != null ? DateTime.tryParse(json['createdAt'].toString()) : null,
+      updatedAt: json['updatedAt'] != null ? DateTime.tryParse(json['updatedAt'].toString()) : null,
+      tipos: tiposList,
+      enderecos: enderecosList,
     );
   }
 
@@ -115,22 +265,59 @@ class UsuarioModel {
       'facebook': facebook,
       'linkedin': linkedin,
       'email': email,
-      'tipo': tipo.value,
+      'tipo_usuario_id': tipoUsuarioId,
+      'tipo_sexo_id': tipoSexoId,
+      'tipo_sexo': tipoSexo?.toJson(),
       'ativo': ativo,
       'ultimo_login': ultimoLogin?.toIso8601String(),
-      'created_at': createdAt?.toIso8601String(),
-      'updated_at': updatedAt?.toIso8601String(),
+      'createdAt': createdAt?.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+      'tipos': tipos.map((tipo) => tipo.toJson()).toList(),
+      'enderecos': enderecos.map((endereco) => endereco.toJson()).toList(),
     };
   }
 
+  /// Getter para obter o tipo principal do usuário
+  TipoUsuarioModel? get tipoPrincipal {
+    try {
+      return tipos.firstWhere((tipo) => tipo.principal && tipo.ativo);
+    } catch (e) {
+      return tipos.isNotEmpty ? tipos.first : null;
+    }
+  }
+
   /// Getter para verificar se é aluno
-  bool get isAluno => tipo == TipoUsuario.ALUNO;
+  bool get isAluno => tipoPrincipal?.codigoTipo == 'ALUNO';
 
   /// Getter para verificar se é professor
-  bool get isProfessor => tipo == TipoUsuario.PROFESSOR;
+  bool get isProfessor => tipoPrincipal?.codigoTipo == 'PROFESSOR';
 
   /// Getter para verificar se é admin
-  bool get isAdmin => tipo == TipoUsuario.ADMIN;
+  bool get isAdmin => tipoPrincipal?.codigoTipo == 'ADMIN';
+
+  /// Getter para verificar se é arena
+  bool get isArena => tipoPrincipal?.codigoTipo == 'ARENA';
+
+  /// Getter para verificar se é atleta
+  bool get isAtleta => tipoPrincipal?.codigoTipo == 'ATLETA';
+
+  /// Getter para verificar se é profissional técnico
+  bool get isProfissionalTecnico => tipoPrincipal?.codigoTipo == 'PROFISSIONAL_TECNICO';
+
+  /// Getter para verificar se tem múltiplos perfis ativos
+  bool get hasMultipleProfiles => tipos.where((tipo) => tipo.ativo).length > 1;
+
+  /// Getter para obter todos os tipos ativos
+  List<TipoUsuarioModel> get tiposAtivos => tipos.where((tipo) => tipo.ativo).toList();
+
+  /// Getter para obter o endereço principal
+  EnderecoModel? get enderecoPrincipal {
+    try {
+      return enderecos.firstWhere((endereco) => endereco.principal && endereco.ativo);
+    } catch (e) {
+      return enderecos.isNotEmpty ? enderecos.first : null;
+    }
+  }
 
   /// Getter para nome de exibição (primeiro nome + sobrenome)
   String get nomeExibicao {
@@ -166,11 +353,15 @@ class UsuarioModel {
     String? facebook,
     String? linkedin,
     String? email,
-    TipoUsuario? tipo,
+    int? tipoUsuarioId,
+    int? tipoSexoId,
+    TipoSexoModel? tipoSexo,
     bool? ativo,
     DateTime? ultimoLogin,
     DateTime? createdAt,
     DateTime? updatedAt,
+    List<TipoUsuarioModel>? tipos,
+    List<EnderecoModel>? enderecos,
   }) {
     return UsuarioModel(
       id: id ?? this.id,
@@ -181,17 +372,21 @@ class UsuarioModel {
       facebook: facebook ?? this.facebook,
       linkedin: linkedin ?? this.linkedin,
       email: email ?? this.email,
-      tipo: tipo ?? this.tipo,
+      tipoUsuarioId: tipoUsuarioId ?? this.tipoUsuarioId,
+      tipoSexoId: tipoSexoId ?? this.tipoSexoId,
+      tipoSexo: tipoSexo ?? this.tipoSexo,
       ativo: ativo ?? this.ativo,
       ultimoLogin: ultimoLogin ?? this.ultimoLogin,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      tipos: tipos ?? this.tipos,
+      enderecos: enderecos ?? this.enderecos,
     );
   }
 
   @override
   String toString() {
-    return 'UsuarioModel(id: $id, nome: $nome, email: $email, tipo: ${tipo.value})';
+    return 'UsuarioModel(id: $id, nome: $nome, email: $email, tipoPrincipal: ${tipoPrincipal?.codigoTipo})';
   }
 
   @override
@@ -269,7 +464,13 @@ class LoginModel {
   String get emailUsuario => usuario?.email ?? '';
 
   /// Getter para o tipo do usuário (seguro)
-  String get tipoUsuario => usuario?.tipo.value ?? '';
+  String get tipoUsuario => usuario?.tipoPrincipal?.codigoTipo ?? '';
+
+  /// Getter para verificar se tem múltiplos perfis
+  bool get hasMultipleProfiles => usuario?.hasMultipleProfiles ?? false;
+
+  /// Getter para obter todos os tipos ativos
+  List<TipoUsuarioModel> get tiposAtivos => usuario?.tiposAtivos ?? [];
 
   /// Getter para verificar se o usuário está ativo
   bool get usuarioAtivo => usuario?.ativo ?? false;
@@ -279,7 +480,7 @@ class LoginModel {
     if (hasError) {
       return 'LoginModel(success: false, error: $errorMessage)';
     }
-    return 'LoginModel(success: $success, usuario: ${usuario?.nome}, tipo: ${usuario?.tipo.value})';
+    return 'LoginModel(success: $success, usuario: ${usuario?.nome}, tipo: ${usuario?.tipoPrincipal?.codigoTipo})';
   }
 
   @override

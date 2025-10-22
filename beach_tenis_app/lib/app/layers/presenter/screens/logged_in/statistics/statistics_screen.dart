@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../../common/styles/app_styles.dart';
 import '../../../../../common/widget/custom_app_bar.dart';
 import 'statistics_provider.dart';
@@ -23,7 +24,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with SingleTickerPr
     super.initState();
     _provider = Provider.of<StatisticsProvider>(context, listen: false);
     _tabController = TabController(length: 3, vsync: this);
-    
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _provider.loadStatistics();
     });
@@ -38,7 +39,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: 'Estatísticas',
         showBackButton: true,
       ),
@@ -47,7 +48,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with SingleTickerPr
           if (provider.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          
+
           return Column(
             children: [
               _buildFilterSection(provider),
@@ -96,7 +97,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with SingleTickerPr
 
   Widget _buildAlunosTab(StatisticsProvider provider) {
     final alunosStats = provider.alunosStatistics;
-    
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppStyles.mediumSpace),
       child: Column(
@@ -207,7 +208,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with SingleTickerPr
 
   Widget _buildTreinosTab(StatisticsProvider provider) {
     final treinosStats = provider.treinosStatistics;
-    
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppStyles.mediumSpace),
       child: Column(
@@ -318,7 +319,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with SingleTickerPr
 
   Widget _buildJogosTab(StatisticsProvider provider) {
     final jogosStats = provider.jogosStatistics;
-    
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppStyles.mediumSpace),
       child: Column(

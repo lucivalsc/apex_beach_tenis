@@ -17,13 +17,15 @@ class AuthScreen extends StatefulWidget {
   State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateMixin {
+class _AuthScreenState extends State<AuthScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   late AuthProvider authProvider;
 
   // Controllers para os campos de texto
-  final _loginEmailController = TextEditingController(text: 'arena@exemplo.com');
+  final _loginEmailController =
+      TextEditingController(text: 'arena@exemplo.com');
   final _loginPasswordController = TextEditingController(text: '912167');
   final _registerNameController = TextEditingController();
   final _registerEmailController = TextEditingController();
@@ -113,7 +115,8 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
     final isEmailValid = _isValidEmail(_registerEmailController.text);
     final isPhoneValid = _isValidPhone(_registerPhoneController.text);
     final isPasswordValid = _isValidPassword(_registerPasswordController.text);
-    final isConfirmPasswordValid = _registerPasswordController.text == _registerConfirmPasswordController.text;
+    final isConfirmPasswordValid = _registerPasswordController.text ==
+        _registerConfirmPasswordController.text;
     final isAccessTypeSelected = _selectedAccessType != null;
     final areTermsAccepted = _acceptTerms;
 
@@ -206,7 +209,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.black.withValues(alpha: 0.2),
                 blurRadius: 10,
                 offset: const Offset(0, 5),
               ),
@@ -221,7 +224,12 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               fontSize: 22, // Levemente reduzido para economizar espaço
               fontWeight: FontWeight.bold,
               color: Colors.white, // Cor ajustada para melhor contraste
-              shadows: [Shadow(blurRadius: 2.0, color: Colors.black26, offset: Offset(1, 1))]),
+              shadows: [
+                Shadow(
+                    blurRadius: 2.0,
+                    color: Colors.black26,
+                    offset: Offset(1, 1))
+              ]),
         ),
         const SizedBox(height: 4),
         const Text(
@@ -273,7 +281,8 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               padding: const EdgeInsets.all(6),
               labelColor: Colors.white,
               unselectedLabelColor: Colors.grey[600],
-              labelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+              labelStyle:
+                  const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
               tabs: [
                 Tab(
                   child: Container(
@@ -329,8 +338,13 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
             prefixIcon: Icons.lock,
             obscureText: _obscureLoginPassword,
             suffixIcon: IconButton(
-              icon: Icon(_obscureLoginPassword ? Icons.visibility_off : Icons.visibility, color: Colors.grey[500]),
-              onPressed: () => setState(() => _obscureLoginPassword = !_obscureLoginPassword),
+              icon: Icon(
+                  _obscureLoginPassword
+                      ? Icons.visibility_off
+                      : Icons.visibility,
+                  color: Colors.grey[500]),
+              onPressed: () => setState(
+                  () => _obscureLoginPassword = !_obscureLoginPassword),
             ),
           ),
           const SizedBox(height: 6),
@@ -338,14 +352,16 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
             children: [
               Checkbox(
                 value: _keepLoggedIn,
-                onChanged: (value) => setState(() => _keepLoggedIn = value ?? false),
+                onChanged: (value) =>
+                    setState(() => _keepLoggedIn = value ?? false),
                 activeColor: const Color(0xFF4A90E2),
               ),
               const Text('Manter conectado'),
               const Spacer(),
               TextButton(
                 onPressed: () {/* TODO: Implementar esqueci a senha */},
-                child: const Text('Esqueci a senha', style: TextStyle(color: Color(0xFF4A90E2))),
+                child: const Text('Esqueci a senha',
+                    style: TextStyle(color: Color(0xFF4A90E2))),
               ),
             ],
           ),
@@ -379,7 +395,9 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildTextField(
-              controller: _registerNameController, labelText: 'Nome Completo', prefixIcon: Icons.person_outline),
+              controller: _registerNameController,
+              labelText: 'Nome Completo',
+              prefixIcon: Icons.person_outline),
           const SizedBox(height: 6),
           _buildAccessTypeDropdown(),
           const SizedBox(height: 6),
@@ -403,8 +421,13 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
             prefixIcon: Icons.lock_outline,
             obscureText: _obscureRegisterPassword,
             suffixIcon: IconButton(
-              icon: Icon(_obscureRegisterPassword ? Icons.visibility_off : Icons.visibility, color: Colors.grey[500]),
-              onPressed: () => setState(() => _obscureRegisterPassword = !_obscureRegisterPassword),
+              icon: Icon(
+                  _obscureRegisterPassword
+                      ? Icons.visibility_off
+                      : Icons.visibility,
+                  color: Colors.grey[500]),
+              onPressed: () => setState(
+                  () => _obscureRegisterPassword = !_obscureRegisterPassword),
             ),
           ),
           const SizedBox(height: 6),
@@ -414,8 +437,13 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
             prefixIcon: Icons.lock_outline,
             obscureText: _obscureConfirmPassword,
             suffixIcon: IconButton(
-              icon: Icon(_obscureConfirmPassword ? Icons.visibility_off : Icons.visibility, color: Colors.grey[500]),
-              onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+              icon: Icon(
+                  _obscureConfirmPassword
+                      ? Icons.visibility_off
+                      : Icons.visibility,
+                  color: Colors.grey[500]),
+              onPressed: () => setState(
+                  () => _obscureConfirmPassword = !_obscureConfirmPassword),
             ),
           ),
           const SizedBox(height: 6),
@@ -431,7 +459,8 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
           _buildCheckboxRow(
             label: 'Aceito receber comunicações',
             value: _acceptCommunications,
-            onChanged: (value) => setState(() => _acceptCommunications = value ?? false),
+            onChanged: (value) =>
+                setState(() => _acceptCommunications = value ?? false),
           ),
           const SizedBox(height: 6),
           // Feedback visual da validação
@@ -520,10 +549,12 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF4A90E2),
           foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           disabledBackgroundColor: Colors.grey.shade300,
         ),
-        child: Text(text, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        child: Text(text,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
       ),
     );
   }
@@ -545,7 +576,8 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               label: Text(text, style: TextStyle(color: Colors.grey[700])),
               style: OutlinedButton.styleFrom(
                 side: BorderSide(color: Colors.grey.shade400),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
               ),
             )
           : ElevatedButton.icon(
@@ -554,7 +586,8 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               label: Text(text, style: TextStyle(color: foregroundColor)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: backgroundColor,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
               ),
             ),
     );
@@ -601,7 +634,8 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
     if (!_isValidPassword(_registerPasswordController.text)) {
       errors.add('Senha deve ter no mínimo 9 caracteres');
     }
-    if (_registerPasswordController.text != _registerConfirmPasswordController.text) {
+    if (_registerPasswordController.text !=
+        _registerConfirmPasswordController.text) {
       errors.add('Senhas não coincidem');
     }
     if (!_acceptTerms) {
@@ -626,7 +660,10 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               const SizedBox(width: 8),
               Text(
                 'Complete os seguintes campos:',
-                style: TextStyle(color: Colors.orange.shade700, fontSize: 12, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    color: Colors.orange.shade700,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -659,14 +696,19 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   }) {
     return Row(
       children: [
-        Checkbox(value: value, onChanged: onChanged, activeColor: const Color(0xFF4A90E2)),
+        Checkbox(
+            value: value,
+            onChanged: onChanged,
+            activeColor: const Color(0xFF4A90E2)),
         Expanded(
           child: isLink
               ? GestureDetector(
                   onTap: () {/* TODO: Abrir termos de uso */},
                   child: Text(
                     label,
-                    style: const TextStyle(color: Color(0xFF4A90E2), decoration: TextDecoration.underline),
+                    style: const TextStyle(
+                        color: Color(0xFF4A90E2),
+                        decoration: TextDecoration.underline),
                   ),
                 )
               : Text(label),

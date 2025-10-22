@@ -481,4 +481,300 @@ class RemoteDataDatasourceImplementation implements IRemoteDataDatasource {
     // Em um cenário real, aqui seria atualizado o status de busca do demandante
     return;
   }
+
+  // Implementações dos métodos de Professor
+  @override
+  Future<List<Map<String, dynamic>>> getAllProfessores() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getProfessoresByArena(int arenaId) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<Map<String, dynamic>?> getProfessorById(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return null;
+  }
+
+  @override
+  Future<Map<String, dynamic>> createProfessor(Map<String, dynamic> professor) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return professor;
+  }
+
+  @override
+  Future<Map<String, dynamic>> updateProfessor(Map<String, dynamic> professor) async {
+    await Future.delayed(const Duration(milliseconds: 400));
+    return professor;
+  }
+
+  @override
+  Future<void> deleteProfessor(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return;
+  }
+
+  // Implementações dos métodos de Aluno
+  @override
+  Future<List<Map<String, dynamic>>> getAllAlunos() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getAlunosByArena(int arenaId) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<Map<String, dynamic>?> getAlunoById(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return null;
+  }
+
+  @override
+  Future<Map<String, dynamic>> createAluno(Map<String, dynamic> aluno) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return aluno;
+  }
+
+  @override
+  Future<Map<String, dynamic>> updateAluno(Map<String, dynamic> aluno) async {
+    await Future.delayed(const Duration(milliseconds: 400));
+    return aluno;
+  }
+
+  @override
+  Future<void> deleteAluno(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return;
+  }
+
+  // Implementações dos métodos de Atleta
+  @override
+  Future<List<Map<String, dynamic>>> getAllAtletas() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<Map<String, dynamic>?> getAtletaById(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return null;
+  }
+
+  @override
+  Future<Map<String, dynamic>> createAtleta(Map<String, dynamic> atleta) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return atleta;
+  }
+
+  @override
+  Future<Map<String, dynamic>> updateAtleta(Map<String, dynamic> atleta) async {
+    await Future.delayed(const Duration(milliseconds: 400));
+    return atleta;
+  }
+
+  @override
+  Future<void> deleteAtleta(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return;
+  }
+
+  // Implementações dos métodos de Arena
+  @override
+  Future<List<Map<String, dynamic>>> getAllArenas() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<Map<String, dynamic>?> getArenaById(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return null;
+  }
+
+  @override
+  Future<Map<String, dynamic>> createArena(Map<String, dynamic> arena) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return arena;
+  }
+
+  @override
+  Future<Map<String, dynamic>> updateArena(Map<String, dynamic> arena) async {
+    await Future.delayed(const Duration(milliseconds: 400));
+    return arena;
+  }
+
+  @override
+  Future<void> deleteArena(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return;
+  }
+
+  // Implementações dos métodos de Jogo
+  @override
+  Future<List<Map<String, dynamic>>> getAllJogos() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getJogosByAtleta(int atletaId) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<Map<String, dynamic>?> getJogoById(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return null;
+  }
+
+  @override
+  Future<Map<String, dynamic>> createJogo(Map<String, dynamic> jogo) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return jogo;
+  }
+
+  @override
+  Future<Map<String, dynamic>> updateJogo(Map<String, dynamic> jogo) async {
+    await Future.delayed(const Duration(milliseconds: 400));
+    return jogo;
+  }
+
+  @override
+  Future<void> deleteJogo(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return;
+  }
+
+  // Implementações dos métodos de Treino
+  @override
+  Future<List<Map<String, dynamic>>> getAllTreinos() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getTreinosByAluno(int alunoId) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getTreinosByProfessor(int professorId) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<Map<String, dynamic>?> getTreinoById(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return null;
+  }
+
+  @override
+  Future<Map<String, dynamic>> createTreino(Map<String, dynamic> treino) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return treino;
+  }
+
+  @override
+  Future<Map<String, dynamic>> updateTreino(Map<String, dynamic> treino) async {
+    await Future.delayed(const Duration(milliseconds: 400));
+    return treino;
+  }
+
+  @override
+  Future<void> deleteTreino(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return;
+  }
+
+  // Implementações dos métodos de Avaliação
+  @override
+  Future<List<Map<String, dynamic>>> getAllAvaliacoes() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getAvaliacoesByAluno(int alunoId) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getAvaliacoesByProfessor(int professorId) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<Map<String, dynamic>?> getAvaliacaoById(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return null;
+  }
+
+  @override
+  Future<Map<String, dynamic>> createAvaliacao(Map<String, dynamic> avaliacao) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return avaliacao;
+  }
+
+  @override
+  Future<Map<String, dynamic>> updateAvaliacao(Map<String, dynamic> avaliacao) async {
+    await Future.delayed(const Duration(milliseconds: 400));
+    return avaliacao;
+  }
+
+  @override
+  Future<void> deleteAvaliacao(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return;
+  }
+
+  // Implementações dos métodos de Conexão
+  @override
+  Future<List<Map<String, dynamic>>> getAllConexoes() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getConexoesByAtleta(int atletaId) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return [];
+  }
+
+  @override
+  Future<Map<String, dynamic>?> getConexaoById(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return null;
+  }
+
+  @override
+  Future<Map<String, dynamic>> createConexao(Map<String, dynamic> conexao) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return conexao;
+  }
+
+  @override
+  Future<Map<String, dynamic>> updateConexao(Map<String, dynamic> conexao) async {
+    await Future.delayed(const Duration(milliseconds: 400));
+    return conexao;
+  }
+
+  @override
+  Future<void> deleteConexao(int id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return;
+  }
 }

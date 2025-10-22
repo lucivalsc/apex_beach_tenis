@@ -14,7 +14,8 @@ class AthleteRegistrationScreen extends StatefulWidget {
   static const String route = "athlete-registration";
 
   @override
-  State<AthleteRegistrationScreen> createState() => _AthleteRegistrationScreenState();
+  State<AthleteRegistrationScreen> createState() =>
+      _AthleteRegistrationScreenState();
 }
 
 class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
@@ -44,7 +45,12 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
   bool _acceptsTerms = false;
   bool _acceptsDataUsage = false;
 
-  final List<String> _experienceLevels = ['Iniciante', 'Intermediário', 'Avançado', 'Profissional'];
+  final List<String> _experienceLevels = [
+    'Iniciante',
+    'Intermediário',
+    'Avançado',
+    'Profissional'
+  ];
 
   final List<String> _positions = ['Fundo', 'Rede', 'Ambos'];
 
@@ -139,7 +145,8 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
 
               // Indicador de progresso
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 child: Row(
                   children: List.generate(3, (index) {
                     return Expanded(
@@ -147,7 +154,9 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
                         margin: EdgeInsets.only(right: index < 2 ? 8 : 0),
                         height: 4,
                         decoration: BoxDecoration(
-                          color: index <= _currentStep ? Colors.white : Colors.white.withOpacity(0.3),
+                          color: index <= _currentStep
+                              ? Colors.white
+                              : Colors.white.withValues(alpha: 0.3),
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
@@ -188,7 +197,9 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
                     if (_currentStep > 0) const SizedBox(width: 16),
                     Expanded(
                       child: CustomButton(
-                        text: _currentStep == 2 ? 'FINALIZAR CADASTRO' : 'PRÓXIMO',
+                        text: _currentStep == 2
+                            ? 'FINALIZAR CADASTRO'
+                            : 'PRÓXIMO',
                         onPressed: _currentStep == 2 ? _submitForm : _nextStep,
                         type: ButtonType.primary,
                       ),
@@ -254,9 +265,12 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 11) {
-                  if (text.length > 3) text = '${text.substring(0, 3)}.${text.substring(3)}';
-                  if (text.length > 7) text = '${text.substring(0, 7)}.${text.substring(7)}';
-                  if (text.length > 11) text = '${text.substring(0, 11)}-${text.substring(11)}';
+                  if (text.length > 3)
+                    text = '${text.substring(0, 3)}.${text.substring(3)}';
+                  if (text.length > 7)
+                    text = '${text.substring(0, 7)}.${text.substring(7)}';
+                  if (text.length > 11)
+                    text = '${text.substring(0, 11)}-${text.substring(11)}';
                 }
                 return TextEditingValue(
                   text: text,
@@ -280,8 +294,10 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 8) {
-                  if (text.length > 2) text = '${text.substring(0, 2)}/${text.substring(2)}';
-                  if (text.length > 5) text = '${text.substring(0, 5)}/${text.substring(5)}';
+                  if (text.length > 2)
+                    text = '${text.substring(0, 2)}/${text.substring(2)}';
+                  if (text.length > 5)
+                    text = '${text.substring(0, 5)}/${text.substring(5)}';
                 }
                 return TextEditingValue(
                   text: text,
@@ -289,7 +305,8 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
                 );
               }),
             ],
-            validator: (value) => _validateRequired(value, 'Data de nascimento'),
+            validator: (value) =>
+                _validateRequired(value, 'Data de nascimento'),
           ),
 
           const SizedBox(height: 16),
@@ -318,20 +335,24 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
                   children: [
                     Expanded(
                       child: RadioListTile<String>(
-                        title: const Text('Masculino', style: TextStyle(color: Colors.white)),
+                        title: const Text('Masculino',
+                            style: TextStyle(color: Colors.white)),
                         value: 'M',
                         groupValue: _selectedGender,
-                        onChanged: (value) => setState(() => _selectedGender = value!),
+                        onChanged: (value) =>
+                            setState(() => _selectedGender = value!),
                         activeColor: Colors.white,
                         contentPadding: EdgeInsets.zero,
                       ),
                     ),
                     Expanded(
                       child: RadioListTile<String>(
-                        title: const Text('Feminino', style: TextStyle(color: Colors.white)),
+                        title: const Text('Feminino',
+                            style: TextStyle(color: Colors.white)),
                         value: 'F',
                         groupValue: _selectedGender,
-                        onChanged: (value) => setState(() => _selectedGender = value!),
+                        onChanged: (value) =>
+                            setState(() => _selectedGender = value!),
                         activeColor: Colors.white,
                         contentPadding: EdgeInsets.zero,
                       ),
@@ -355,8 +376,10 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 11) {
-                  if (text.length > 2) text = '(${text.substring(0, 2)}) ${text.substring(2)}';
-                  if (text.length > 9) text = '${text.substring(0, 10)}-${text.substring(10)}';
+                  if (text.length > 2)
+                    text = '(${text.substring(0, 2)}) ${text.substring(2)}';
+                  if (text.length > 9)
+                    text = '${text.substring(0, 10)}-${text.substring(10)}';
                 }
                 return TextEditingValue(
                   text: text,
@@ -463,20 +486,24 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
                   children: [
                     Expanded(
                       child: RadioListTile<String>(
-                        title: const Text('Destro', style: TextStyle(color: Colors.white)),
+                        title: const Text('Destro',
+                            style: TextStyle(color: Colors.white)),
                         value: 'Destro',
                         groupValue: _selectedDominantHand,
-                        onChanged: (value) => setState(() => _selectedDominantHand = value!),
+                        onChanged: (value) =>
+                            setState(() => _selectedDominantHand = value!),
                         activeColor: Colors.white,
                         contentPadding: EdgeInsets.zero,
                       ),
                     ),
                     Expanded(
                       child: RadioListTile<String>(
-                        title: const Text('Canhoto', style: TextStyle(color: Colors.white)),
+                        title: const Text('Canhoto',
+                            style: TextStyle(color: Colors.white)),
                         value: 'Canhoto',
                         groupValue: _selectedDominantHand,
-                        onChanged: (value) => setState(() => _selectedDominantHand = value!),
+                        onChanged: (value) =>
+                            setState(() => _selectedDominantHand = value!),
                         activeColor: Colors.white,
                         contentPadding: EdgeInsets.zero,
                       ),
@@ -500,7 +527,8 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
               value: _selectedExperienceLevel,
               decoration: InputDecoration(
                 labelText: 'Nível de Experiência',
-                prefixIcon: Icon(Icons.trending_up, color: AppStyles().primaryColor),
+                prefixIcon:
+                    Icon(Icons.trending_up, color: AppStyles().primaryColor),
                 border: InputBorder.none,
               ),
               items: _experienceLevels.map((level) {
@@ -530,7 +558,8 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
               value: _selectedPosition,
               decoration: InputDecoration(
                 labelText: 'Posição Preferida',
-                prefixIcon: Icon(Icons.sports_tennis, color: AppStyles().primaryColor),
+                prefixIcon:
+                    Icon(Icons.sports_tennis, color: AppStyles().primaryColor),
                 border: InputBorder.none,
               ),
               items: _positions.map((position) {
@@ -573,7 +602,8 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
                 style: TextStyle(color: Colors.white, fontSize: 14),
               ),
               value: _hasHealthIssues,
-              onChanged: (value) => setState(() => _hasHealthIssues = value ?? false),
+              onChanged: (value) =>
+                  setState(() => _hasHealthIssues = value ?? false),
               activeColor: AppStyles().primaryColor,
               checkColor: Colors.white,
               controlAffinity: ListTileControlAffinity.leading,
@@ -620,7 +650,8 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
             controller: _emergencyContactController,
             labelText: 'Contato de Emergência',
             prefixIcon: const Icon(Icons.emergency),
-            validator: (value) => _validateRequired(value, 'Contato de emergência'),
+            validator: (value) =>
+                _validateRequired(value, 'Contato de emergência'),
           ),
 
           const SizedBox(height: 16),
@@ -636,8 +667,10 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 11) {
-                  if (text.length > 2) text = '(${text.substring(0, 2)}) ${text.substring(2)}';
-                  if (text.length > 9) text = '${text.substring(0, 10)}-${text.substring(10)}';
+                  if (text.length > 2)
+                    text = '(${text.substring(0, 2)}) ${text.substring(2)}';
+                  if (text.length > 9)
+                    text = '${text.substring(0, 10)}-${text.substring(10)}';
                 }
                 return TextEditingValue(
                   text: text,
@@ -645,7 +678,8 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
                 );
               }),
             ],
-            validator: (value) => _validateRequired(value, 'Telefone de emergência'),
+            validator: (value) =>
+                _validateRequired(value, 'Telefone de emergência'),
           ),
 
           const SizedBox(height: 16),
@@ -686,7 +720,8 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
                     ),
                   ),
                   value: _acceptsTerms,
-                  onChanged: (value) => setState(() => _acceptsTerms = value ?? false),
+                  onChanged: (value) =>
+                      setState(() => _acceptsTerms = value ?? false),
                   activeColor: AppStyles().primaryColor,
                   checkColor: Colors.white,
                   controlAffinity: ListTileControlAffinity.leading,
@@ -698,7 +733,8 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
                     style: TextStyle(color: Colors.white, fontSize: 14),
                   ),
                   value: _acceptsDataUsage,
-                  onChanged: (value) => setState(() => _acceptsDataUsage = value ?? false),
+                  onChanged: (value) =>
+                      setState(() => _acceptsDataUsage = value ?? false),
                   activeColor: AppStyles().primaryColor,
                   checkColor: Colors.white,
                   controlAffinity: ListTileControlAffinity.leading,

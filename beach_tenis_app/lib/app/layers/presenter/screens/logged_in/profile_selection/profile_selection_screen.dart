@@ -73,7 +73,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                         'Escolha a opção que melhor descreve você para personalizar sua experiência',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white.withValues(alpha: 0.9),
                           height: 1.4,
                         ),
                         textAlign: TextAlign.center,
@@ -84,7 +84,8 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                       // Card Arena
                       ProfileCard(
                         title: 'Arena',
-                        subtitle: 'Sou proprietário ou administrador de uma arena de beach tennis',
+                        subtitle:
+                            'Sou proprietário ou administrador de uma arena de beach tennis',
                         icon: Icons.location_city,
                         iconColor: AppStyles().primaryColor,
                         isSelected: _selectedProfile == 'arena',
@@ -102,7 +103,8 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                       // Card Atleta
                       ProfileCard(
                         title: 'Atleta',
-                        subtitle: 'Sou jogador de beach tennis e quero acompanhar meu desempenho',
+                        subtitle:
+                            'Sou jogador de beach tennis e quero acompanhar meu desempenho',
                         icon: Icons.sports_tennis,
                         iconColor: AppStyles().secondaryColor,
                         isSelected: _selectedProfile == 'atleta',
@@ -121,17 +123,17 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                           ),
                         ),
                         child: Row(
                           children: [
                             Icon(
                               Icons.info_outline,
-                              color: Colors.white.withOpacity(0.8),
+                              color: Colors.white.withValues(alpha: 0.8),
                               size: 20,
                             ),
                             const SizedBox(width: 12),
@@ -139,7 +141,7 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                               child: Text(
                                 'Você poderá alterar seu perfil posteriormente nas configurações do aplicativo.',
                                 style: TextStyle(
-                                  color: Colors.white.withOpacity(0.8),
+                                  color: Colors.white.withValues(alpha: 0.8),
                                   fontSize: 14,
                                   height: 1.3,
                                 ),
@@ -155,13 +157,18 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                       SizedBox(
                         height: 56,
                         child: ElevatedButton(
-                          onPressed: _selectedProfile != null ? _continueToNextStep : null,
+                          onPressed: _selectedProfile != null
+                              ? _continueToNextStep
+                              : null,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: _selectedProfile != null ? Colors.white : Colors.white.withOpacity(0.3),
-                            foregroundColor:
-                                _selectedProfile != null ? AppStyles().primaryColor : Colors.white.withOpacity(0.5),
+                            backgroundColor: _selectedProfile != null
+                                ? Colors.white
+                                : Colors.white.withValues(alpha: 0.3),
+                            foregroundColor: _selectedProfile != null
+                                ? AppStyles().primaryColor
+                                : Colors.white.withValues(alpha: 0.5),
                             elevation: _selectedProfile != null ? 8 : 0,
-                            shadowColor: Colors.black.withOpacity(0.3),
+                            shadowColor: Colors.black.withValues(alpha: 0.3),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -200,21 +207,22 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                         child: Text(
                           'Pular por agora',
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.7),
+                            color: Colors.white.withValues(alpha: 0.7),
                             fontSize: 14,
                             decoration: TextDecoration.underline,
                           ),
                         ),
                       ),
-                      
+
                       const SizedBox(height: 20),
-                      
+
                       // Botão de sair
                       TextButton(
                         onPressed: () {
                           // Redirecionar para a tela de login
                           Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (context) => const AuthScreen()),
+                            MaterialPageRoute(
+                                builder: (context) => const AuthScreen()),
                             (route) => false,
                           );
                         },
@@ -224,14 +232,14 @@ class _ProfileSelectionScreenState extends State<ProfileSelectionScreen> {
                           children: [
                             Icon(
                               Icons.exit_to_app,
-                              color: Colors.white.withOpacity(0.7),
+                              color: Colors.white.withValues(alpha: 0.7),
                               size: 18,
                             ),
                             const SizedBox(width: 8),
                             Text(
                               'Sair',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withValues(alpha: 0.7),
                                 fontSize: 14,
                               ),
                             ),

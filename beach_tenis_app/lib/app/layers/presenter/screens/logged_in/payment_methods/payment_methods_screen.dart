@@ -17,7 +17,8 @@ class PaymentMethodsScreen extends StatefulWidget {
   State<PaymentMethodsScreen> createState() => _PaymentMethodsScreenState();
 }
 
-class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with SingleTickerProviderStateMixin {
+class _PaymentMethodsScreenState extends State<PaymentMethodsScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   // Controladores dos campos do cartão
@@ -58,7 +59,8 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
 
     // Recuperar dados do plano se passados como argumentos
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
       if (args != null) {
         setState(() {
           _planData = args;
@@ -156,7 +158,8 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
   String _getCardBrand(String cardNumber) {
     cardNumber = cardNumber.replaceAll(' ', '');
     if (cardNumber.startsWith('4')) return 'Visa';
-    if (cardNumber.startsWith('5') || cardNumber.startsWith('2')) return 'Mastercard';
+    if (cardNumber.startsWith('5') || cardNumber.startsWith('2'))
+      return 'Mastercard';
     if (cardNumber.startsWith('3')) return 'American Express';
     return '';
   }
@@ -192,7 +195,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 10,
                               offset: const Offset(0, 5),
                             ),
@@ -255,9 +258,10 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.white.withOpacity(0.3)),
+                          border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.3)),
                         ),
                         child: CheckboxListTile(
                           title: GestureDetector(
@@ -274,7 +278,8 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
                             ),
                           ),
                           value: _acceptsTerms,
-                          onChanged: (value) => setState(() => _acceptsTerms = value ?? false),
+                          onChanged: (value) =>
+                              setState(() => _acceptsTerms = value ?? false),
                           activeColor: AppStyles().primaryColor,
                           checkColor: Colors.white,
                           controlAffinity: ListTileControlAffinity.leading,
@@ -301,14 +306,14 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
                           children: [
                             Icon(
                               Icons.security,
-                              color: Colors.white.withOpacity(0.7),
+                              color: Colors.white.withValues(alpha: 0.7),
                               size: 16,
                             ),
                             const SizedBox(width: 8),
                             Text(
                               'Seus dados estão protegidos com criptografia SSL',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withValues(alpha: 0.7),
                                 fontSize: 12,
                               ),
                             ),
@@ -334,7 +339,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -348,7 +353,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppStyles().primaryColor.withOpacity(0.1),
+                  color: AppStyles().primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -370,7 +375,9 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
                       ),
                     ),
                     Text(
-                      _planData['isAnnual'] ? 'Cobrança anual' : 'Cobrança mensal',
+                      _planData['isAnnual']
+                          ? 'Cobrança anual'
+                          : 'Cobrança mensal',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey[600],
@@ -501,7 +508,8 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
                     TextInputFormatter.withFunction((oldValue, newValue) {
                       String text = newValue.text.replaceAll('/', '');
                       if (text.length <= 4) {
-                        if (text.length > 2) text = '${text.substring(0, 2)}/${text.substring(2)}';
+                        if (text.length > 2)
+                          text = '${text.substring(0, 2)}/${text.substring(2)}';
                       }
                       return TextEditingValue(
                         text: text,
@@ -541,9 +549,12 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 11) {
-                  if (text.length > 3) text = '${text.substring(0, 3)}.${text.substring(3)}';
-                  if (text.length > 7) text = '${text.substring(0, 7)}.${text.substring(7)}';
-                  if (text.length > 11) text = '${text.substring(0, 11)}-${text.substring(11)}';
+                  if (text.length > 3)
+                    text = '${text.substring(0, 3)}.${text.substring(3)}';
+                  if (text.length > 7)
+                    text = '${text.substring(0, 7)}.${text.substring(7)}';
+                  if (text.length > 11)
+                    text = '${text.substring(0, 11)}-${text.substring(11)}';
                 }
                 return TextEditingValue(
                   text: text,
@@ -595,12 +606,17 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
               return GestureDetector(
                 onTap: () => setState(() => _selectedPixType = type['value']),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
-                    color: isSelected ? AppStyles().primaryColor : Colors.grey[100],
+                    color: isSelected
+                        ? AppStyles().primaryColor
+                        : Colors.grey[100],
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: isSelected ? AppStyles().primaryColor : Colors.grey[300]!,
+                      color: isSelected
+                          ? AppStyles().primaryColor
+                          : Colors.grey[300]!,
                     ),
                   ),
                   child: Row(
@@ -643,9 +659,10 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppStyles().secondaryColor3.withOpacity(0.1),
+              color: AppStyles().secondaryColor3.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppStyles().secondaryColor3.withOpacity(0.3)),
+              border: Border.all(
+                  color: AppStyles().secondaryColor3.withValues(alpha: 0.3)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -733,9 +750,12 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
           TextInputFormatter.withFunction((oldValue, newValue) {
             String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
             if (text.length <= 11) {
-              if (text.length > 3) text = '${text.substring(0, 3)}.${text.substring(3)}';
-              if (text.length > 7) text = '${text.substring(0, 7)}.${text.substring(7)}';
-              if (text.length > 11) text = '${text.substring(0, 11)}-${text.substring(11)}';
+              if (text.length > 3)
+                text = '${text.substring(0, 3)}.${text.substring(3)}';
+              if (text.length > 7)
+                text = '${text.substring(0, 7)}.${text.substring(7)}';
+              if (text.length > 11)
+                text = '${text.substring(0, 11)}-${text.substring(11)}';
             }
             return TextEditingValue(
               text: text,
@@ -749,8 +769,10 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> with Single
           TextInputFormatter.withFunction((oldValue, newValue) {
             String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
             if (text.length <= 11) {
-              if (text.length > 2) text = '(${text.substring(0, 2)}) ${text.substring(2)}';
-              if (text.length > 9) text = '${text.substring(0, 10)}-${text.substring(10)}';
+              if (text.length > 2)
+                text = '(${text.substring(0, 2)}) ${text.substring(2)}';
+              if (text.length > 9)
+                text = '${text.substring(0, 10)}-${text.substring(10)}';
             }
             return TextEditingValue(
               text: text,
