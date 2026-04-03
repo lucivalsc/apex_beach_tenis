@@ -37,6 +37,19 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def buildType = variant.buildType.name
+            def versionName = variant.versionName
+            def versionCode = variant.versionCode
+      
+            def newApkName = "ApexSports_${buildType}_${versionName}_${versionCode}.apk"
+            
+            outputFileName = newApkName
+        }
+    }
+
 }
 
 flutter {
