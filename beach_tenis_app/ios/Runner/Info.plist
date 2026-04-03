@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>apex_sports</string>
+	<string>beach_tenis_app</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>O app precisa acessar sua galeria para fotos de perfil e imagens do aplicativo.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>O app precisa acessar sua câmera para tirar fotos de perfil.</string>
 </dict>
 </plist>

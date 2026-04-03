@@ -1,0 +1,4 @@
+storePassword=SENHA_DO_KEYSTORE
+keyPassword=SENHA_DA_CHAVE
+keyAlias=ALIAS_DA_CHAVE
+storeFile=CAMINHO_ABSOLUTO/keystore.jks
