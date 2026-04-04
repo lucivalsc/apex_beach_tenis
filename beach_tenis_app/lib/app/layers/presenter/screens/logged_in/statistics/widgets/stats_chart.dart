@@ -46,8 +46,11 @@ class StatsChart extends StatelessWidget {
 
   Widget _buildChart() {
     // Encontrar o valor máximo para escala
-    final maxValue = data.map((e) => e['valor'] as int).reduce((a, b) => a > b ? a : b).toDouble();
-    
+    final maxValue = data
+        .map((e) => e['valor'] as int)
+        .reduce((a, b) => a > b ? a : b)
+        .toDouble();
+
     return Column(
       children: [
         Expanded(
@@ -57,7 +60,7 @@ class StatsChart extends StatelessWidget {
               final value = item['valor'] as int;
               final label = item['data'] as String;
               final barHeight = (value / maxValue) * 100;
-              
+
               return Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -67,7 +70,7 @@ class StatsChart extends StatelessWidget {
                       Container(
                         height: barHeight * 1.5,
                         decoration: BoxDecoration(
-                          color: color.withOpacity(0.8),
+                          color: color.withValues(alpha: 0.8),
                           borderRadius: const BorderRadius.vertical(
                             top: Radius.circular(AppStyles.radiusSmall),
                           ),
@@ -84,7 +87,7 @@ class StatsChart extends StatelessWidget {
         Row(
           children: data.map((item) {
             final label = item['data'] as String;
-            
+
             return Expanded(
               child: Center(
                 child: Text(

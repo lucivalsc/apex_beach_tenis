@@ -20,23 +20,28 @@ class ProfessorRepositoryImplementation implements IProfessorRepository {
   Future<Either<Failure, List<ProfessorModel>>> getAllProfessores() async {
     try {
       final result = await remoteDatasource.getAllProfessores();
-      final professores = result.map((json) => ProfessorModel.fromJson(json)).toList();
+      final professores =
+          result.map((json) => ProfessorModel.fromJson(json)).toList();
       return Right(professores);
     } on ServerException catch (e) {
-      return Left(Failure(failureType: "ServerFailure", title: e.title, message: e.message));
+      return Left(Failure(
+          failureType: "ServerFailure", title: e.title, message: e.message));
     } on SocketException {
       return Left(socketError);
     }
   }
 
   @override
-  Future<Either<Failure, List<ProfessorModel>>> getProfessoresByArena(int arenaId) async {
+  Future<Either<Failure, List<ProfessorModel>>> getProfessoresByArena(
+      int arenaId) async {
     try {
       final result = await remoteDatasource.getProfessoresByArena(arenaId);
-      final professores = result.map((json) => ProfessorModel.fromJson(json)).toList();
+      final professores =
+          result.map((json) => ProfessorModel.fromJson(json)).toList();
       return Right(professores);
     } on ServerException catch (e) {
-      return Left(Failure(failureType: "ServerFailure", title: e.title, message: e.message));
+      return Left(Failure(
+          failureType: "ServerFailure", title: e.title, message: e.message));
     } on SocketException {
       return Left(socketError);
     }
@@ -51,7 +56,10 @@ class ProfessorRepositoryImplementation implements IProfessorRepository {
         (professores) => Right(professores.where((p) => p.ativo).toList()),
       );
     } catch (e) {
-      return Left(const Failure(failureType: "UnknownFailure", title: "Erro", message: "Erro desconhecido"));
+      return const Left(Failure(
+          failureType: "UnknownFailure",
+          title: "Erro",
+          message: "Erro desconhecido"));
     }
   }
 
@@ -63,7 +71,8 @@ class ProfessorRepositoryImplementation implements IProfessorRepository {
       final professor = ProfessorModel.fromJson(result);
       return Right(professor);
     } on ServerException catch (e) {
-      return Left(Failure(failureType: "ServerFailure", title: e.title, message: e.message));
+      return Left(Failure(
+          failureType: "ServerFailure", title: e.title, message: e.message));
     } on SocketException {
       return Left(socketError);
     }
@@ -85,31 +94,38 @@ class ProfessorRepositoryImplementation implements IProfessorRepository {
         },
       );
     } catch (e) {
-      return Left(const Failure(failureType: "UnknownFailure", title: "Erro", message: "Erro desconhecido"));
+      return const Left(Failure(
+          failureType: "UnknownFailure",
+          title: "Erro",
+          message: "Erro desconhecido"));
     }
   }
 
   @override
-  Future<Either<Failure, ProfessorModel>> createProfessor(ProfessorModel professor) async {
+  Future<Either<Failure, ProfessorModel>> createProfessor(
+      ProfessorModel professor) async {
     try {
       final result = await remoteDatasource.createProfessor(professor.toJson());
       final novoProfessor = ProfessorModel.fromJson(result);
       return Right(novoProfessor);
     } on ServerException catch (e) {
-      return Left(Failure(failureType: "ServerFailure", title: e.title, message: e.message));
+      return Left(Failure(
+          failureType: "ServerFailure", title: e.title, message: e.message));
     } on SocketException {
       return Left(socketError);
     }
   }
 
   @override
-  Future<Either<Failure, ProfessorModel>> updateProfessor(ProfessorModel professor) async {
+  Future<Either<Failure, ProfessorModel>> updateProfessor(
+      ProfessorModel professor) async {
     try {
       final result = await remoteDatasource.updateProfessor(professor.toJson());
       final professorAtualizado = ProfessorModel.fromJson(result);
       return Right(professorAtualizado);
     } on ServerException catch (e) {
-      return Left(Failure(failureType: "ServerFailure", title: e.title, message: e.message));
+      return Left(Failure(
+          failureType: "ServerFailure", title: e.title, message: e.message));
     } on SocketException {
       return Left(socketError);
     }
@@ -121,23 +137,29 @@ class ProfessorRepositoryImplementation implements IProfessorRepository {
       await remoteDatasource.deleteProfessor(id);
       return const Right(null);
     } on ServerException catch (e) {
-      return Left(Failure(failureType: "ServerFailure", title: e.title, message: e.message));
+      return Left(Failure(
+          failureType: "ServerFailure", title: e.title, message: e.message));
     } on SocketException {
       return Left(socketError);
     }
   }
 
   @override
-  Future<Either<Failure, void>> ativarDesativarProfessor(int id, bool ativo) async {
+  Future<Either<Failure, void>> ativarDesativarProfessor(
+      int id, bool ativo) async {
     try {
       final professorResult = await getProfessorById(id);
       return professorResult.fold(
         (failure) => Left(failure),
         (professor) async {
           if (professor == null) {
-            return const Left(Failure(failureType: "NotFound", title: "Professor não encontrado", message: "Professor não encontrado"));
+            return const Left(Failure(
+                failureType: "NotFound",
+                title: "Professor não encontrado",
+                message: "Professor não encontrado"));
           }
-          final professorAtualizado = professor.copyWith(ativo: ativo, updatedAt: DateTime.now());
+          final professorAtualizado =
+              professor.copyWith(ativo: ativo, updatedAt: DateTime.now());
           final result = await updateProfessor(professorAtualizado);
           return result.fold(
             (failure) => Left(failure),
@@ -146,12 +168,16 @@ class ProfessorRepositoryImplementation implements IProfessorRepository {
         },
       );
     } catch (e) {
-      return Left(const Failure(failureType: "UnknownFailure", title: "Erro", message: "Erro desconhecido"));
+      return const Left(Failure(
+          failureType: "UnknownFailure",
+          title: "Erro",
+          message: "Erro desconhecido"));
     }
   }
 
   @override
-  Future<Either<Failure, List<ProfessorModel>>> searchProfessores(String query) async {
+  Future<Either<Failure, List<ProfessorModel>>> searchProfessores(
+      String query) async {
     try {
       final result = await getAllProfessores();
       return result.fold(
@@ -167,19 +193,26 @@ class ProfessorRepositoryImplementation implements IProfessorRepository {
         },
       );
     } catch (e) {
-      return Left(const Failure(failureType: "UnknownFailure", title: "Erro", message: "Erro desconhecido"));
+      return const Left(Failure(
+          failureType: "UnknownFailure",
+          title: "Erro",
+          message: "Erro desconhecido"));
     }
   }
 
   @override
-  Future<Either<Failure, void>> vincularArena(int professorId, int arenaId) async {
+  Future<Either<Failure, void>> vincularArena(
+      int professorId, int arenaId) async {
     try {
       final professorResult = await getProfessorById(professorId);
       return professorResult.fold(
         (failure) => Left(failure),
         (professor) async {
           if (professor == null) {
-            return const Left(Failure(failureType: "NotFound", title: "Professor não encontrado", message: "Professor não encontrado"));
+            return const Left(Failure(
+                failureType: "NotFound",
+                title: "Professor não encontrado",
+                message: "Professor não encontrado"));
           }
           final arenasAtualizadas = List<int>.from(professor.arenasIds);
           if (!arenasAtualizadas.contains(arenaId)) {
@@ -197,19 +230,26 @@ class ProfessorRepositoryImplementation implements IProfessorRepository {
         },
       );
     } catch (e) {
-      return Left(const Failure(failureType: "UnknownFailure", title: "Erro", message: "Erro desconhecido"));
+      return const Left(Failure(
+          failureType: "UnknownFailure",
+          title: "Erro",
+          message: "Erro desconhecido"));
     }
   }
 
   @override
-  Future<Either<Failure, void>> desvincularArena(int professorId, int arenaId) async {
+  Future<Either<Failure, void>> desvincularArena(
+      int professorId, int arenaId) async {
     try {
       final professorResult = await getProfessorById(professorId);
       return professorResult.fold(
         (failure) => Left(failure),
         (professor) async {
           if (professor == null) {
-            return const Left(Failure(failureType: "NotFound", title: "Professor não encontrado", message: "Professor não encontrado"));
+            return const Left(Failure(
+                failureType: "NotFound",
+                title: "Professor não encontrado",
+                message: "Professor não encontrado"));
           }
           final arenasAtualizadas = List<int>.from(professor.arenasIds);
           arenasAtualizadas.remove(arenaId);
@@ -225,7 +265,10 @@ class ProfessorRepositoryImplementation implements IProfessorRepository {
         },
       );
     } catch (e) {
-      return Left(const Failure(failureType: "UnknownFailure", title: "Erro", message: "Erro desconhecido"));
+      return const Left(Failure(
+          failureType: "UnknownFailure",
+          title: "Erro",
+          message: "Erro desconhecido"));
     }
   }
 }

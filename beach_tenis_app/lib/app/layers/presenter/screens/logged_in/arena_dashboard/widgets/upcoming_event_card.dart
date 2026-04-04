@@ -24,10 +24,10 @@ class UpcomingEventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateFormatter = DateFormat('dd/MM');
     final timeFormatter = DateFormat('HH:mm');
-    
+
     Color typeColor;
     IconData typeIcon;
-    
+
     switch (type) {
       case 'TREINO':
         typeColor = AppStyles.primaryGreen;
@@ -63,7 +63,7 @@ class UpcomingEventCard extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: typeColor.withOpacity(0.1),
+                  color: typeColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppStyles.radiusSmall),
                 ),
                 child: Column(
@@ -112,11 +112,12 @@ class UpcomingEventCard extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: status == 'AGENDADO'
-                                ? AppStyles.info.withOpacity(0.1)
+                                ? AppStyles.info.withValues(alpha: 0.1)
                                 : status == 'EXECUTADO'
-                                    ? AppStyles.success.withOpacity(0.1)
-                                    : AppStyles.error.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(AppStyles.radiusSmall),
+                                    ? AppStyles.success.withValues(alpha: 0.1)
+                                    : AppStyles.error.withValues(alpha: 0.1),
+                            borderRadius:
+                                BorderRadius.circular(AppStyles.radiusSmall),
                           ),
                           child: Text(
                             status,

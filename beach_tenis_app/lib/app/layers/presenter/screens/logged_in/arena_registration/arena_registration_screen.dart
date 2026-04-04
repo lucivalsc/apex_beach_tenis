@@ -268,7 +268,7 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
             'Passo 1 de 3',
             style: TextStyle(
               fontSize: 16,
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
             ),
             textAlign: TextAlign.center,
           ),
@@ -296,14 +296,18 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 14) {
-                  if (text.length > 2)
+                  if (text.length > 2) {
                     text = '${text.substring(0, 2)}.${text.substring(2)}';
-                  if (text.length > 6)
+                  }
+                  if (text.length > 6) {
                     text = '${text.substring(0, 6)}.${text.substring(6)}';
-                  if (text.length > 10)
+                  }
+                  if (text.length > 10) {
                     text = '${text.substring(0, 10)}/${text.substring(10)}';
-                  if (text.length > 15)
+                  }
+                  if (text.length > 15) {
                     text = '${text.substring(0, 15)}-${text.substring(15)}';
+                  }
                 }
                 return TextEditingValue(
                   text: text,
@@ -327,10 +331,12 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 11) {
-                  if (text.length > 2)
+                  if (text.length > 2) {
                     text = '(${text.substring(0, 2)}) ${text.substring(2)}';
-                  if (text.length > 9)
+                  }
+                  if (text.length > 9) {
                     text = '${text.substring(0, 10)}-${text.substring(10)}';
+                  }
                 }
                 return TextEditingValue(
                   text: text,
@@ -358,9 +364,9 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white.withOpacity(0.3)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -432,7 +438,7 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
             'Passo 2 de 3',
             style: TextStyle(
               fontSize: 16,
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
             ),
             textAlign: TextAlign.center,
           ),
@@ -450,8 +456,9 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 8) {
-                  if (text.length > 5)
+                  if (text.length > 5) {
                     text = '${text.substring(0, 5)}-${text.substring(5)}';
+                  }
                 }
                 return TextEditingValue(
                   text: text,
@@ -528,7 +535,7 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: DropdownButtonFormField<String>(
-              value: _selectedState,
+              initialValue: _selectedState,
               decoration: const InputDecoration(
                 labelText: 'Estado',
                 prefixIcon: Icon(Icons.map, color: AppStyles.primaryBlue),
@@ -576,7 +583,7 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
             'Passo 3 de 3',
             style: TextStyle(
               fontSize: 16,
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
             ),
             textAlign: TextAlign.center,
           ),
@@ -597,9 +604,9 @@ class _ArenaRegistrationScreenState extends State<ArenaRegistrationScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white.withOpacity(0.3)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

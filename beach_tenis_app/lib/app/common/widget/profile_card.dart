@@ -34,7 +34,9 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color cardColor = isActive ? (activeColor ?? AppStyles.primaryBlue) : (inactiveColor ?? AppStyles.grey400);
+    final Color cardColor = isActive
+        ? (activeColor ?? AppStyles.primaryBlue)
+        : (inactiveColor ?? AppStyles.grey400);
 
     return GestureDetector(
       onTap: isActive ? onTap : null,
@@ -46,7 +48,7 @@ class ProfileCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppStyles.radiusLarge),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(isActive ? 0.15 : 0.05),
+              color: Colors.black.withValues(alpha: isActive ? 0.15 : 0.05),
               blurRadius: isActive ? 8 : 2,
               offset: const Offset(0, 2),
             ),

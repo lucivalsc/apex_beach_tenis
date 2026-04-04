@@ -22,8 +22,13 @@ class _AddAlunoDialogState extends State<AddAlunoDialog> {
   final _bioController = TextEditingController();
   DateTime? _dataNascimento;
   String _nivelSelecionado = 'INICIANTE';
-  
-  final List<String> _niveis = ['INICIANTE', 'INTERMEDIÁRIO', 'AVANÇADO', 'PROFISSIONAL'];
+
+  final List<String> _niveis = [
+    'INICIANTE',
+    'INTERMEDIÁRIO',
+    'AVANÇADO',
+    'PROFISSIONAL'
+  ];
   bool _isLoading = false;
 
   @override
@@ -116,7 +121,8 @@ class _AddAlunoDialogState extends State<AddAlunoDialog> {
                           if (value == null || value.isEmpty) {
                             return 'Email é obrigatório';
                           }
-                          if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                          if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .hasMatch(value)) {
                             return 'Email inválido';
                           }
                           return null;
@@ -245,7 +251,8 @@ class _AddAlunoDialogState extends State<AddAlunoDialog> {
               ? '${_dataNascimento!.day.toString().padLeft(2, '0')}/${_dataNascimento!.month.toString().padLeft(2, '0')}/${_dataNascimento!.year}'
               : 'Selecione a data de nascimento',
           style: TextStyle(
-            color: _dataNascimento != null ? AppStyles.grey900 : AppStyles.grey500,
+            color:
+                _dataNascimento != null ? AppStyles.grey900 : AppStyles.grey500,
           ),
         ),
       ),
@@ -254,7 +261,7 @@ class _AddAlunoDialogState extends State<AddAlunoDialog> {
 
   Widget _buildNivelDropdown() {
     return DropdownButtonFormField<String>(
-      value: _nivelSelecionado,
+      initialValue: _nivelSelecionado,
       decoration: InputDecoration(
         labelText: 'Nível',
         prefixIcon: const Icon(Icons.trending_up, color: AppStyles.primaryBlue),
@@ -304,11 +311,11 @@ class _AddAlunoDialogState extends State<AddAlunoDialog> {
   TextInputFormatter _cpfFormatter() {
     return TextInputFormatter.withFunction((oldValue, newValue) {
       String text = newValue.text.replaceAll(RegExp(r'\D'), '');
-      
+
       if (text.length > 11) {
         text = text.substring(0, 11);
       }
-      
+
       if (text.length >= 4) {
         text = '${text.substring(0, 3)}.${text.substring(3)}';
       }
@@ -318,7 +325,7 @@ class _AddAlunoDialogState extends State<AddAlunoDialog> {
       if (text.length >= 12) {
         text = '${text.substring(0, 11)}-${text.substring(11)}';
       }
-      
+
       return TextEditingValue(
         text: text,
         selection: TextSelection.collapsed(offset: text.length),
@@ -329,18 +336,18 @@ class _AddAlunoDialogState extends State<AddAlunoDialog> {
   TextInputFormatter _phoneFormatter() {
     return TextInputFormatter.withFunction((oldValue, newValue) {
       String text = newValue.text.replaceAll(RegExp(r'\D'), '');
-      
+
       if (text.length > 11) {
         text = text.substring(0, 11);
       }
-      
+
       if (text.length >= 3) {
         text = '(${text.substring(0, 2)}) ${text.substring(2)}';
       }
       if (text.length >= 10) {
         text = '${text.substring(0, 9)}-${text.substring(9)}';
       }
-      
+
       return TextEditingValue(
         text: text,
         selection: TextSelection.collapsed(offset: text.length),

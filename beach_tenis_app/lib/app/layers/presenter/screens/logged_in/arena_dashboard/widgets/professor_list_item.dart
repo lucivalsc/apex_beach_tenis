@@ -34,8 +34,9 @@ class ProfessorListItem extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 25,
-                backgroundColor: AppStyles.primaryBlue.withOpacity(0.1),
-                backgroundImage: photoUrl != null ? NetworkImage(photoUrl!) : null,
+                backgroundColor: AppStyles.primaryBlue.withValues(alpha: 0.1),
+                backgroundImage:
+                    photoUrl != null ? NetworkImage(photoUrl!) : null,
                 child: photoUrl == null
                     ? Text(
                         name.isNotEmpty ? name[0].toUpperCase() : '?',
@@ -80,8 +81,9 @@ class ProfessorListItem extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppStyles.primaryBlue.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(AppStyles.radiusSmall),
+                      color: AppStyles.primaryBlue.withValues(alpha: 0.1),
+                      borderRadius:
+                          BorderRadius.circular(AppStyles.radiusSmall),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

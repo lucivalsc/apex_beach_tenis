@@ -158,8 +158,9 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen>
   String _getCardBrand(String cardNumber) {
     cardNumber = cardNumber.replaceAll(' ', '');
     if (cardNumber.startsWith('4')) return 'Visa';
-    if (cardNumber.startsWith('5') || cardNumber.startsWith('2'))
+    if (cardNumber.startsWith('5') || cardNumber.startsWith('2')) {
       return 'Mastercard';
+    }
     if (cardNumber.startsWith('3')) return 'American Express';
     return '';
   }
@@ -508,8 +509,9 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen>
                     TextInputFormatter.withFunction((oldValue, newValue) {
                       String text = newValue.text.replaceAll('/', '');
                       if (text.length <= 4) {
-                        if (text.length > 2)
+                        if (text.length > 2) {
                           text = '${text.substring(0, 2)}/${text.substring(2)}';
+                        }
                       }
                       return TextEditingValue(
                         text: text,
@@ -549,12 +551,15 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen>
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 11) {
-                  if (text.length > 3)
+                  if (text.length > 3) {
                     text = '${text.substring(0, 3)}.${text.substring(3)}';
-                  if (text.length > 7)
+                  }
+                  if (text.length > 7) {
                     text = '${text.substring(0, 7)}.${text.substring(7)}';
-                  if (text.length > 11)
+                  }
+                  if (text.length > 11) {
                     text = '${text.substring(0, 11)}-${text.substring(11)}';
+                  }
                 }
                 return TextEditingValue(
                   text: text,
@@ -750,12 +755,15 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen>
           TextInputFormatter.withFunction((oldValue, newValue) {
             String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
             if (text.length <= 11) {
-              if (text.length > 3)
+              if (text.length > 3) {
                 text = '${text.substring(0, 3)}.${text.substring(3)}';
-              if (text.length > 7)
+              }
+              if (text.length > 7) {
                 text = '${text.substring(0, 7)}.${text.substring(7)}';
-              if (text.length > 11)
+              }
+              if (text.length > 11) {
                 text = '${text.substring(0, 11)}-${text.substring(11)}';
+              }
             }
             return TextEditingValue(
               text: text,
@@ -769,10 +777,12 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen>
           TextInputFormatter.withFunction((oldValue, newValue) {
             String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
             if (text.length <= 11) {
-              if (text.length > 2)
+              if (text.length > 2) {
                 text = '(${text.substring(0, 2)}) ${text.substring(2)}';
-              if (text.length > 9)
+              }
+              if (text.length > 9) {
                 text = '${text.substring(0, 10)}-${text.substring(10)}';
+              }
             }
             return TextEditingValue(
               text: text,

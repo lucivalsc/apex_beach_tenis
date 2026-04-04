@@ -478,7 +478,7 @@ class _AuthScreenState extends State<AuthScreen>
   /// Widget para o dropdown de tipo de acesso.
   Widget _buildAccessTypeDropdown() {
     return DropdownButtonFormField<String>(
-      value: _selectedAccessType,
+      initialValue: _selectedAccessType,
       decoration: InputDecoration(
         labelText: 'Tipo de Acesso',
         prefixIcon: const Icon(Icons.security, color: Color(0xFF4A90E2)),
@@ -731,9 +731,9 @@ class _AuthScreenState extends State<AuthScreen>
             // Alterna o tema usando o ThemeProvider
             themeProvider.toggleTheme();
           },
-          activeColor: Colors.white,
+          activeThumbColor: Colors.white,
           inactiveThumbColor: Colors.white,
-          inactiveTrackColor: Colors.white.withOpacity(0.3),
+          inactiveTrackColor: Colors.white.withValues(alpha: 0.3),
         ),
         const SizedBox(width: 12),
         const Text(

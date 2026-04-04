@@ -237,7 +237,7 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
             'Passo 1 de 3',
             style: TextStyle(
               fontSize: 16,
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
             ),
             textAlign: TextAlign.center,
           ),
@@ -265,12 +265,15 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 11) {
-                  if (text.length > 3)
+                  if (text.length > 3) {
                     text = '${text.substring(0, 3)}.${text.substring(3)}';
-                  if (text.length > 7)
+                  }
+                  if (text.length > 7) {
                     text = '${text.substring(0, 7)}.${text.substring(7)}';
-                  if (text.length > 11)
+                  }
+                  if (text.length > 11) {
                     text = '${text.substring(0, 11)}-${text.substring(11)}';
+                  }
                 }
                 return TextEditingValue(
                   text: text,
@@ -294,10 +297,12 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 8) {
-                  if (text.length > 2)
+                  if (text.length > 2) {
                     text = '${text.substring(0, 2)}/${text.substring(2)}';
-                  if (text.length > 5)
+                  }
+                  if (text.length > 5) {
                     text = '${text.substring(0, 5)}/${text.substring(5)}';
+                  }
                 }
                 return TextEditingValue(
                   text: text,
@@ -315,9 +320,9 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white.withOpacity(0.3)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -376,10 +381,12 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 11) {
-                  if (text.length > 2)
+                  if (text.length > 2) {
                     text = '(${text.substring(0, 2)}) ${text.substring(2)}';
-                  if (text.length > 9)
+                  }
+                  if (text.length > 9) {
                     text = '${text.substring(0, 10)}-${text.substring(10)}';
+                  }
                 }
                 return TextEditingValue(
                   text: text,
@@ -428,7 +435,7 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
             'Passo 2 de 3',
             style: TextStyle(
               fontSize: 16,
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
             ),
             textAlign: TextAlign.center,
           ),
@@ -466,9 +473,9 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white.withOpacity(0.3)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -524,7 +531,7 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: DropdownButtonFormField<String>(
-              value: _selectedExperienceLevel,
+              initialValue: _selectedExperienceLevel,
               decoration: InputDecoration(
                 labelText: 'Nível de Experiência',
                 prefixIcon:
@@ -555,7 +562,7 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: DropdownButtonFormField<String>(
-              value: _selectedPosition,
+              initialValue: _selectedPosition,
               decoration: InputDecoration(
                 labelText: 'Posição Preferida',
                 prefixIcon:
@@ -592,9 +599,9 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white.withOpacity(0.3)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
             ),
             child: CheckboxListTile(
               title: const Text(
@@ -638,7 +645,7 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
             'Passo 3 de 3',
             style: TextStyle(
               fontSize: 16,
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
             ),
             textAlign: TextAlign.center,
           ),
@@ -667,10 +674,12 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
               TextInputFormatter.withFunction((oldValue, newValue) {
                 String text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
                 if (text.length <= 11) {
-                  if (text.length > 2)
+                  if (text.length > 2) {
                     text = '(${text.substring(0, 2)}) ${text.substring(2)}';
-                  if (text.length > 9)
+                  }
+                  if (text.length > 9) {
                     text = '${text.substring(0, 10)}-${text.substring(10)}';
+                  }
                 }
                 return TextEditingValue(
                   text: text,
@@ -699,9 +708,9 @@ class _AthleteRegistrationScreenState extends State<AthleteRegistrationScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white.withOpacity(0.3)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
             ),
             child: Column(
               children: [

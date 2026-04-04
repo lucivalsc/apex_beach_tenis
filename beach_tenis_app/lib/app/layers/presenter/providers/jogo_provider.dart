@@ -26,7 +26,8 @@ class JogoProvider extends ChangeNotifier {
   List<JogoModel> get jogos => _jogos;
   String? get errorMessage => _errorMessage;
   JogoModel? get selectedJogo => _selectedJogo;
-  List<JogoModel> get filteredJogos => _filteredJogos.isEmpty && _searchQuery.isEmpty ? _jogos : _filteredJogos;
+  List<JogoModel> get filteredJogos =>
+      _filteredJogos.isEmpty && _searchQuery.isEmpty ? _jogos : _filteredJogos;
   String get searchQuery => _searchQuery;
   int? get selectedAtletaId => _selectedAtletaId;
   int? get selectedArenaId => _selectedArenaId;
@@ -71,12 +72,13 @@ class JogoProvider extends ChangeNotifier {
 
     // Filtro por atleta
     if (_selectedAtletaId != null) {
-      filtered = filtered.where((j) => 
-        j.atleta1Id == _selectedAtletaId ||
-        j.atleta2Id == _selectedAtletaId ||
-        j.atleta3Id == _selectedAtletaId ||
-        j.atleta4Id == _selectedAtletaId
-      ).toList();
+      filtered = filtered
+          .where((j) =>
+              j.atleta1Id == _selectedAtletaId ||
+              j.atleta2Id == _selectedAtletaId ||
+              j.atleta3Id == _selectedAtletaId ||
+              j.atleta4Id == _selectedAtletaId)
+          .toList();
     }
 
     // Filtro por arena
@@ -87,11 +89,24 @@ class JogoProvider extends ChangeNotifier {
     // Filtro por busca
     if (_searchQuery.isNotEmpty) {
       filtered = filtered.where((jogo) {
-        return jogo.nomeAtleta1.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-            jogo.nomeAtleta2.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-            (jogo.nomeAtleta3?.toLowerCase().contains(_searchQuery.toLowerCase()) ?? false) ||
-            (jogo.nomeAtleta4?.toLowerCase().contains(_searchQuery.toLowerCase()) ?? false) ||
-            (jogo.observacoes?.toLowerCase().contains(_searchQuery.toLowerCase()) ?? false);
+        return jogo.nomeAtleta1
+                .toLowerCase()
+                .contains(_searchQuery.toLowerCase()) ||
+            jogo.nomeAtleta2
+                .toLowerCase()
+                .contains(_searchQuery.toLowerCase()) ||
+            (jogo.nomeAtleta3
+                    ?.toLowerCase()
+                    .contains(_searchQuery.toLowerCase()) ??
+                false) ||
+            (jogo.nomeAtleta4
+                    ?.toLowerCase()
+                    .contains(_searchQuery.toLowerCase()) ??
+                false) ||
+            (jogo.observacoes
+                    ?.toLowerCase()
+                    .contains(_searchQuery.toLowerCase()) ??
+                false);
       }).toList();
     }
 
@@ -104,7 +119,7 @@ class JogoProvider extends ChangeNotifier {
     clearError();
 
     final result = await _getJogosUsecase(NoParams());
-    
+
     result.fold(
       (failure) {
         setError('${failure.title}: ${failure.message}');
@@ -123,7 +138,7 @@ class JogoProvider extends ChangeNotifier {
     clearError();
 
     final result = await _createJogoUsecase(jogo);
-    
+
     return result.fold(
       (failure) {
         setError('${failure.title}: ${failure.message}');
@@ -141,12 +156,13 @@ class JogoProvider extends ChangeNotifier {
 
   // Métodos específicos para jogos
   List<JogoModel> getJogosByAtleta(int atletaId) {
-    return _jogos.where((j) => 
-      j.atleta1Id == atletaId ||
-      j.atleta2Id == atletaId ||
-      j.atleta3Id == atletaId ||
-      j.atleta4Id == atletaId
-    ).toList();
+    return _jogos
+        .where((j) =>
+            j.atleta1Id == atletaId ||
+            j.atleta2Id == atletaId ||
+            j.atleta3Id == atletaId ||
+            j.atleta4Id == atletaId)
+        .toList();
   }
 
   List<JogoModel> getJogosByArena(int arenaId) {
@@ -169,25 +185,29 @@ class JogoProvider extends ChangeNotifier {
     return _jogos.where((j) {
       if (j.dataHora == null) return false;
       return j.dataHora!.isAfter(inicio.subtract(const Duration(days: 1))) &&
-             j.dataHora!.isBefore(fim.add(const Duration(days: 1)));
+          j.dataHora!.isBefore(fim.add(const Duration(days: 1)));
     }).toList();
   }
 
   List<JogoModel> getHistoricoJogos(int atletaId, {int? limit}) {
     var jogosAtleta = getJogosByAtleta(atletaId);
-    jogosAtleta = jogosAtleta.where((j) => j.status == StatusJogo.finalizado).toList();
-    jogosAtleta.sort((a, b) => (b.dataHora ?? DateTime.now()).compareTo(a.dataHora ?? DateTime.now()));
-    
+    jogosAtleta =
+        jogosAtleta.where((j) => j.status == StatusJogo.finalizado).toList();
+    jogosAtleta.sort((a, b) =>
+        (b.dataHora ?? DateTime.now()).compareTo(a.dataHora ?? DateTime.now()));
+
     if (limit != null && limit > 0) {
       return jogosAtleta.take(limit).toList();
     }
-    
+
     return jogosAtleta;
   }
 
   Map<String, dynamic> getEstatisticasAtleta(int atletaId) {
-    final jogosAtleta = getJogosByAtleta(atletaId).where((j) => j.status == StatusJogo.finalizado).toList();
-    
+    final jogosAtleta = getJogosByAtleta(atletaId)
+        .where((j) => j.status == StatusJogo.finalizado)
+        .toList();
+
     if (jogosAtleta.isEmpty) {
       return {
         'totalJogos': 0,
@@ -226,7 +246,8 @@ class JogoProvider extends ChangeNotifier {
     }
 
     final derrotas = jogosAtleta.length - vitorias;
-    final percentualVitorias = jogosAtleta.length > 0 ? (vitorias / jogosAtleta.length) * 100 : 0.0;
+    final percentualVitorias =
+        jogosAtleta.isNotEmpty ? (vitorias / jogosAtleta.length) * 100 : 0.0;
 
     return {
       'totalJogos': jogosAtleta.length,
@@ -249,7 +270,8 @@ class JogoProvider extends ChangeNotifier {
 
   double getPercentualJogosFinalizados() {
     if (_jogos.isEmpty) return 0.0;
-    final finalizados = _jogos.where((j) => j.status == StatusJogo.finalizado).length;
+    final finalizados =
+        _jogos.where((j) => j.status == StatusJogo.finalizado).length;
     return (finalizados / _jogos.length) * 100;
   }
 

@@ -73,8 +73,10 @@ class ConexaoModel {
       tipoConexao: _parseTipoConexao(json['tipo_conexao']),
       status: _parseStatusConexao(json['status']),
       mensagem: json['mensagem']?.toString(),
-      dataSolicitacao: DateTime.tryParse(json['data_solicitacao']?.toString() ?? '') ?? DateTime.now(),
-      dataResposta: json['data_resposta'] != null 
+      dataSolicitacao:
+          DateTime.tryParse(json['data_solicitacao']?.toString() ?? '') ??
+              DateTime.now(),
+      dataResposta: json['data_resposta'] != null
           ? DateTime.tryParse(json['data_resposta'].toString())
           : null,
       totalJogosJuntos: json['total_jogos_juntos'],
@@ -83,10 +85,10 @@ class ConexaoModel {
       avaliacaoSolicitante: json['avaliacao_solicitante']?.toDouble(),
       avaliacaoDestinatario: json['avaliacao_destinatario']?.toDouble(),
       notificacaoEnviada: json['notificacao_enviada'] ?? false,
-      createdAt: json['createdAt'] != null 
+      createdAt: json['createdAt'] != null
           ? DateTime.tryParse(json['createdAt'].toString())
           : null,
-      updatedAt: json['updatedAt'] != null 
+      updatedAt: json['updatedAt'] != null
           ? DateTime.tryParse(json['updatedAt'].toString())
           : null,
     );
@@ -191,37 +193,38 @@ class ConexaoModel {
   bool get isParceria => tipoConexao == TipoConexao.PARCERIA;
   bool get isAdversario => tipoConexao == TipoConexao.ADVERSARIO_PREFERIDO;
 
-  bool get temHistoricoJogos => totalJogosJuntos != null && totalJogosJuntos! > 0;
+  bool get temHistoricoJogos =>
+      totalJogosJuntos != null && totalJogosJuntos! > 0;
 
   String get estatisticaJogos {
     if (!temHistoricoJogos) return 'Nenhum jogo registrado';
-    
+
     if (isParceria) {
       return '$totalJogosJuntos jogos como parceiros';
     } else if (isAdversario) {
       final vitSol = vitoriasSolicitante ?? 0;
       final vitDest = vitoriasDestinatario ?? 0;
-      return '$vitSol x $vitDest (${totalJogosJuntos} jogos)';
+      return '$vitSol x $vitDest ($totalJogosJuntos jogos)';
     }
-    
+
     return '$totalJogosJuntos jogos juntos';
   }
 
   double? get avaliacaoMedia {
     final avalSol = avaliacaoSolicitante ?? 0;
     final avalDest = avaliacaoDestinatario ?? 0;
-    
+
     if (avalSol == 0 && avalDest == 0) return null;
     if (avalSol == 0) return avalDest;
     if (avalDest == 0) return avalSol;
-    
+
     return (avalSol + avalDest) / 2;
   }
 
   String get tempoSolicitacao {
     final agora = DateTime.now();
     final diferenca = agora.difference(dataSolicitacao);
-    
+
     if (diferenca.inDays > 0) {
       return '${diferenca.inDays}d atrás';
     } else if (diferenca.inHours > 0) {
@@ -272,7 +275,8 @@ class ConexaoModel {
       vitoriasSolicitante: vitoriasSolicitante ?? this.vitoriasSolicitante,
       vitoriasDestinatario: vitoriasDestinatario ?? this.vitoriasDestinatario,
       avaliacaoSolicitante: avaliacaoSolicitante ?? this.avaliacaoSolicitante,
-      avaliacaoDestinatario: avaliacaoDestinatario ?? this.avaliacaoDestinatario,
+      avaliacaoDestinatario:
+          avaliacaoDestinatario ?? this.avaliacaoDestinatario,
       notificacaoEnviada: notificacaoEnviada ?? this.notificacaoEnviada,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,

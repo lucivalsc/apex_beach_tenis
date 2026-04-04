@@ -22,7 +22,7 @@ class GradientBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     // Acessa o ThemeProvider para obter o tema atual
     final themeProvider = Provider.of<ThemeProvider>(context, listen: true);
-    
+
     return Container(
       decoration: BoxDecoration(
         gradient: colors != null
@@ -62,7 +62,7 @@ class BeachTennisLogo extends StatelessWidget {
             borderRadius: BorderRadius.circular(size! / 2),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.black.withValues(alpha: 0.2),
                 blurRadius: 10,
                 offset: const Offset(0, 5),
               ),

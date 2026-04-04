@@ -30,7 +30,7 @@ class EstatisticaCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
+                color: color.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(AppStyles.radiusSmall),
               ),
               child: Icon(

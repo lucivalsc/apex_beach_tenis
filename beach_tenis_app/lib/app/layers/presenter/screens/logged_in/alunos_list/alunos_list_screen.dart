@@ -129,7 +129,7 @@ class _AlunosListScreenState extends State<AlunosListScreen> {
           Icon(
             Icons.school_outlined,
             size: 80,
-            color: AppStyles.grey400.withOpacity(0.5),
+            color: AppStyles.grey400.withValues(alpha: 0.5),
           ),
           const SizedBox(height: AppStyles.mediumSpace),
           const Text(
@@ -167,7 +167,7 @@ class _AlunosListScreenState extends State<AlunosListScreen> {
           Icon(
             Icons.error_outline,
             size: 80,
-            color: AppStyles.grey400.withOpacity(0.5),
+            color: AppStyles.grey400.withValues(alpha: 0.5),
           ),
           const SizedBox(height: AppStyles.mediumSpace),
           const Text(
