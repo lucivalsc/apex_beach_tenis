@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "VALIDATION_REPORT_COMPLETO.html",
+  "entry": "VALIDATION_REPORT_COMPLETO.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-06-04T00:25:11.842Z",
+  "updatedAt": "2026-06-04T00:25:11.842Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}
