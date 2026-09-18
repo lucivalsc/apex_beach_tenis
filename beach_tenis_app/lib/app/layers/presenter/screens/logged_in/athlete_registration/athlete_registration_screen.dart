@@ -1,3 +1,4 @@
+// ignore_for_file: deprecated_member_use
 import 'package:apex_sports/app/common/styles/app_styles.dart';
 import 'package:apex_sports/app/common/widget/custom_app_bar.dart';
 import 'package:apex_sports/app/common/widget/custom_button.dart';

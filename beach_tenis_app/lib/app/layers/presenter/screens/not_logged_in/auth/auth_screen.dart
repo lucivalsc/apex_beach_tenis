@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print
 /// Widget para a linha de checkbox.import 'package:apex_sports/app/common/providers/theme_provider.dart';
 import 'package:apex_sports/app/common/providers/theme_provider.dart';
 import 'package:apex_sports/app/layers/presenter/providers/auth_provider.dart';

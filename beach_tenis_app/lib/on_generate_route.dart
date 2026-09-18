@@ -10,7 +10,6 @@ import "package:flutter/material.dart";
 import "package:responsive_sizer/responsive_sizer.dart";
 
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
-  final args = settings.arguments != null ? settings.arguments as List<dynamic> : null;
   switch (settings.name) {
     case Starter.route:
       return MaterialPageRoute(

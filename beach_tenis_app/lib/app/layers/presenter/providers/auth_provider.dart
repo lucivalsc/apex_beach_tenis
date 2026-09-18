@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:apex_sports/app/common/models/failure_models.dart';
 import 'package:apex_sports/app/layers/data/models/login_model.dart';
 import 'package:apex_sports/app/layers/domain/usecases/auth/sign_in_usecase.dart';

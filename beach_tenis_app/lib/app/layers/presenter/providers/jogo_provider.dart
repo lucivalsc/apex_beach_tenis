@@ -1,3 +1,4 @@
+// ignore_for_file: unrelated_type_equality_checks
 import 'package:apex_sports/app/common/usecase.dart';
 import 'package:apex_sports/app/layers/data/models/jogo_model.dart';
 import 'package:apex_sports/app/layers/domain/usecases/jogo/create_jogo_usecase.dart';

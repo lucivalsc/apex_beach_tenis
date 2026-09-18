@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print
 import 'package:apex_sports/app/layers/presenter/providers/auth_provider.dart';
 import 'package:apex_sports/app/layers/presenter/providers/config_provider.dart';
 import 'package:apex_sports/app/layers/presenter/providers/data_provider.dart';

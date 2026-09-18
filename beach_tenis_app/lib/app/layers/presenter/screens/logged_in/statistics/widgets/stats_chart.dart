@@ -58,7 +58,6 @@ class StatsChart extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: data.map((item) {
               final value = item['valor'] as int;
-              final label = item['data'] as String;
               final barHeight = (value / maxValue) * 100;
 
               return Expanded(

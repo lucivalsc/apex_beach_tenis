@@ -82,12 +82,6 @@ class _SubscriptionSelectionScreenState
     });
   }
 
-  void _toggleBilling() {
-    setState(() {
-      _isAnnual = !_isAnnual;
-    });
-  }
-
   void _continueToPayment() {
     if (_selectedPlan != null) {
       pushNamed(context, PaymentMethodsScreen.route, arguments: [

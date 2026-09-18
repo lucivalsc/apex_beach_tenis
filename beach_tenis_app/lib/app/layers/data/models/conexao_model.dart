@@ -1,3 +1,4 @@
+// ignore_for_file: constant_identifier_names
 ///
 /// Model para Conexão/Amizade - Beach Tênis App
 /// Gerencia as conexões entre atletas e solicitações de amizade

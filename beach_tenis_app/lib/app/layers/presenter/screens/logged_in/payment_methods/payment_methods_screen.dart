@@ -32,7 +32,6 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen>
   final _pixKeyController = TextEditingController();
 
   // Estados
-  final String _selectedPaymentMethod = 'credit_card';
   String _selectedPixType = 'cpf';
   bool _saveCard = false;
   bool _acceptsTerms = false;

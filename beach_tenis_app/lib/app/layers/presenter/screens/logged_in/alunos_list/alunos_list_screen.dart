@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:apex_sports/app/layers/presenter/providers/aluno_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
